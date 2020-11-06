@@ -45,6 +45,7 @@ jobs:
           test -z "$(gofmt -l .)"
           test -z "$(goreturns -l .)"
           test -z "$(goimports -l .)"
+        if: startsWith(matrix.vm-os, 'windows') == false
 
       - name: Go test
         shell: bash
