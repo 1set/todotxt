@@ -1,11 +1,3 @@
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-// Package todotxt is a Go client library for Gina Trapani's todo.txt files.
-// It allows for parsing and manipulating of task lists and tasks in the todo.txt format.
-//
-// Source code and project home: https://github.com/JamesClonk/go-todotxt
 package todotxt
 
 import (

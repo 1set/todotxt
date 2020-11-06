@@ -1,6 +1,6 @@
 # todotxt
 
-Parser for todo.txt files in Go ✅
+Yet another a Go library for Gina Trapani's todo.txt files. ✅
 
 ## Features
 
