@@ -10,7 +10,7 @@ import (
 )
 
 func ExampleLoadFromFilename() {
-	if tasklist, err := LoadFromFilename("todo.txt"); err != nil {
+	if tasklist, err := LoadFromFilename("testdata/todo.txt"); err != nil {
 		log.Fatal(err)
 	} else {
 		fmt.Print(tasklist) // String representation of TaskList works as expected.
@@ -32,7 +32,7 @@ func ExampleTaskList_LoadFromFilename() {
 
 	// This will overwrite whatever was in the tasklist before.
 	// Irrelevant here since the list is still empty.
-	if err := tasklist.LoadFromFilename("todo.txt"); err != nil {
+	if err := tasklist.LoadFromFilename("testdata/todo.txt"); err != nil {
 		log.Fatal(err)
 	}
 
