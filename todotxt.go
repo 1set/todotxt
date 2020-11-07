@@ -23,8 +23,7 @@ var (
 
 // NewTaskList creates a new empty TaskList.
 func NewTaskList() TaskList {
-	tasklist := TaskList{}
-	return tasklist
+	return TaskList{}
 }
 
 // String returns a complete list of tasks in todo.txt format.
@@ -119,12 +118,12 @@ func (tasklist *TaskList) Filter(predicate func(Task) bool) *TaskList {
 //
 // Note: This will clear the current TaskList and overwrite it's contents with whatever is in *os.File.
 func (tasklist *TaskList) LoadFromFile(file *os.File) error {
-	*tasklist = []Task{} // Empty tasklist
+	*tasklist = []Task{} // Empty task list
 
 	taskId := 1
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		text := strings.Trim(scanner.Text(), "\t\n\r ") // Read line
+		text := strings.Trim(scanner.Text(), whitespaces) // Read line
 
 		// Ignore blank or comment lines
 		if text == "" || (IgnoreComments && strings.HasPrefix(text, "#")) {
@@ -149,9 +148,10 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 // Using *os.File instead of a filename allows to also use os.Stdout.
 func (tasklist *TaskList) WriteToFile(file *os.File) error {
 	writer := bufio.NewWriter(file)
-	_, err := writer.WriteString(tasklist.String())
-	writer.Flush()
-	return err
+	if _, err := writer.WriteString(tasklist.String()); err != nil {
+		return err
+	}
+	return writer.Flush()
 }
 
 // LoadFromFilename loads a TaskList from a file (most likely called "todo.txt").

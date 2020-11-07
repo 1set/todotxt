@@ -8,7 +8,7 @@ import (
 
 // Flags for defining sort element and order.
 const (
-	SORT_PRIORITY_ASC = iota
+	SORT_PRIORITY_ASC = iota + 1
 	SORT_PRIORITY_DESC
 	SORT_CREATED_DATE_ASC
 	SORT_CREATED_DATE_DESC
