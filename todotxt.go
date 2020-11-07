@@ -150,9 +150,8 @@ func (tasklist *TaskList) WriteToFile(file *os.File) error {
 	writer := bufio.NewWriter(file)
 	if _, err := writer.WriteString(tasklist.String()); err != nil {
 		return err
-	} else {
-		return writer.Flush()
 	}
+	return writer.Flush()
 }
 
 // LoadFromFilename loads a TaskList from a file (most likely called "todo.txt").
