@@ -49,4 +49,10 @@ jobs:
 
       - name: Go test
         shell: bash
-        run: go test -v -race -cover -covermode=atomic -count 1 .
+        run: go test -v -race -cover -covermode=atomic -coverprofile=coverage.txt -count 1 .
+
+      - name: Upload report to Codecov
+        uses: codecov/codecov-action@v1.0.14
+        with:
+          file: ./coverage.txt
+        if: startsWith(matrix.vm-os, 'ubuntu')
