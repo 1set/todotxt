@@ -2,7 +2,7 @@
 
 Yet another a Go library for Gina Trapani's todo.txt files. ✅
 
-[![GoDoc](https://godoc.org/github.com/vt128/todotxt?status.svg)](https://godoc.org/github.com/vt128/todotxt)
+[![GoDoc](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/vt128/todotxt)
 [![License](https://img.shields.io/github/license/vt128/todotxt)](https://github.com/vt128/todotxt/blob/master/LICENSE)
 [![GitHub Action Workflow](https://github.com/vt128/todotxt/workflows/Test/badge.svg)](https://github.com/vt128/todotxt/actions?workflow=Test)
 [![Go Report Card](https://goreportcard.com/badge/github.com/vt128/todotxt)](https://goreportcard.com/report/github.com/vt128/todotxt)

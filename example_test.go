@@ -37,7 +37,7 @@ func ExampleTaskList_LoadFromFilename() {
 	fmt.Println(tasklist[0].Todo)      // Text part of first task (Call Mom)
 	fmt.Println(tasklist[2].Contexts)  // Slice of contexts from third task ([Computer])
 	fmt.Println(tasklist[3].Priority)  // Priority of fourth task (C)
-	fmt.Println(tasklist[7].Completed) // Completed flag of eigth task (true)
+	fmt.Println(tasklist[7].Completed) // Completed flag of eighth task (true)
 	// Output:
 	// Call Mom
 	// [Computer]

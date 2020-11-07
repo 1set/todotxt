@@ -13,7 +13,7 @@ var (
 	testInputTasklistDueDateError       = "testdata/tasklist_dueDate_error.txt"
 	testInputTasklistCompletedDateError = "testdata/tasklist_completedDate_error.txt"
 	testInputTasklistScannerError       = "testdata/tasklist_scanner_error.txt"
-	testOutput                          = "testdata/ouput_todo.txt"
+	testOutput                          = "testdata/output_todo.txt"
 	testExpectedOutput                  = "testdata/expected_todo.txt"
 	testTasklist                        TaskList
 	testExpected                        interface{}
@@ -299,7 +299,6 @@ func TestTaskListAddTask(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%d], but got [%d]", taskId, testExpected, testGot)
 	}
-	taskId++
 }
 
 func TestTaskListGetTask(t *testing.T) {
@@ -322,7 +321,6 @@ func TestTaskListGetTask(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%d], but got [%d]", taskId, testExpected, testGot)
 	}
-	taskId++
 }
 
 func TestTaskListUpdateTask(t *testing.T) {

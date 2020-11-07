@@ -184,7 +184,6 @@ func TestTaskId(t *testing.T) {
 	if testGot != taskId {
 		t.Errorf("Expected Task[%d] to have Id [%d], but got [%d]", taskId, taskId, testGot)
 	}
-	taskId++
 }
 
 func TestTaskString(t *testing.T) {
@@ -224,7 +223,6 @@ func TestTaskString(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
 	}
-	taskId++
 }
 
 func TestTaskPriority(t *testing.T) {
@@ -255,7 +253,6 @@ func TestTaskPriority(t *testing.T) {
 	if testTasklist[taskId-1].HasPriority() {
 		t.Errorf("Expected Task[%d] to have no priority, but got '%s'", taskId, testTasklist[4].Priority)
 	}
-	taskId++
 }
 
 func TestTaskCreatedDate(t *testing.T) {
@@ -315,7 +312,6 @@ func TestTaskCreatedDate(t *testing.T) {
 	if testTasklist[taskId-1].HasCreatedDate() {
 		t.Errorf("Expected Task[%d] to have no created date, but got '%v'", taskId, testTasklist[4].CreatedDate)
 	}
-	taskId++
 }
 
 func TestTaskContexts(t *testing.T) {
@@ -348,7 +344,6 @@ func TestTaskContexts(t *testing.T) {
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
 		t.Errorf("Expected Task[%d] to have no contexts, but got '%v'", taskId, testGot)
 	}
-	taskId++
 }
 
 func TestTasksProjects(t *testing.T) {
@@ -374,7 +369,6 @@ func TestTasksProjects(t *testing.T) {
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
 		t.Errorf("Expected Task[%d] to have no projects, but got '%v'", taskId, testGot)
 	}
-	taskId++
 }
 
 func TestTaskDueDate(t *testing.T) {
@@ -394,7 +388,6 @@ func TestTaskDueDate(t *testing.T) {
 	if testTasklist[taskId-1].HasDueDate() {
 		t.Errorf("Expected Task[%d] to have no due date, but got '%v'", taskId, testTasklist[taskId-1].DueDate)
 	}
-	taskId++
 }
 
 func TestTaskAddonTags(t *testing.T) {
@@ -431,7 +424,6 @@ func TestTaskAddonTags(t *testing.T) {
 		!compareMaps(testGot.(map[string]string), testExpected.(map[string]string)) {
 		t.Errorf("Expected Task[%d] to have no additional tags, but got '%v'", taskId, testGot)
 	}
-	taskId++
 }
 
 func TestTaskCompleted(t *testing.T) {
@@ -471,7 +463,6 @@ func TestTaskCompleted(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] not to be completed, but got '%v'", taskId, testGot)
 	}
-	taskId++
 }
 
 func TestTaskCompletedDate(t *testing.T) {
@@ -521,7 +512,6 @@ func TestTaskCompletedDate(t *testing.T) {
 	if testTasklist[taskId-1].HasCompletedDate() {
 		t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskId, testTasklist[taskId-1].CompletedDate)
 	}
-	taskId++
 }
 
 func TestTaskIsOverdue(t *testing.T) {
@@ -562,7 +552,6 @@ func TestTaskIsOverdue(t *testing.T) {
 	if testGot.(bool) {
 		t.Errorf("Expected Task[%d] not to be overdue, but got '%v'", taskId, testGot)
 	}
-	taskId++
 }
 
 func TestTaskComplete(t *testing.T) {
@@ -621,7 +610,6 @@ func TestTaskComplete(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to have a completed date of '%v', but got '%v'", taskId, testExpected, testGot)
 	}
-	taskId++
 }
 
 func TestTaskReopen(t *testing.T) {
@@ -695,7 +683,6 @@ func TestTaskReopen(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskId, testGot)
 	}
-	taskId++
 }
 
 func compareSlices(list1 []string, list2 []string) bool {
