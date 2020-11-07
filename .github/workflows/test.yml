@@ -6,35 +6,46 @@ on:
 
 jobs:
   build:
-    name: Test on ${{ matrix.vm-os }}
+    name: Go ${{ matrix.go-version }} on ${{ matrix.vm-os }}
     runs-on: ${{ matrix.vm-os }}
     strategy:
       max-parallel: 10
       fail-fast: false
       matrix:
-        vm-os: [ubuntu-latest]
-        go-version: [1.13.15, 1.14.10, 1.15.3]
+        vm-os: [ubuntu-latest, macOS-latest, windows-latest]
+        go-version: [1.13.15, 1.14.11, 1.15.4]
 
     steps:
       - name: Set up Go ${{ matrix.go-version }}
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
         id: go
 
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
+      - name: Check out source code
+        uses: actions/checkout@v2
         with:
           fetch-depth: 2
 
       - name: Get dependencies
         shell: bash
         run: |
+          go version
+          go get github.com/sqs/goreturns
+          go get golang.org/x/tools/cmd/goimports
           go get -v -t -d ./...
           if [ -f Gopkg.toml ]; then
               curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
               dep ensure
           fi
+
+      - name: Go format
+        shell: bash
+        run: |
+          test -z "$(gofmt -l .)"
+          test -z "$(goreturns -l .)"
+          test -z "$(goimports -l .)"
+        if: startsWith(matrix.vm-os, 'windows') == false
 
       - name: Go test
         shell: bash
