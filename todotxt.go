@@ -43,7 +43,7 @@ func (tasklist *TaskList) AddTask(task *Task) {
 			task.Id = t.Id
 		}
 	}
-	task.Id += 1
+	task.Id++
 
 	*tasklist = append(*tasklist, *task)
 }
@@ -140,11 +140,8 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 		*tasklist = append(*tasklist, *task)
 		taskId++
 	}
-	if err := scanner.Err(); err != nil {
-		return err
-	}
 
-	return nil
+	return scanner.Err()
 }
 
 // WriteToFile writes a TaskList to *os.File.
