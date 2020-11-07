@@ -30,7 +30,7 @@ func NewTaskList() TaskList {
 // String returns a complete list of tasks in todo.txt format.
 func (tasklist TaskList) String() (text string) {
 	for _, task := range tasklist {
-		text += fmt.Sprintln(task.String())
+		text += fmt.Sprintf("%s%s", task.String(), newLineStr)
 	}
 	return text
 }
