@@ -23,8 +23,7 @@ var (
 
 // NewTaskList creates a new empty TaskList.
 func NewTaskList() TaskList {
-	tasklist := TaskList{}
-	return tasklist
+	return TaskList{}
 }
 
 // String returns a complete list of tasks in todo.txt format.
@@ -124,7 +123,7 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 	taskId := 1
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		text := strings.Trim(scanner.Text(), "\t\n\r ") // Read line
+		text := strings.Trim(scanner.Text(), whitespaces) // Read line
 
 		// Ignore blank or comment lines
 		if text == "" || (IgnoreComments && strings.HasPrefix(text, "#")) {

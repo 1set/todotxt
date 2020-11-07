@@ -12,6 +12,8 @@ var (
 	// DateLayout is used for formatting time.Time into todo.txt date format and vice-versa.
 	DateLayout = "2006-01-02"
 
+	whitespaces = "\t\n\r "
+
 	priorityRx = regexp.MustCompile(`^(x|x \d{4}-\d{2}-\d{2}|)\s*\(([A-Z])\)\s+`) // Match priority: '(A) ...' or 'x (A) ...' or 'x 2012-12-12 (A) ...'
 	// Match created date: '(A) 2012-12-12 ...' or 'x 2012-12-12 (A) 2012-12-12 ...' or 'x (A) 2012-12-12 ...'or 'x 2012-12-12 2012-12-12 ...' or '2012-12-12 ...'
 	createdDateRx   = regexp.MustCompile(`^(\([A-Z]\)|x \d{4}-\d{2}-\d{2} \([A-Z]\)|x \([A-Z]\)|x \d{4}-\d{2}-\d{2}|)\s*(\d{4}-\d{2}-\d{2})\s+`)
@@ -110,7 +112,7 @@ func ParseTask(text string) (*Task, error) {
 	var err error
 
 	task := Task{}
-	task.Original = strings.Trim(text, "\t\n\r ")
+	task.Original = strings.Trim(text, whitespaces)
 	task.Todo = task.Original
 
 	// Check for completed
@@ -152,7 +154,7 @@ func ParseTask(text string) (*Task, error) {
 		slice := make([]string, 0, len(matches))
 		seen := make(map[string]bool, len(matches))
 		for _, match := range matches {
-			word := strings.Trim(match[2], "\t\n\r ")
+			word := strings.Trim(match[2], whitespaces)
 			if _, found := seen[word]; !found {
 				slice = append(slice, word)
 				seen[word] = true
@@ -240,7 +242,7 @@ func (task *Task) Complete() {
 func (task *Task) Reopen() {
 	if task.Completed {
 		task.Completed = false
-		task.CompletedDate = time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC) // time.IsZero() value
+		task.CompletedDate = time.Time{} // time.IsZero() value
 	}
 }
 
