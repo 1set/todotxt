@@ -367,7 +367,7 @@ func TestTaskListUpdateTask(t *testing.T) {
 		t.Error(err)
 	}
 	if testGot.Task() != testExpected.Task() {
-		t.Errorf("Expected Task to be [%v]\n, but got [%v]", testExpected, testGot)
+		t.Errorf("Expected Task to be [%v], but got [%v]", testExpected, testGot)
 	}
 }
 
