@@ -49,4 +49,22 @@ jobs:
 
       - name: Go test
         shell: bash
-        run: go test -v -race -cover -covermode=atomic -count 1 .
+        run: go test -v -race -cover -covermode=atomic -coverprofile=coverage.txt -count 1 .
+
+      - name: Upload report to Codecov
+        uses: codecov/codecov-action@v1.0.14
+        with:
+          file: ./coverage.txt
+        if: startsWith(matrix.vm-os, 'ubuntu')
+
+      - name: Upload report to Codacy
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)
+          export GOBIN=$GOPATH/bin
+          export PATH=$PATH:$GOBIN
+          go get github.com/schrej/godacov
+          godacov -t $CODACY_PROJECT_TOKEN -r ./coverage.txt -c $GITHUB_SHA
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.codacy_token }}
+        if: startsWith(matrix.vm-os, 'ubuntu')
