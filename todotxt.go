@@ -118,7 +118,7 @@ func (tasklist *TaskList) Filter(predicate func(Task) bool) *TaskList {
 //
 // Note: This will clear the current TaskList and overwrite it's contents with whatever is in *os.File.
 func (tasklist *TaskList) LoadFromFile(file *os.File) error {
-	*tasklist = []Task{} // Empty tasklist
+	*tasklist = []Task{} // Empty task list
 
 	taskId := 1
 	scanner := bufio.NewScanner(file)
@@ -148,9 +148,11 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 // Using *os.File instead of a filename allows to also use os.Stdout.
 func (tasklist *TaskList) WriteToFile(file *os.File) error {
 	writer := bufio.NewWriter(file)
-	_, err := writer.WriteString(tasklist.String())
-	writer.Flush()
-	return err
+	if _, err := writer.WriteString(tasklist.String()); err != nil {
+		return err
+	} else {
+		return writer.Flush()
+	}
 }
 
 // LoadFromFilename loads a TaskList from a file (most likely called "todo.txt").
