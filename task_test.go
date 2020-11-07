@@ -9,6 +9,23 @@ var (
 	testInputTask = "testdata/task_todo.txt"
 )
 
+func BenchmarkParseTask(b *testing.B) {
+	s := "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12   "
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = ParseTask(s)
+	}
+}
+
+func BenchmarkTask_String(b *testing.B) {
+	s := "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12   "
+	task, _ := ParseTask(s)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = task.String()
+	}
+}
+
 func TestNewTask(t *testing.T) {
 	task := NewTask()
 

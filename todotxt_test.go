@@ -20,6 +20,20 @@ var (
 	testGot                             interface{}
 )
 
+func BenchmarkLoadFromFilename(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_, _ = LoadFromFilename(testInputTasklist)
+	}
+}
+
+func BenchmarkTaskList_String(b *testing.B) {
+	taskList, _ := LoadFromFilename(testInputTasklist)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = taskList.String()
+	}
+}
+
 func TestLoadFromFile(t *testing.T) {
 	file, err := os.Open(testInputTasklist)
 	if err != nil {
