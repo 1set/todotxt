@@ -56,3 +56,15 @@ jobs:
         with:
           file: ./coverage.txt
         if: startsWith(matrix.vm-os, 'ubuntu')
+
+      - name: Upload report to Codacy
+        shell: bash
+        run: |
+          export GOPATH=$(go env GOPATH)
+          export GOBIN=$GOPATH/bin
+          export PATH=$PATH:$GOBIN
+          go get github.com/schrej/godacov
+          godacov -t $CODACY_PROJECT_TOKEN -r ./coverage.txt -c $GITHUB_SHA
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.codacy_token }}
+        if: startsWith(matrix.vm-os, 'ubuntu')
