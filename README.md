@@ -13,8 +13,8 @@ Yet another a Go library for Gina Trapani's todo.txt files. ✅
 
 Based on [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) from [Fabio Berchtold](https://github.com/JamesClonk) with:
 
-- [ ] Go mod support
-- [ ] Structured series
+- [x] Go mod support
+- [x] Structured series
 
 ## Credits
 

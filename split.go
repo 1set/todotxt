@@ -7,6 +7,7 @@ import (
 
 type TaskSegmentType int
 
+// Flags for indicating type of segment in task string.
 const (
 	TaskSegment_IsCompleted TaskSegmentType = iota + 1
 	TaskSegment_CompletedDate
@@ -19,12 +20,14 @@ const (
 	TaskSegment_DueDate
 )
 
+// TaskSegment represents a segment in task string.
 type TaskSegment struct {
 	Type      TaskSegmentType
 	Originals []string
 	Display   string
 }
 
+// Segments returns a segmented task string in todo.txt format. The order of segments is the same as String().
 func (task *Task) Segments() []*TaskSegment {
 	var segs []*TaskSegment
 	newBasicTaskSeg := func(t TaskSegmentType, s string) *TaskSegment {
