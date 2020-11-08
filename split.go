@@ -5,6 +5,7 @@ import (
 	"sort"
 )
 
+// TaskSegmentType represents type of segment in task string.
 type TaskSegmentType int
 
 // Flags for indicating type of segment in task string.
