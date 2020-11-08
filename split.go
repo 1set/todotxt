@@ -12,7 +12,7 @@ const (
 	TaskSegment_CompletedDate
 	TaskSegment_Priority
 	TaskSegment_CreatedDate
-	TaskSegment_Todo
+	TaskSegment_TodoText
 	TaskSegment_Context
 	TaskSegment_Project
 	TaskSegment_Tag
@@ -20,25 +20,25 @@ const (
 )
 
 type TaskSegment struct {
-	Type     TaskSegmentType
-	Original string
-	Display  string
+	Type      TaskSegmentType
+	Originals []string
+	Display   string
 }
 
 func (task *Task) Split() []*TaskSegment {
 	var segs []*TaskSegment
 	newBasicTaskSeg := func(t TaskSegmentType, s string) *TaskSegment {
 		return &TaskSegment{
-			Type:     t,
-			Original: s,
-			Display:  s,
+			Type:      t,
+			Originals: []string{s},
+			Display:   s,
 		}
 	}
 	newTaskSeg := func(t TaskSegmentType, so, sd string) *TaskSegment {
 		return &TaskSegment{
-			Type:     t,
-			Original: so,
-			Display:  sd,
+			Type:      t,
+			Originals: []string{so},
+			Display:   sd,
 		}
 	}
 
@@ -57,7 +57,7 @@ func (task *Task) Split() []*TaskSegment {
 		segs = append(segs, newBasicTaskSeg(TaskSegment_CreatedDate, task.CreatedDate.Format(DateLayout)))
 	}
 
-	segs = append(segs, newBasicTaskSeg(TaskSegment_Todo, task.Todo))
+	segs = append(segs, newBasicTaskSeg(TaskSegment_TodoText, task.Todo))
 
 	if len(task.Contexts) > 0 {
 		sort.Strings(task.Contexts)
@@ -81,7 +81,12 @@ func (task *Task) Split() []*TaskSegment {
 		}
 		sort.Strings(keys)
 		for _, key := range keys {
-			segs = append(segs, newBasicTaskSeg(TaskSegment_Tag, fmt.Sprintf("%s:%s", key, task.AdditionalTags[key])))
+			val := task.AdditionalTags[key]
+			segs = append(segs, &TaskSegment{
+				Type:      TaskSegment_Tag,
+				Originals: []string{key, val},
+				Display:   fmt.Sprintf("%s:%s", key, val),
+			})
 		}
 	}
 
