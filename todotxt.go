@@ -126,7 +126,7 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 		text := strings.Trim(scanner.Text(), whitespaces) // Read line
 
 		// Ignore blank or comment lines
-		if text == "" || (IgnoreComments && strings.HasPrefix(text, "#")) {
+		if text == emptyStr || (IgnoreComments && strings.HasPrefix(text, "#")) {
 			continue
 		}
 
