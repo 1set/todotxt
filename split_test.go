@@ -61,6 +61,69 @@ func TestTaskSegments(t *testing.T) {
 					Display:   "@GroceryStore",
 				},
 			}},
+
+		{text: "x Download Todo.txt mobile app @Phone",
+			segs: []*TaskSegment{
+				{
+					Type:      TaskSegment_IsCompleted,
+					Originals: []string{"x"},
+					Display:   "x",
+				},
+				{
+					Type:      TaskSegment_TodoText,
+					Originals: []string{"Download Todo.txt mobile app"},
+					Display:   "Download Todo.txt mobile app",
+				},
+				{
+					Type:      TaskSegment_Context,
+					Originals: []string{"Phone"},
+					Display:   "@Phone",
+				},
+			}},
+
+		{text: "(B) 2013-12-01 Outline chapter 5 @Computer +Novel Level:5 private:false due:2014-02-17",
+			segs: []*TaskSegment{
+				{
+					Type:      TaskSegment_Priority,
+					Originals: []string{"B"},
+					Display:   "(B)",
+				},
+				{
+					Type:      TaskSegment_CreatedDate,
+					Originals: []string{"2013-12-01"},
+					Display:   "2013-12-01",
+				},
+				{
+					Type:      TaskSegment_TodoText,
+					Originals: []string{"Outline chapter 5"},
+					Display:   "Outline chapter 5",
+				},
+				{
+					Type:      TaskSegment_Context,
+					Originals: []string{"Computer"},
+					Display:   "@Computer",
+				},
+				{
+					Type:      TaskSegment_Project,
+					Originals: []string{"Novel"},
+					Display:   "+Novel",
+				},
+				{
+					Type:      TaskSegment_Tag,
+					Originals: []string{"Level", "5"},
+					Display:   "Level:5",
+				},
+				{
+					Type:      TaskSegment_Tag,
+					Originals: []string{"private", "false"},
+					Display:   "private:false",
+				},
+				{
+					Type:      TaskSegment_DueDate,
+					Originals: []string{"due:2014-02-17"},
+					Display:   "due:2014-02-17",
+				},
+			}},
 	}
 
 	for _, c := range cases {
