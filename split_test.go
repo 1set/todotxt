@@ -38,6 +38,15 @@ func strTaskSegmentList(l []*TaskSegment) string {
 	return strings.Join(parts, ", ")
 }
 
+func BenchmarkTaskSegments(b *testing.B) {
+	s := "x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt test:benchmark due:2014-01-12   "
+	task, _ := ParseTask(s)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = task.Segments()
+	}
+}
+
 func TestTaskSegments(t *testing.T) {
 	cases := []struct {
 		text string
