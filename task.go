@@ -42,7 +42,7 @@ type Task struct {
 
 // String returns a complete task string in todo.txt format.
 //
-// Contexts,  Projects and additional tags are alphabetically sorted,
+// Contexts, Projects and additional tags are alphabetically sorted,
 // and appended at the end in the following order:
 // Contexts, Projects, Tags
 //
