@@ -12,6 +12,7 @@ var (
 	// DateLayout is used for formatting time.Time into todo.txt date format and vice-versa.
 	DateLayout = "2006-01-02"
 
+	emptyStr    string
 	whitespaces = "\t\n\r "
 
 	priorityRx = regexp.MustCompile(`^(x|x \d{4}-\d{2}-\d{2}|)\s*\(([A-Z])\)\s+`) // Match priority: '(A) ...' or 'x (A) ...' or 'x 2012-12-12 (A) ...'
@@ -41,8 +42,8 @@ type Task struct {
 
 // String returns a complete task string in todo.txt format.
 //
-// Contexts,  Projects and additional tags are alphabetically sorted,
-// and appendend at the end in the following order:
+// Contexts, Projects and additional tags are alphabetically sorted,
+// and appended at the end in the following order:
 // Contexts, Projects, Tags
 //
 // For example:
@@ -128,21 +129,21 @@ func ParseTask(text string) (*Task, error) {
 		}
 
 		// Remove from Todo text
-		task.Todo = completedDateRx.ReplaceAllString(task.Todo, "") // Strip CompletedDate first, otherwise it wouldn't match anymore (^x date...)
-		task.Todo = completedRx.ReplaceAllString(task.Todo, "")     // Strip 'x '
+		task.Todo = completedDateRx.ReplaceAllString(task.Todo, emptyStr) // Strip CompletedDate first, otherwise it wouldn't match anymore (^x date...)
+		task.Todo = completedRx.ReplaceAllString(task.Todo, emptyStr)     // Strip 'x '
 	}
 
 	// Check for priority
 	if priorityRx.MatchString(task.Original) {
 		task.Priority = priorityRx.FindStringSubmatch(task.Original)[2]
-		task.Todo = priorityRx.ReplaceAllString(task.Todo, "") // Remove from Todo text
+		task.Todo = priorityRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 	}
 
 	// Check for created date
 	if createdDateRx.MatchString(task.Original) {
 		if date, err := time.Parse(DateLayout, createdDateRx.FindStringSubmatch(task.Original)[2]); err == nil {
 			task.CreatedDate = date
-			task.Todo = createdDateRx.ReplaceAllString(task.Todo, "") // Remove from Todo text
+			task.Todo = createdDateRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 		} else {
 			return nil, err
 		}
@@ -167,13 +168,13 @@ func ParseTask(text string) (*Task, error) {
 	// Check for contexts
 	if contextRx.MatchString(task.Original) {
 		task.Contexts = getSlice(contextRx)
-		task.Todo = contextRx.ReplaceAllString(task.Todo, "") // Remove from Todo text
+		task.Todo = contextRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 	}
 
 	// Check for projects
 	if projectRx.MatchString(task.Original) {
 		task.Projects = getSlice(projectRx)
-		task.Todo = projectRx.ReplaceAllString(task.Todo, "") // Remove from Todo text
+		task.Todo = projectRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 	}
 
 	// Check for additional tags
@@ -188,12 +189,12 @@ func ParseTask(text string) (*Task, error) {
 				} else {
 					return nil, err
 				}
-			} else if key != "" && value != "" {
+			} else if key != emptyStr && value != emptyStr {
 				tags[key] = value
 			}
 		}
 		task.AdditionalTags = tags
-		task.Todo = addonTagRx.ReplaceAllString(task.Todo, "") // Remove from Todo text
+		task.Todo = addonTagRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 	}
 
 	// Trim any remaining whitespaces from Todo text
@@ -210,7 +211,7 @@ func (task *Task) Task() string {
 
 // HasPriority returns true if the task has a priority.
 func (task *Task) HasPriority() bool {
-	return task.Priority != ""
+	return task.Priority != emptyStr
 }
 
 // HasCreatedDate returns true if the task has a created date.

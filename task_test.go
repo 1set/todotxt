@@ -17,7 +17,7 @@ func BenchmarkParseTask(b *testing.B) {
 	}
 }
 
-func BenchmarkTask_String(b *testing.B) {
+func BenchmarkTaskString(b *testing.B) {
 	s := "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12   "
 	task, _ := ParseTask(s)
 	b.ResetTimer()
