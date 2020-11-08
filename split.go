@@ -25,7 +25,7 @@ type TaskSegment struct {
 	Display   string
 }
 
-func (task *Task) Split() []*TaskSegment {
+func (task *Task) Segments() []*TaskSegment {
 	var segs []*TaskSegment
 	newBasicTaskSeg := func(t TaskSegmentType, s string) *TaskSegment {
 		return &TaskSegment{
