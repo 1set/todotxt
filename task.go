@@ -263,14 +263,10 @@ func (task *Task) IsOverdue() bool {
 	return false
 }
 
-// Due returns the duration passed since due date, or until due date from now.
-// Check with IsOverdue() if the task is overdue or not.
+// Due returns the duration left until due date from now. The duration is negative if the task is overdue.
 //
 // Just as with IsOverdue(), this function does also not take the Completed flag into consideration.
 // You should check Task.Completed first if needed.
 func (task *Task) Due() time.Duration {
-	if task.IsOverdue() {
-		return time.Now().Sub(task.DueDate)
-	}
 	return task.DueDate.Sub(time.Now())
 }

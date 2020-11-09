@@ -581,10 +581,15 @@ func TestTaskIsOverdue(t *testing.T) {
 		t.Errorf("Expected Task[%d] to be overdue, but got '%v'", taskID, testGot)
 	}
 	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, -3)
-	testGot = testTasklist[taskID-1].Due()
-	if testGot.(time.Duration).Hours() < 71 ||
-		testGot.(time.Duration).Hours() > 73 {
+	testGot = -testTasklist[taskID-1].Due()
+	if testGot.(time.Duration).Hours() < 71 || testGot.(time.Duration).Hours() > 73 {
 		t.Errorf("Expected Task[%d] to be due since 72 hours, but got '%v'", taskID, testGot)
+	}
+
+	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, 3)
+	testGot = testTasklist[taskID-1].Due()
+	if testGot.(time.Duration).Hours() < 71 || testGot.(time.Duration).Hours() > 73 {
+		t.Errorf("Expected Task[%d] to be due in 72 hours, but got '%v'", taskID, testGot)
 	}
 	taskID++
 
