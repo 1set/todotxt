@@ -13,7 +13,6 @@ func ExampleLoadFromPath() {
 	} else {
 		fmt.Print(tasklist) // String representation of TaskList works as expected.
 	}
-
 	// Output:
 	// (A) Call Mom @Phone +Family
 	// (A) Schedule annual checkup +Health

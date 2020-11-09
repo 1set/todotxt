@@ -19,7 +19,7 @@ const (
 )
 
 // Sort allows a TaskList to be sorted by certain predefined fields.
-// See constants SORT_* for fields and sort order.
+// See constants Sort* for fields and sort order.
 func (tasklist *TaskList) Sort(sortFlag int) error {
 	switch sortFlag {
 	case SortPriorityAsc, SortPriorityDesc:
