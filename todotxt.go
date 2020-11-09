@@ -120,7 +120,7 @@ func (tasklist *TaskList) Filter(predicate func(Task) bool) *TaskList {
 func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 	*tasklist = []Task{} // Empty task list
 
-	taskId := 1
+	taskID := 1
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		text := strings.Trim(scanner.Text(), whitespaces) // Read line
@@ -134,10 +134,10 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 		if err != nil {
 			return err
 		}
-		task.ID = taskId
+		task.ID = taskID
 
 		*tasklist = append(*tasklist, *task)
-		taskId++
+		taskID++
 	}
 
 	return scanner.Err()

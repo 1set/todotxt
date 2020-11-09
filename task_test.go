@@ -184,544 +184,544 @@ func TestParseTask(t *testing.T) {
 func TestTaskId(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 
-	taskId := 1
-	testGot = testTasklist[taskId-1].ID
-	if testGot != taskId {
-		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskId, taskId, testGot)
+	taskID := 1
+	testGot = testTasklist[taskID-1].ID
+	if testGot != taskID {
+		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskID, taskID, testGot)
 	}
 
-	taskId = 5
-	testGot = testTasklist[taskId-1].ID
-	if testGot != taskId {
-		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskId, taskId, testGot)
+	taskID = 5
+	testGot = testTasklist[taskID-1].ID
+	if testGot != taskID {
+		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskID, taskID, testGot)
 	}
 
-	taskId = 27
-	testGot = testTasklist[taskId-1].ID
-	if testGot != taskId {
-		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskId, taskId, testGot)
+	taskID = 27
+	testGot = testTasklist[taskID-1].ID
+	if testGot != taskID {
+		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskID, taskID, testGot)
 	}
 }
 
 func TestTaskString(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 1
+	taskID := 1
 
 	testExpected = "2013-02-22 Pick up milk @GroceryStore"
-	testGot = testTasklist[taskId-1].String()
+	testGot = testTasklist[taskID-1].String()
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = "x Download Todo.txt mobile app @Phone"
-	testGot = testTasklist[taskId-1].String()
+	testGot = testTasklist[taskID-1].String()
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = "(B) 2013-12-01 Outline chapter 5 @Computer +Novel Level:5 private:false due:2014-02-17"
-	testGot = testTasklist[taskId-1].Task()
+	testGot = testTasklist[taskID-1].Task()
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = "x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt"
-	testGot = testTasklist[taskId-1].Task()
+	testGot = testTasklist[taskID-1].Task()
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = "x 2014-01-03 2014-01-01 Create some more golang library test cases @Go +go-todotxt"
-	testGot = testTasklist[taskId-1].Task()
+	testGot = testTasklist[taskID-1].Task()
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskID, testExpected, testGot)
 	}
 }
 
 func TestTaskPriority(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 6
+	taskID := 6
 
 	testExpected = "B"
-	testGot = testTasklist[taskId-1].Priority
+	testGot = testTasklist[taskID-1].Priority
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have priority '%s', but got '%s'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have priority '%s', but got '%s'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = "C"
-	testGot = testTasklist[taskId-1].Priority
+	testGot = testTasklist[taskID-1].Priority
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have priority '%s', but got '%s'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have priority '%s', but got '%s'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = "B"
-	testGot = testTasklist[taskId-1].Priority
+	testGot = testTasklist[taskID-1].Priority
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have priority '%s', but got '%s'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have priority '%s', but got '%s'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
-	if testTasklist[taskId-1].HasPriority() {
-		t.Errorf("Expected Task[%d] to have no priority, but got '%s'", taskId, testTasklist[4].Priority)
+	if testTasklist[taskID-1].HasPriority() {
+		t.Errorf("Expected Task[%d] to have no priority, but got '%s'", taskID, testTasklist[4].Priority)
 	}
 }
 
 func TestTaskCreatedDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 10
+	taskID := 10
 
 	testExpected, err := time.Parse(DateLayout, "2012-01-30")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].CreatedDate
+	testGot = testTasklist[taskID-1].CreatedDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected, err = time.Parse(DateLayout, "2013-02-22")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].CreatedDate
+	testGot = testTasklist[taskID-1].CreatedDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected, err = time.Parse(DateLayout, "2014-01-01")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].CreatedDate
+	testGot = testTasklist[taskID-1].CreatedDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected, err = time.Parse(DateLayout, "2013-12-30")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].CreatedDate
+	testGot = testTasklist[taskID-1].CreatedDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected, err = time.Parse(DateLayout, "2014-01-01")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].CreatedDate
+	testGot = testTasklist[taskID-1].CreatedDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have created date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
-	if testTasklist[taskId-1].HasCreatedDate() {
-		t.Errorf("Expected Task[%d] to have no created date, but got '%v'", taskId, testTasklist[4].CreatedDate)
+	if testTasklist[taskID-1].HasCreatedDate() {
+		t.Errorf("Expected Task[%d] to have no created date, but got '%v'", taskID, testTasklist[4].CreatedDate)
 	}
 }
 
 func TestTaskContexts(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 16
+	taskID := 16
 
 	testExpected = []string{"Call", "Phone"}
-	testGot = testTasklist[taskId-1].Contexts
+	testGot = testTasklist[taskID-1].Contexts
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
-		t.Errorf("Expected Task[%d] to have contexts '%v', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have contexts '%v', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = []string{"Office"}
-	testGot = testTasklist[taskId-1].Contexts
+	testGot = testTasklist[taskID-1].Contexts
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
-		t.Errorf("Expected Task[%d] to have contexts '%v', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have contexts '%v', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = []string{"Electricity", "Home", "Of_Super-Importance", "Television"}
-	testGot = testTasklist[taskId-1].Contexts
+	testGot = testTasklist[taskID-1].Contexts
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
-		t.Errorf("Expected Task[%d] to have contexts '%v', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have contexts '%v', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = []string{}
-	testGot = testTasklist[taskId-1].Contexts
+	testGot = testTasklist[taskID-1].Contexts
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
-		t.Errorf("Expected Task[%d] to have no contexts, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to have no contexts, but got '%v'", taskID, testGot)
 	}
 }
 
 func TestTasksProjects(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 20
+	taskID := 20
 
 	testExpected = []string{"Gardening", "Improving", "Planning", "Relaxing-Work"}
-	testGot = testTasklist[taskId-1].Projects
+	testGot = testTasklist[taskID-1].Projects
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
-		t.Errorf("Expected Task[%d] to have projects '%v', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have projects '%v', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = []string{"Novel"}
-	testGot = testTasklist[taskId-1].Projects
+	testGot = testTasklist[taskID-1].Projects
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
-		t.Errorf("Expected Task[%d] to have projects '%v', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have projects '%v', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = []string{}
-	testGot = testTasklist[taskId-1].Projects
+	testGot = testTasklist[taskID-1].Projects
 	if !compareSlices(testGot.([]string), testExpected.([]string)) {
-		t.Errorf("Expected Task[%d] to have no projects, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to have no projects, but got '%v'", taskID, testGot)
 	}
 }
 
 func TestTaskDueDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 23
+	taskID := 23
 
 	testExpected, err := time.Parse(DateLayout, "2014-02-17")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].DueDate
+	testGot = testTasklist[taskID-1].DueDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have due date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have due date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
-	if testTasklist[taskId-1].HasDueDate() {
-		t.Errorf("Expected Task[%d] to have no due date, but got '%v'", taskId, testTasklist[taskId-1].DueDate)
+	if testTasklist[taskID-1].HasDueDate() {
+		t.Errorf("Expected Task[%d] to have no due date, but got '%v'", taskID, testTasklist[taskID-1].DueDate)
 	}
 }
 
 func TestTaskAddonTags(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 25
+	taskID := 25
 
 	testExpected = map[string]string{"Level": "5", "private": "false"}
-	testGot = testTasklist[taskId-1].AdditionalTags
+	testGot = testTasklist[taskID-1].AdditionalTags
 	if len(testGot.(map[string]string)) != 2 ||
 		!compareMaps(testGot.(map[string]string), testExpected.(map[string]string)) {
-		t.Errorf("Expected Task[%d] to have addon tags '%v', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have addon tags '%v', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = map[string]string{"Importance": "Very!"}
-	testGot = testTasklist[taskId-1].AdditionalTags
+	testGot = testTasklist[taskID-1].AdditionalTags
 	if len(testGot.(map[string]string)) != 1 ||
 		!compareMaps(testGot.(map[string]string), testExpected.(map[string]string)) {
-		t.Errorf("Expected Task[%d] to have projects '%v', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have projects '%v', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = map[string]string{}
-	testGot = testTasklist[taskId-1].AdditionalTags
+	testGot = testTasklist[taskID-1].AdditionalTags
 	if len(testGot.(map[string]string)) != 0 ||
 		!compareMaps(testGot.(map[string]string), testExpected.(map[string]string)) {
-		t.Errorf("Expected Task[%d] to have no additional tags, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to have no additional tags, but got '%v'", taskID, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = map[string]string{}
-	testGot = testTasklist[taskId-1].AdditionalTags
+	testGot = testTasklist[taskID-1].AdditionalTags
 	if len(testGot.(map[string]string)) != 0 ||
 		!compareMaps(testGot.(map[string]string), testExpected.(map[string]string)) {
-		t.Errorf("Expected Task[%d] to have no additional tags, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to have no additional tags, but got '%v'", taskID, testGot)
 	}
 }
 
 func TestTaskIsCompleted(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 	var (
-		taskId   int
+		taskID   int
 		testGot1 bool
 		testGot2 bool
 	)
 
-	taskId = 31
-	testGot1 = testTasklist[taskId-1].Completed
-	testGot2 = testTasklist[taskId-1].IsCompleted()
+	taskID = 31
+	testGot1 = testTasklist[taskID-1].Completed
+	testGot2 = testTasklist[taskID-1].IsCompleted()
 	if testGot1 != testGot2 {
-		t.Errorf("Expected Task[%d] to be completed '%v', but got '%v'", taskId, testGot1, testGot2)
+		t.Errorf("Expected Task[%d] to be completed '%v', but got '%v'", taskID, testGot1, testGot2)
 	}
 
-	taskId = 32
-	testGot1 = testTasklist[taskId-1].Completed
-	testGot2 = testTasklist[taskId-1].IsCompleted()
+	taskID = 32
+	testGot1 = testTasklist[taskID-1].Completed
+	testGot2 = testTasklist[taskID-1].IsCompleted()
 	if testGot1 != testGot2 {
-		t.Errorf("Expected Task[%d] to be not completed '%v', but got '%v'", taskId, testGot1, testGot2)
+		t.Errorf("Expected Task[%d] to be not completed '%v', but got '%v'", taskID, testGot1, testGot2)
 	}
 }
 
 func TestTaskCompleted(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 29
+	taskID := 29
 
 	testExpected = true
-	testGot = testTasklist[taskId-1].Completed
+	testGot = testTasklist[taskID-1].Completed
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = true
-	testGot = testTasklist[taskId-1].Completed
+	testGot = testTasklist[taskID-1].Completed
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = true
-	testGot = testTasklist[taskId-1].Completed
+	testGot = testTasklist[taskID-1].Completed
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = false
-	testGot = testTasklist[taskId-1].Completed
+	testGot = testTasklist[taskID-1].Completed
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] not to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] not to be completed, but got '%v'", taskID, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected = false
-	testGot = testTasklist[taskId-1].Completed
+	testGot = testTasklist[taskID-1].Completed
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] not to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] not to be completed, but got '%v'", taskID, testGot)
 	}
 }
 
 func TestTaskCompletedDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 34
+	taskID := 34
 
-	if testTasklist[taskId-1].HasCompletedDate() {
-		t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskId, testTasklist[taskId-1].CompletedDate)
+	if testTasklist[taskID-1].HasCompletedDate() {
+		t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskID, testTasklist[taskID-1].CompletedDate)
 	}
-	taskId++
+	taskID++
 
 	testExpected, err := time.Parse(DateLayout, "2014-01-03")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].CompletedDate
+	testGot = testTasklist[taskID-1].CompletedDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have completed date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have completed date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
-	if testTasklist[taskId-1].HasCompletedDate() {
-		t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskId, testTasklist[taskId-1].CompletedDate)
+	if testTasklist[taskID-1].HasCompletedDate() {
+		t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskID, testTasklist[taskID-1].CompletedDate)
 	}
-	taskId++
+	taskID++
 
 	testExpected, err = time.Parse(DateLayout, "2014-01-02")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].CompletedDate
+	testGot = testTasklist[taskID-1].CompletedDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have completed date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have completed date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
 	testExpected, err = time.Parse(DateLayout, "2014-01-03")
 	if err != nil {
 		t.Fatal(err)
 	}
-	testGot = testTasklist[taskId-1].CompletedDate
+	testGot = testTasklist[taskID-1].CompletedDate
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have completed date '%s', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have completed date '%s', but got '%v'", taskID, testExpected, testGot)
 	}
-	taskId++
+	taskID++
 
-	if testTasklist[taskId-1].HasCompletedDate() {
-		t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskId, testTasklist[taskId-1].CompletedDate)
+	if testTasklist[taskID-1].HasCompletedDate() {
+		t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskID, testTasklist[taskID-1].CompletedDate)
 	}
 }
 
 func TestTaskIsOverdue(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 40
+	taskID := 40
 
-	testGot = testTasklist[taskId-1].IsOverdue()
+	testGot = testTasklist[taskID-1].IsOverdue()
 	if !testGot.(bool) {
-		t.Errorf("Expected Task[%d] to be overdue, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be overdue, but got '%v'", taskID, testGot)
 	}
-	taskId++
+	taskID++
 
-	testGot = testTasklist[taskId-1].IsOverdue()
+	testGot = testTasklist[taskID-1].IsOverdue()
 	if testGot.(bool) {
-		t.Errorf("Expected Task[%d] not to be overdue, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] not to be overdue, but got '%v'", taskID, testGot)
 	}
-	testTasklist[taskId-1].DueDate = time.Now().AddDate(0, 0, 1)
-	testGot = testTasklist[taskId-1].Due()
+	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, 1)
+	testGot = testTasklist[taskID-1].Due()
 	if testGot.(time.Duration).Hours() < 23 ||
 		testGot.(time.Duration).Hours() > 25 {
-		t.Errorf("Expected Task[%d] to be due in 24 hours, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be due in 24 hours, but got '%v'", taskID, testGot)
 	}
-	taskId++
+	taskID++
 
-	testGot = testTasklist[taskId-1].IsOverdue()
+	testGot = testTasklist[taskID-1].IsOverdue()
 	if !testGot.(bool) {
-		t.Errorf("Expected Task[%d] to be overdue, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be overdue, but got '%v'", taskID, testGot)
 	}
-	testTasklist[taskId-1].DueDate = time.Now().AddDate(0, 0, -3)
-	testGot = testTasklist[taskId-1].Due()
+	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, -3)
+	testGot = testTasklist[taskID-1].Due()
 	if testGot.(time.Duration).Hours() < 71 ||
 		testGot.(time.Duration).Hours() > 73 {
-		t.Errorf("Expected Task[%d] to be due since 72 hours, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be due since 72 hours, but got '%v'", taskID, testGot)
 	}
-	taskId++
+	taskID++
 
-	testGot = testTasklist[taskId-1].IsOverdue()
+	testGot = testTasklist[taskID-1].IsOverdue()
 	if testGot.(bool) {
-		t.Errorf("Expected Task[%d] not to be overdue, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] not to be overdue, but got '%v'", taskID, testGot)
 	}
 }
 
 func TestTaskComplete(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 44
+	taskID := 44
 
 	// first 4 tasks should all match the same tests
 	for i := 0; i < 4; i++ {
 		testExpected = false
-		testGot = testTasklist[taskId-1].Completed
+		testGot = testTasklist[taskID-1].Completed
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] not to be completed, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] not to be completed, but got '%v'", taskID, testGot)
 		}
-		testGot = testTasklist[taskId-1].HasCompletedDate()
+		testGot = testTasklist[taskID-1].HasCompletedDate()
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] not to have a completed date, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] not to have a completed date, but got '%v'", taskID, testGot)
 		}
-		testTasklist[taskId-1].Complete()
+		testTasklist[taskID-1].Complete()
 		testExpected = true
-		testGot = testTasklist[taskId-1].Completed
+		testGot = testTasklist[taskID-1].Completed
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 		}
-		testGot = testTasklist[taskId-1].HasCompletedDate()
+		testGot = testTasklist[taskID-1].HasCompletedDate()
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 		}
 		testExpected = time.Now().Format(DateLayout)
-		testGot = testTasklist[taskId-1].CompletedDate.Format(DateLayout)
+		testGot = testTasklist[taskID-1].CompletedDate.Format(DateLayout)
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to have a completed date of '%v', but got '%v'", taskId, testExpected, testGot)
+			t.Errorf("Expected Task[%d] to have a completed date of '%v', but got '%v'", taskID, testExpected, testGot)
 		}
-		taskId++
+		taskID++
 	}
 
 	testExpected = true
-	testGot = testTasklist[taskId-1].Completed
+	testGot = testTasklist[taskID-1].Completed
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 	}
-	testGot = testTasklist[taskId-1].HasCompletedDate()
+	testGot = testTasklist[taskID-1].HasCompletedDate()
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 	}
-	testTasklist[taskId-1].Complete()
-	testGot = testTasklist[taskId-1].Completed // should be unchanged
+	testTasklist[taskID-1].Complete()
+	testGot = testTasklist[taskID-1].Completed // should be unchanged
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 	}
-	testGot = testTasklist[taskId-1].HasCompletedDate() // should be unchanged
+	testGot = testTasklist[taskID-1].HasCompletedDate() // should be unchanged
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 	}
 	testExpected = "2012-01-01" // should be unchanged
-	testGot = testTasklist[taskId-1].CompletedDate.Format(DateLayout)
+	testGot = testTasklist[taskID-1].CompletedDate.Format(DateLayout)
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have a completed date of '%v', but got '%v'", taskId, testExpected, testGot)
+		t.Errorf("Expected Task[%d] to have a completed date of '%v', but got '%v'", taskID, testExpected, testGot)
 	}
 }
 
 func TestTaskReopen(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
-	taskId := 49
+	taskID := 49
 
 	// the first 2 tasks should match the same tests
 	for i := 0; i < 2; i++ {
 		testExpected = true
-		testGot = testTasklist[taskId-1].Completed
+		testGot = testTasklist[taskID-1].Completed
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 		}
 		testExpected = false
-		testGot = testTasklist[taskId-1].HasCompletedDate()
+		testGot = testTasklist[taskID-1].HasCompletedDate()
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 		}
-		testTasklist[taskId-1].Reopen()
+		testTasklist[taskID-1].Reopen()
 		testExpected = false
-		testGot = testTasklist[taskId-1].Completed
+		testGot = testTasklist[taskID-1].Completed
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to not be completed, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to not be completed, but got '%v'", taskID, testGot)
 		}
-		testGot = testTasklist[taskId-1].HasCompletedDate()
+		testGot = testTasklist[taskID-1].HasCompletedDate()
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskID, testGot)
 		}
-		taskId++
+		taskID++
 	}
 
 	// the next 3 tasks should all match the same tests
 	for i := 0; i < 3; i++ {
 		testExpected = true
-		testGot = testTasklist[taskId-1].Completed
+		testGot = testTasklist[taskID-1].Completed
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 		}
-		testGot = testTasklist[taskId-1].HasCompletedDate()
+		testGot = testTasklist[taskID-1].HasCompletedDate()
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 		}
-		testTasklist[taskId-1].Reopen()
+		testTasklist[taskID-1].Reopen()
 		testExpected = false
-		testGot = testTasklist[taskId-1].Completed
+		testGot = testTasklist[taskID-1].Completed
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to not be completed, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to not be completed, but got '%v'", taskID, testGot)
 		}
-		testGot = testTasklist[taskId-1].HasCompletedDate()
+		testGot = testTasklist[taskID-1].HasCompletedDate()
 		if testGot != testExpected {
-			t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskId, testGot)
+			t.Errorf("Expected Task[%d] to not have a completed date, but got '%v'", taskID, testGot)
 		}
-		taskId++
+		taskID++
 	}
 
 	testExpected = false
-	testGot = testTasklist[taskId-1].Completed
+	testGot = testTasklist[taskID-1].Completed
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 	}
-	testGot = testTasklist[taskId-1].HasCompletedDate()
+	testGot = testTasklist[taskID-1].HasCompletedDate()
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 	}
-	testTasklist[taskId-1].Reopen()
-	testGot = testTasklist[taskId-1].Completed // should be unchanged
+	testTasklist[taskID-1].Reopen()
+	testGot = testTasklist[taskID-1].Completed // should be unchanged
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to be completed, but got '%v'", taskID, testGot)
 	}
-	testGot = testTasklist[taskId-1].HasCompletedDate() // should be unchanged
+	testGot = testTasklist[taskID-1].HasCompletedDate() // should be unchanged
 	if testGot != testExpected {
-		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskId, testGot)
+		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 	}
 }
 
