@@ -14,7 +14,8 @@ Yet another a Go library for Gina Trapani's todo.txt files. ✅
 Based on [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) from [Fabio Berchtold](https://github.com/JamesClonk) with:
 
 - [x] Go mod support
-- [x] Structured series
+- [x] Segments for task string
+- [x] Negative `Due()` duration
 
 ## Credits
 
