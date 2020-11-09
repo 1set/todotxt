@@ -14,7 +14,7 @@ func TestTaskSortByPriority(t *testing.T) {
 
 	testTasklist = testTasklist[taskId : taskId+6]
 
-	if err := testTasklist.Sort(SORT_PRIORITY_ASC); err != nil {
+	if err := testTasklist.Sort(SortPriorityAsc); err != nil {
 		t.Fatal(err)
 	}
 
@@ -54,7 +54,7 @@ func TestTaskSortByPriority(t *testing.T) {
 		t.Errorf("Expected Task[6] after Sort() to be [%s], but got [%s]", testExpected, testGot)
 	}
 
-	if err := testTasklist.Sort(SORT_PRIORITY_DESC); err != nil {
+	if err := testTasklist.Sort(SortPriorityDesc); err != nil {
 		t.Fatal(err)
 	}
 
@@ -101,7 +101,7 @@ func TestTaskSortByCreatedDate(t *testing.T) {
 
 	testTasklist = testTasklist[taskId : taskId+5]
 
-	if err := testTasklist.Sort(SORT_CREATED_DATE_ASC); err != nil {
+	if err := testTasklist.Sort(SortCreatedDateAsc); err != nil {
 		t.Fatal(err)
 	}
 
@@ -135,7 +135,7 @@ func TestTaskSortByCreatedDate(t *testing.T) {
 		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
 	}
 
-	if err := testTasklist.Sort(SORT_CREATED_DATE_DESC); err != nil {
+	if err := testTasklist.Sort(SortCreatedDateDesc); err != nil {
 		t.Fatal(err)
 	}
 
@@ -176,7 +176,7 @@ func TestTaskSortByCompletedDate(t *testing.T) {
 
 	testTasklist = testTasklist[taskId : taskId+6]
 
-	if err := testTasklist.Sort(SORT_COMPLETED_DATE_ASC); err != nil {
+	if err := testTasklist.Sort(SortCompletedDateAsc); err != nil {
 		t.Fatal(err)
 	}
 
@@ -216,7 +216,7 @@ func TestTaskSortByCompletedDate(t *testing.T) {
 		t.Errorf("Expected Task[6] after Sort() to be [%s], but got [%s]", testExpected, testGot)
 	}
 
-	if err := testTasklist.Sort(SORT_COMPLETED_DATE_DESC); err != nil {
+	if err := testTasklist.Sort(SortCompletedDateDesc); err != nil {
 		t.Fatal(err)
 	}
 
@@ -263,7 +263,7 @@ func TestTaskSortByDueDate(t *testing.T) {
 
 	testTasklist = testTasklist[taskId : taskId+4]
 
-	if err := testTasklist.Sort(SORT_DUE_DATE_ASC); err != nil {
+	if err := testTasklist.Sort(SortDueDateAsc); err != nil {
 		t.Fatal(err)
 	}
 
@@ -291,7 +291,7 @@ func TestTaskSortByDueDate(t *testing.T) {
 		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
 	}
 
-	if err := testTasklist.Sort(SORT_DUE_DATE_DESC); err != nil {
+	if err := testTasklist.Sort(SortDueDateDesc); err != nil {
 		t.Fatal(err)
 	}
 

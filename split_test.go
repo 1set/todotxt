@@ -55,17 +55,17 @@ func TestTaskSegments(t *testing.T) {
 		{text: "2013-02-22 Pick up milk @GroceryStore",
 			segs: []*TaskSegment{
 				{
-					Type:      TaskSegment_CreatedDate,
+					Type:      SegmentCreatedDate,
 					Originals: []string{"2013-02-22"},
 					Display:   "2013-02-22",
 				},
 				{
-					Type:      TaskSegment_TodoText,
+					Type:      SegmentTodoText,
 					Originals: []string{"Pick up milk"},
 					Display:   "Pick up milk",
 				},
 				{
-					Type:      TaskSegment_Context,
+					Type:      SegmentContext,
 					Originals: []string{"GroceryStore"},
 					Display:   "@GroceryStore",
 				},
@@ -73,17 +73,17 @@ func TestTaskSegments(t *testing.T) {
 		{text: "x Download Todo.txt mobile app @Phone",
 			segs: []*TaskSegment{
 				{
-					Type:      TaskSegment_IsCompleted,
+					Type:      SegmentIsCompleted,
 					Originals: []string{"x"},
 					Display:   "x",
 				},
 				{
-					Type:      TaskSegment_TodoText,
+					Type:      SegmentTodoText,
 					Originals: []string{"Download Todo.txt mobile app"},
 					Display:   "Download Todo.txt mobile app",
 				},
 				{
-					Type:      TaskSegment_Context,
+					Type:      SegmentContext,
 					Originals: []string{"Phone"},
 					Display:   "@Phone",
 				},
@@ -91,42 +91,42 @@ func TestTaskSegments(t *testing.T) {
 		{text: "(B) 2013-12-01 Outline chapter 5 @Computer +Novel Level:5 private:false due:2014-02-17",
 			segs: []*TaskSegment{
 				{
-					Type:      TaskSegment_Priority,
+					Type:      SegmentPriority,
 					Originals: []string{"B"},
 					Display:   "(B)",
 				},
 				{
-					Type:      TaskSegment_CreatedDate,
+					Type:      SegmentCreatedDate,
 					Originals: []string{"2013-12-01"},
 					Display:   "2013-12-01",
 				},
 				{
-					Type:      TaskSegment_TodoText,
+					Type:      SegmentTodoText,
 					Originals: []string{"Outline chapter 5"},
 					Display:   "Outline chapter 5",
 				},
 				{
-					Type:      TaskSegment_Context,
+					Type:      SegmentContext,
 					Originals: []string{"Computer"},
 					Display:   "@Computer",
 				},
 				{
-					Type:      TaskSegment_Project,
+					Type:      SegmentProject,
 					Originals: []string{"Novel"},
 					Display:   "+Novel",
 				},
 				{
-					Type:      TaskSegment_Tag,
+					Type:      SegmentTag,
 					Originals: []string{"Level", "5"},
 					Display:   "Level:5",
 				},
 				{
-					Type:      TaskSegment_Tag,
+					Type:      SegmentTag,
 					Originals: []string{"private", "false"},
 					Display:   "private:false",
 				},
 				{
-					Type:      TaskSegment_DueDate,
+					Type:      SegmentDueDate,
 					Originals: []string{"due:2014-02-17"},
 					Display:   "due:2014-02-17",
 				},
@@ -134,37 +134,37 @@ func TestTaskSegments(t *testing.T) {
 		{text: "x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt",
 			segs: []*TaskSegment{
 				{
-					Type:      TaskSegment_IsCompleted,
+					Type:      SegmentIsCompleted,
 					Originals: []string{"x"},
 					Display:   "x",
 				},
 				{
-					Type:      TaskSegment_CompletedDate,
+					Type:      SegmentCompletedDate,
 					Originals: []string{"2014-01-02"},
 					Display:   "2014-01-02",
 				},
 				{
-					Type:      TaskSegment_Priority,
+					Type:      SegmentPriority,
 					Originals: []string{"B"},
 					Display:   "(B)",
 				},
 				{
-					Type:      TaskSegment_CreatedDate,
+					Type:      SegmentCreatedDate,
 					Originals: []string{"2013-12-30"},
 					Display:   "2013-12-30",
 				},
 				{
-					Type:      TaskSegment_TodoText,
+					Type:      SegmentTodoText,
 					Originals: []string{"Create golang library test cases"},
 					Display:   "Create golang library test cases",
 				},
 				{
-					Type:      TaskSegment_Context,
+					Type:      SegmentContext,
 					Originals: []string{"Go"},
 					Display:   "@Go",
 				},
 				{
-					Type:      TaskSegment_Project,
+					Type:      SegmentProject,
 					Originals: []string{"go-todotxt"},
 					Display:   "+go-todotxt",
 				},
@@ -172,32 +172,32 @@ func TestTaskSegments(t *testing.T) {
 		{text: "x 2014-01-03 2014-01-01 Create some more golang library test cases @Go +go-todotxt",
 			segs: []*TaskSegment{
 				{
-					Type:      TaskSegment_IsCompleted,
+					Type:      SegmentIsCompleted,
 					Originals: []string{"x"},
 					Display:   "x",
 				},
 				{
-					Type:      TaskSegment_CompletedDate,
+					Type:      SegmentCompletedDate,
 					Originals: []string{"2014-01-03"},
 					Display:   "2014-01-03",
 				},
 				{
-					Type:      TaskSegment_CreatedDate,
+					Type:      SegmentCreatedDate,
 					Originals: []string{"2014-01-01"},
 					Display:   "2014-01-01",
 				},
 				{
-					Type:      TaskSegment_TodoText,
+					Type:      SegmentTodoText,
 					Originals: []string{"Create some more golang library test cases"},
 					Display:   "Create some more golang library test cases",
 				},
 				{
-					Type:      TaskSegment_Context,
+					Type:      SegmentContext,
 					Originals: []string{"Go"},
 					Display:   "@Go",
 				},
 				{
-					Type:      TaskSegment_Project,
+					Type:      SegmentProject,
 					Originals: []string{"go-todotxt"},
 					Display:   "+go-todotxt",
 				},

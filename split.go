@@ -10,15 +10,15 @@ type TaskSegmentType int
 
 // Flags for indicating type of segment in task string.
 const (
-	TaskSegment_IsCompleted TaskSegmentType = iota + 1
-	TaskSegment_CompletedDate
-	TaskSegment_Priority
-	TaskSegment_CreatedDate
-	TaskSegment_TodoText
-	TaskSegment_Context
-	TaskSegment_Project
-	TaskSegment_Tag
-	TaskSegment_DueDate
+	SegmentIsCompleted TaskSegmentType = iota + 1
+	SegmentCompletedDate
+	SegmentPriority
+	SegmentCreatedDate
+	SegmentTodoText
+	SegmentContext
+	SegmentProject
+	SegmentTag
+	SegmentDueDate
 )
 
 // TaskSegment represents a segment in task string.
@@ -47,33 +47,33 @@ func (task *Task) Segments() []*TaskSegment {
 	}
 
 	if task.Completed {
-		segs = append(segs, newBasicTaskSeg(TaskSegment_IsCompleted, "x"))
+		segs = append(segs, newBasicTaskSeg(SegmentIsCompleted, "x"))
 		if task.HasCompletedDate() {
-			segs = append(segs, newBasicTaskSeg(TaskSegment_CompletedDate, task.CompletedDate.Format(DateLayout)))
+			segs = append(segs, newBasicTaskSeg(SegmentCompletedDate, task.CompletedDate.Format(DateLayout)))
 		}
 	}
 
 	if task.HasPriority() {
-		segs = append(segs, newTaskSeg(TaskSegment_Priority, task.Priority, fmt.Sprintf("(%s)", task.Priority)))
+		segs = append(segs, newTaskSeg(SegmentPriority, task.Priority, fmt.Sprintf("(%s)", task.Priority)))
 	}
 
 	if task.HasCreatedDate() {
-		segs = append(segs, newBasicTaskSeg(TaskSegment_CreatedDate, task.CreatedDate.Format(DateLayout)))
+		segs = append(segs, newBasicTaskSeg(SegmentCreatedDate, task.CreatedDate.Format(DateLayout)))
 	}
 
-	segs = append(segs, newBasicTaskSeg(TaskSegment_TodoText, task.Todo))
+	segs = append(segs, newBasicTaskSeg(SegmentTodoText, task.Todo))
 
 	if len(task.Contexts) > 0 {
 		sort.Strings(task.Contexts)
 		for _, context := range task.Contexts {
-			segs = append(segs, newTaskSeg(TaskSegment_Context, context, fmt.Sprintf("@%s", context)))
+			segs = append(segs, newTaskSeg(SegmentContext, context, fmt.Sprintf("@%s", context)))
 		}
 	}
 
 	if len(task.Projects) > 0 {
 		sort.Strings(task.Projects)
 		for _, project := range task.Projects {
-			segs = append(segs, newTaskSeg(TaskSegment_Project, project, fmt.Sprintf("+%s", project)))
+			segs = append(segs, newTaskSeg(SegmentProject, project, fmt.Sprintf("+%s", project)))
 		}
 	}
 
@@ -87,7 +87,7 @@ func (task *Task) Segments() []*TaskSegment {
 		for _, key := range keys {
 			val := task.AdditionalTags[key]
 			segs = append(segs, &TaskSegment{
-				Type:      TaskSegment_Tag,
+				Type:      SegmentTag,
 				Originals: []string{key, val},
 				Display:   fmt.Sprintf("%s:%s", key, val),
 			})
@@ -95,7 +95,7 @@ func (task *Task) Segments() []*TaskSegment {
 	}
 
 	if task.HasDueDate() {
-		segs = append(segs, newBasicTaskSeg(TaskSegment_DueDate, fmt.Sprintf("due:%s", task.DueDate.Format(DateLayout))))
+		segs = append(segs, newBasicTaskSeg(SegmentDueDate, fmt.Sprintf("due:%s", task.DueDate.Format(DateLayout))))
 	}
 	return segs
 }
