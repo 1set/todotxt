@@ -58,9 +58,9 @@ func (tasklist *TaskList) GetTask(id int) (*Task, error) {
 	return nil, errors.New("task not found")
 }
 
-// RemoveTaskById removes any Task with given Task 'id' from the TaskList.
+// RemoveTaskByID removes any Task with given Task 'id' from the TaskList.
 // Returns an error if no Task was removed.
-func (tasklist *TaskList) RemoveTaskById(id int) error {
+func (tasklist *TaskList) RemoveTaskByID(id int) error {
 	var newList TaskList
 
 	found := false

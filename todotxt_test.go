@@ -383,13 +383,13 @@ func TestTaskListUpdateTask(t *testing.T) {
 	}
 }
 
-func TestTaskListRemoveTaskById(t *testing.T) {
+func TestTaskListRemoveTaskByID(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
 
 	taskID := 10
-	if err := testTasklist.RemoveTaskById(taskID); err != nil {
+	if err := testTasklist.RemoveTaskByID(taskID); err != nil {
 		t.Error(err)
 	}
 	testExpected = 62
@@ -403,7 +403,7 @@ func TestTaskListRemoveTaskById(t *testing.T) {
 	}
 
 	taskID = 27
-	if err := testTasklist.RemoveTaskById(taskID); err != nil {
+	if err := testTasklist.RemoveTaskByID(taskID); err != nil {
 		t.Error(err)
 	}
 	testExpected = 61
@@ -417,7 +417,7 @@ func TestTaskListRemoveTaskById(t *testing.T) {
 	}
 
 	taskID = 99
-	if err := testTasklist.RemoveTaskById(taskID); err == nil {
+	if err := testTasklist.RemoveTaskByID(taskID); err == nil {
 		t.Errorf("Expected no Task to be found for removal")
 	}
 }

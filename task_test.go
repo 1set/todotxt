@@ -181,7 +181,7 @@ func TestParseTask(t *testing.T) {
 	}
 }
 
-func TestTaskId(t *testing.T) {
+func TestTaskID(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 
 	taskID := 1
