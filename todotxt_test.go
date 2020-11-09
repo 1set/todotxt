@@ -120,6 +120,10 @@ func TestWriteFile(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected TaskList to be [%s], but got [%s]", testExpected, testGot)
 	}
+
+	if err = WriteToFile(&testTasklist, os.Stdin); err == nil {
+		t.Errorf("Expected WriteToFile to fail for Stdin, but it didn't")
+	}
 }
 
 func TestTaskListWriteFile(t *testing.T) {
