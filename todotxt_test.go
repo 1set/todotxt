@@ -171,7 +171,7 @@ func TestWriteFilename(t *testing.T) {
 	if testTasklist, err = LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
-	if err = WriteToFilename(&testTasklist, testOutput); err != nil {
+	if err = WriteToPath(&testTasklist, testOutput); err != nil {
 		t.Fatal(err)
 	}
 	if testTasklist, err = LoadFromPath(testOutput); err != nil {
@@ -196,7 +196,7 @@ func TestTaskListWriteFilename(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
-	if err := testTasklist.WriteToFilename(testOutput); err != nil {
+	if err := testTasklist.WriteToPath(testOutput); err != nil {
 		t.Fatal(err)
 	}
 	if err := testTasklist.LoadFromPath(testOutput); err != nil {
@@ -368,7 +368,7 @@ func TestTaskListUpdateTask(t *testing.T) {
 	testGot := task
 
 	os.Remove(testOutput)
-	if err := testTasklist.WriteToFilename(testOutput); err != nil {
+	if err := testTasklist.WriteToPath(testOutput); err != nil {
 		t.Fatal(err)
 	}
 	if err := testTasklist.LoadFromPath(testOutput); err != nil {

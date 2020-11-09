@@ -167,8 +167,8 @@ func (tasklist *TaskList) LoadFromPath(filename string) error {
 	return tasklist.LoadFromFile(file)
 }
 
-// WriteToFilename writes a TaskList to the specified file (most likely called "todo.txt").
-func (tasklist *TaskList) WriteToFilename(filename string) error {
+// WriteToPath writes a TaskList to the specified file (most likely called "todo.txt").
+func (tasklist *TaskList) WriteToPath(filename string) error {
 	return ioutil.WriteFile(filename, []byte(tasklist.String()), 0640)
 }
 
@@ -199,7 +199,7 @@ func LoadFromPath(filename string) (TaskList, error) {
 	return tasklist, nil
 }
 
-// WriteToFilename writes a TaskList to the specified file (most likely called "todo.txt").
-func WriteToFilename(tasklist *TaskList, filename string) error {
-	return tasklist.WriteToFilename(filename)
+// WriteToPath writes a TaskList to the specified file (most likely called "todo.txt").
+func WriteToPath(tasklist *TaskList, filename string) error {
+	return tasklist.WriteToPath(filename)
 }
