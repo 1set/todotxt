@@ -8,27 +8,27 @@ import (
 
 // Flags for defining sort element and order.
 const (
-	SORT_PRIORITY_ASC = iota + 1
-	SORT_PRIORITY_DESC
-	SORT_CREATED_DATE_ASC
-	SORT_CREATED_DATE_DESC
-	SORT_COMPLETED_DATE_ASC
-	SORT_COMPLETED_DATE_DESC
-	SORT_DUE_DATE_ASC
-	SORT_DUE_DATE_DESC
+	SortPriorityAsc = iota + 1
+	SortPriorityDesc
+	SortCreatedDateAsc
+	SortCreatedDateDesc
+	SortCompletedDateAsc
+	SortCompletedDateDesc
+	SortDueDateAsc
+	SortDueDateDesc
 )
 
 // Sort allows a TaskList to be sorted by certain predefined fields.
 // See constants SORT_* for fields and sort order.
 func (tasklist *TaskList) Sort(sortFlag int) error {
 	switch sortFlag {
-	case SORT_PRIORITY_ASC, SORT_PRIORITY_DESC:
+	case SortPriorityAsc, SortPriorityDesc:
 		tasklist.sortByPriority(sortFlag)
-	case SORT_CREATED_DATE_ASC, SORT_CREATED_DATE_DESC:
+	case SortCreatedDateAsc, SortCreatedDateDesc:
 		tasklist.sortByCreatedDate(sortFlag)
-	case SORT_COMPLETED_DATE_ASC, SORT_COMPLETED_DATE_DESC:
+	case SortCompletedDateAsc, SortCompletedDateDesc:
 		tasklist.sortByCompletedDate(sortFlag)
-	case SORT_DUE_DATE_ASC, SORT_DUE_DATE_DESC:
+	case SortDueDateAsc, SortDueDateDesc:
 		tasklist.sortByDueDate(sortFlag)
 	default:
 		return errors.New("unrecognized sort option")
@@ -64,7 +64,7 @@ func (tasklist *TaskList) sortBy(by func(t1, t2 *Task) bool) *TaskList {
 
 func (tasklist *TaskList) sortByPriority(order int) *TaskList {
 	tasklist.sortBy(func(t1, t2 *Task) bool {
-		if order == SORT_PRIORITY_ASC { // ASC
+		if order == SortPriorityAsc { // ASC
 			if t1.HasPriority() && t2.HasPriority() {
 				return t1.Priority < t2.Priority
 			}
@@ -95,21 +95,21 @@ func sortByDate(asc bool, hasDate1, hasDate2 bool, date1, date2 time.Time) bool 
 
 func (tasklist *TaskList) sortByCreatedDate(order int) *TaskList {
 	tasklist.sortBy(func(t1, t2 *Task) bool {
-		return sortByDate(order == SORT_CREATED_DATE_ASC, t1.HasCreatedDate(), t2.HasCreatedDate(), t1.CreatedDate, t2.CreatedDate)
+		return sortByDate(order == SortCreatedDateAsc, t1.HasCreatedDate(), t2.HasCreatedDate(), t1.CreatedDate, t2.CreatedDate)
 	})
 	return tasklist
 }
 
 func (tasklist *TaskList) sortByCompletedDate(order int) *TaskList {
 	tasklist.sortBy(func(t1, t2 *Task) bool {
-		return sortByDate(order == SORT_COMPLETED_DATE_ASC, t1.HasCompletedDate(), t2.HasCompletedDate(), t1.CompletedDate, t2.CompletedDate)
+		return sortByDate(order == SortCompletedDateAsc, t1.HasCompletedDate(), t2.HasCompletedDate(), t1.CompletedDate, t2.CompletedDate)
 	})
 	return tasklist
 }
 
 func (tasklist *TaskList) sortByDueDate(order int) *TaskList {
 	tasklist.sortBy(func(t1, t2 *Task) bool {
-		return sortByDate(order == SORT_DUE_DATE_ASC, t1.HasDueDate(), t2.HasDueDate(), t1.DueDate, t2.DueDate)
+		return sortByDate(order == SortDueDateAsc, t1.HasDueDate(), t2.HasDueDate(), t1.DueDate, t2.DueDate)
 	})
 	return tasklist
 }
