@@ -50,13 +50,8 @@ func isSameTaskSegmentList(s1, s2 []*TaskSegment) bool {
 		if a.Display != b.Display {
 			return false
 		}
-		if len(a.Originals) != len(b.Originals) {
+		if !compareSlices(a.Originals, b.Originals) {
 			return false
-		}
-		for j := 0; j < len(a.Originals); j++ {
-			if a.Originals[j] != b.Originals[j] {
-				return false
-			}
 		}
 	}
 	return true
