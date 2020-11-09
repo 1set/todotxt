@@ -182,7 +182,7 @@ func TestParseTask(t *testing.T) {
 }
 
 func TestTaskId(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 
 	taskId := 1
 	testGot = testTasklist[taskId-1].Id
@@ -204,7 +204,7 @@ func TestTaskId(t *testing.T) {
 }
 
 func TestTaskString(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 1
 
 	testExpected = "2013-02-22 Pick up milk @GroceryStore"
@@ -243,7 +243,7 @@ func TestTaskString(t *testing.T) {
 }
 
 func TestTaskPriority(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 6
 
 	testExpected = "B"
@@ -273,7 +273,7 @@ func TestTaskPriority(t *testing.T) {
 }
 
 func TestTaskCreatedDate(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 10
 
 	testExpected, err := time.Parse(DateLayout, "2012-01-30")
@@ -332,7 +332,7 @@ func TestTaskCreatedDate(t *testing.T) {
 }
 
 func TestTaskContexts(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 16
 
 	testExpected = []string{"Call", "Phone"}
@@ -364,7 +364,7 @@ func TestTaskContexts(t *testing.T) {
 }
 
 func TestTasksProjects(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 20
 
 	testExpected = []string{"Gardening", "Improving", "Planning", "Relaxing-Work"}
@@ -389,7 +389,7 @@ func TestTasksProjects(t *testing.T) {
 }
 
 func TestTaskDueDate(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 23
 
 	testExpected, err := time.Parse(DateLayout, "2014-02-17")
@@ -408,7 +408,7 @@ func TestTaskDueDate(t *testing.T) {
 }
 
 func TestTaskAddonTags(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 25
 
 	testExpected = map[string]string{"Level": "5", "private": "false"}
@@ -444,7 +444,7 @@ func TestTaskAddonTags(t *testing.T) {
 }
 
 func TestTaskCompleted(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 29
 
 	testExpected = true
@@ -483,7 +483,7 @@ func TestTaskCompleted(t *testing.T) {
 }
 
 func TestTaskCompletedDate(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 34
 
 	if testTasklist[taskId-1].HasCompletedDate() {
@@ -532,7 +532,7 @@ func TestTaskCompletedDate(t *testing.T) {
 }
 
 func TestTaskIsOverdue(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 40
 
 	testGot = testTasklist[taskId-1].IsOverdue()
@@ -572,7 +572,7 @@ func TestTaskIsOverdue(t *testing.T) {
 }
 
 func TestTaskComplete(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 44
 
 	// first 4 tasks should all match the same tests
@@ -630,7 +630,7 @@ func TestTaskComplete(t *testing.T) {
 }
 
 func TestTaskReopen(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputTask)
+	testTasklist.LoadFromPath(testInputTask)
 	taskId := 49
 
 	// the first 2 tasks should match the same tests

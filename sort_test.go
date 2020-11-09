@@ -9,7 +9,7 @@ var (
 )
 
 func TestTaskSortByPriority(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputSort)
+	testTasklist.LoadFromPath(testInputSort)
 	taskId := 0
 
 	testTasklist = testTasklist[taskId : taskId+6]
@@ -96,7 +96,7 @@ func TestTaskSortByPriority(t *testing.T) {
 }
 
 func TestTaskSortByCreatedDate(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputSort)
+	testTasklist.LoadFromPath(testInputSort)
 	taskId := 6
 
 	testTasklist = testTasklist[taskId : taskId+5]
@@ -171,7 +171,7 @@ func TestTaskSortByCreatedDate(t *testing.T) {
 }
 
 func TestTaskSortByCompletedDate(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputSort)
+	testTasklist.LoadFromPath(testInputSort)
 	taskId := 11
 
 	testTasklist = testTasklist[taskId : taskId+6]
@@ -258,7 +258,7 @@ func TestTaskSortByCompletedDate(t *testing.T) {
 }
 
 func TestTaskSortByDueDate(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputSort)
+	testTasklist.LoadFromPath(testInputSort)
 	taskId := 17
 
 	testTasklist = testTasklist[taskId : taskId+4]
@@ -321,7 +321,7 @@ func TestTaskSortByDueDate(t *testing.T) {
 }
 
 func TestTaskSortError(t *testing.T) {
-	testTasklist.LoadFromFilename(testInputSort)
+	testTasklist.LoadFromPath(testInputSort)
 
 	if err := testTasklist.Sort(123); err == nil {
 		t.Errorf("Expected Sort() to fail because of unrecognized sort option, but it didn't!")
