@@ -154,10 +154,10 @@ func (tasklist *TaskList) WriteToFile(file *os.File) error {
 	return writer.Flush()
 }
 
-// LoadFromFilename loads a TaskList from a file (most likely called "todo.txt").
+// LoadFromPath loads a TaskList from a file (most likely called "todo.txt").
 //
 // Note: This will clear the current TaskList and overwrite it's contents with whatever is in the file.
-func (tasklist *TaskList) LoadFromFilename(filename string) error {
+func (tasklist *TaskList) LoadFromPath(filename string) error {
 	file, err := os.Open(filename)
 	if err != nil {
 		return err
@@ -167,8 +167,8 @@ func (tasklist *TaskList) LoadFromFilename(filename string) error {
 	return tasklist.LoadFromFile(file)
 }
 
-// WriteToFilename writes a TaskList to the specified file (most likely called "todo.txt").
-func (tasklist *TaskList) WriteToFilename(filename string) error {
+// WriteToPath writes a TaskList to the specified file (most likely called "todo.txt").
+func (tasklist *TaskList) WriteToPath(filename string) error {
 	return ioutil.WriteFile(filename, []byte(tasklist.String()), 0640)
 }
 
@@ -190,16 +190,16 @@ func WriteToFile(tasklist *TaskList, file *os.File) error {
 	return tasklist.WriteToFile(file)
 }
 
-// LoadFromFilename loads and returns a TaskList from a file (most likely called "todo.txt").
-func LoadFromFilename(filename string) (TaskList, error) {
+// LoadFromPath loads and returns a TaskList from a file (most likely called "todo.txt").
+func LoadFromPath(filename string) (TaskList, error) {
 	tasklist := TaskList{}
-	if err := tasklist.LoadFromFilename(filename); err != nil {
+	if err := tasklist.LoadFromPath(filename); err != nil {
 		return nil, err
 	}
 	return tasklist, nil
 }
 
-// WriteToFilename writes a TaskList to the specified file (most likely called "todo.txt").
-func WriteToFilename(tasklist *TaskList, filename string) error {
-	return tasklist.WriteToFilename(filename)
+// WriteToPath writes a TaskList to the specified file (most likely called "todo.txt").
+func WriteToPath(tasklist *TaskList, filename string) error {
+	return tasklist.WriteToPath(filename)
 }

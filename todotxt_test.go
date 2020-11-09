@@ -20,14 +20,14 @@ var (
 	testGot                             interface{}
 )
 
-func BenchmarkLoadFromFilename(b *testing.B) {
+func BenchmarkLoadFromPath(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_, _ = LoadFromFilename(testInputTasklist)
+		_, _ = LoadFromPath(testInputTasklist)
 	}
 }
 
 func BenchmarkTaskList_String(b *testing.B) {
-	taskList, _ := LoadFromFilename(testInputTasklist)
+	taskList, _ := LoadFromPath(testInputTasklist)
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_ = taskList.String()
@@ -60,8 +60,8 @@ func TestLoadFromFile(t *testing.T) {
 	}
 }
 
-func TestLoadFromFilename(t *testing.T) {
-	if testTasklist, err := LoadFromFilename(testInputTasklist); err != nil {
+func TestLoadFromPath(t *testing.T) {
+	if testTasklist, err := LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	} else {
 		data, err := ioutil.ReadFile(testExpectedOutput)
@@ -75,8 +75,8 @@ func TestLoadFromFilename(t *testing.T) {
 		}
 	}
 
-	if testTasklist, err := LoadFromFilename("some_file_that_does_not_exists.txt"); testTasklist != nil || err == nil {
-		t.Errorf("Expected LoadFromFilename to fail, but got TaskList back: [%s]", testTasklist)
+	if testTasklist, err := LoadFromPath("some_file_that_does_not_exists.txt"); testTasklist != nil || err == nil {
+		t.Errorf("Expected LoadFromPath to fail, but got TaskList back: [%s]", testTasklist)
 	}
 }
 
@@ -168,13 +168,13 @@ func TestWriteFilename(t *testing.T) {
 	os.Remove(testOutput)
 	var err error
 
-	if testTasklist, err = LoadFromFilename(testInputTasklist); err != nil {
+	if testTasklist, err = LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
-	if err = WriteToFilename(&testTasklist, testOutput); err != nil {
+	if err = WriteToPath(&testTasklist, testOutput); err != nil {
 		t.Fatal(err)
 	}
-	if testTasklist, err = LoadFromFilename(testOutput); err != nil {
+	if testTasklist, err = LoadFromPath(testOutput); err != nil {
 		t.Fatal(err)
 	}
 
@@ -193,13 +193,13 @@ func TestTaskListWriteFilename(t *testing.T) {
 	os.Remove(testOutput)
 	testTasklist := TaskList{}
 
-	if err := testTasklist.LoadFromFilename(testInputTasklist); err != nil {
+	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
-	if err := testTasklist.WriteToFilename(testOutput); err != nil {
+	if err := testTasklist.WriteToPath(testOutput); err != nil {
 		t.Fatal(err)
 	}
-	if err := testTasklist.LoadFromFilename(testOutput); err != nil {
+	if err := testTasklist.LoadFromPath(testOutput); err != nil {
 		t.Fatal(err)
 	}
 
@@ -225,7 +225,7 @@ func TestNewTaskList(t *testing.T) {
 }
 
 func TestTaskListCount(t *testing.T) {
-	if err := testTasklist.LoadFromFilename(testInputTasklist); err != nil {
+	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
 
@@ -237,7 +237,7 @@ func TestTaskListCount(t *testing.T) {
 }
 
 func TestTaskListAddTask(t *testing.T) {
-	if err := testTasklist.LoadFromFilename(testInputTasklist); err != nil {
+	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
 
@@ -316,7 +316,7 @@ func TestTaskListAddTask(t *testing.T) {
 }
 
 func TestTaskListGetTask(t *testing.T) {
-	if err := testTasklist.LoadFromFilename(testInputTasklist); err != nil {
+	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
 
@@ -338,7 +338,7 @@ func TestTaskListGetTask(t *testing.T) {
 }
 
 func TestTaskListUpdateTask(t *testing.T) {
-	if err := testTasklist.LoadFromFilename(testInputTasklist); err != nil {
+	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
 
@@ -368,10 +368,10 @@ func TestTaskListUpdateTask(t *testing.T) {
 	testGot := task
 
 	os.Remove(testOutput)
-	if err := testTasklist.WriteToFilename(testOutput); err != nil {
+	if err := testTasklist.WriteToPath(testOutput); err != nil {
 		t.Fatal(err)
 	}
-	if err := testTasklist.LoadFromFilename(testOutput); err != nil {
+	if err := testTasklist.LoadFromPath(testOutput); err != nil {
 		t.Fatal(err)
 	}
 	testExpected, err := testTasklist.GetTask(taskId)
@@ -384,7 +384,7 @@ func TestTaskListUpdateTask(t *testing.T) {
 }
 
 func TestTaskListRemoveTaskById(t *testing.T) {
-	if err := testTasklist.LoadFromFilename(testInputTasklist); err != nil {
+	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
 
@@ -423,7 +423,7 @@ func TestTaskListRemoveTaskById(t *testing.T) {
 }
 
 func TestTaskListRemoveTask(t *testing.T) {
-	if err := testTasklist.LoadFromFilename(testInputTasklist); err != nil {
+	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
 
@@ -471,7 +471,7 @@ func TestTaskListRemoveTask(t *testing.T) {
 }
 
 func TestTaskListFilter(t *testing.T) {
-	if err := testTasklist.LoadFromFilename(testInputTasklist); err != nil {
+	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)
 	}
 
@@ -503,27 +503,27 @@ func TestTaskListFilter(t *testing.T) {
 }
 
 func TestTaskListReadErrors(t *testing.T) {
-	if testTasklist, err := LoadFromFilename(testInputTasklistCreatedDateError); testTasklist != nil || err == nil {
-		t.Errorf("Expected LoadFromFilename to fail because of invalid created date, but got TaskList back: [%s]", testTasklist)
+	if testTasklist, err := LoadFromPath(testInputTasklistCreatedDateError); testTasklist != nil || err == nil {
+		t.Errorf("Expected LoadFromPath to fail because of invalid created date, but got TaskList back: [%s]", testTasklist)
 	} else if err.Error() != `parsing time "2013-13-01": month out of range` {
 		t.Error(err)
 	}
 
-	if testTasklist, err := LoadFromFilename(testInputTasklistDueDateError); testTasklist != nil || err == nil {
-		t.Errorf("Expected LoadFromFilename to fail because of invalid due date, but got TaskList back: [%s]", testTasklist)
+	if testTasklist, err := LoadFromPath(testInputTasklistDueDateError); testTasklist != nil || err == nil {
+		t.Errorf("Expected LoadFromPath to fail because of invalid due date, but got TaskList back: [%s]", testTasklist)
 	} else if err.Error() != `parsing time "2014-02-32": day out of range` {
 		t.Error(err)
 	}
 
-	if testTasklist, err := LoadFromFilename(testInputTasklistCompletedDateError); testTasklist != nil || err == nil {
-		t.Errorf("Expected LoadFromFilename to fail because of invalid completed date, but got TaskList back: [%s]", testTasklist)
+	if testTasklist, err := LoadFromPath(testInputTasklistCompletedDateError); testTasklist != nil || err == nil {
+		t.Errorf("Expected LoadFromPath to fail because of invalid completed date, but got TaskList back: [%s]", testTasklist)
 	} else if err.Error() != `parsing time "2014-25-04": month out of range` {
 		t.Error(err)
 	}
 
 	// really silly test
-	if testTasklist, err := LoadFromFilename(testInputTasklistScannerError); testTasklist != nil || err == nil {
-		t.Errorf("Expected LoadFromFilename to fail because of invalid file, but got TaskList back: [%s]", testTasklist)
+	if testTasklist, err := LoadFromPath(testInputTasklistScannerError); testTasklist != nil || err == nil {
+		t.Errorf("Expected LoadFromPath to fail because of invalid file, but got TaskList back: [%s]", testTasklist)
 	} else if err.Error() != `bufio.Scanner: token too long` {
 		t.Error(err)
 	}

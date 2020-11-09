@@ -7,8 +7,8 @@ import (
 	"log"
 )
 
-func ExampleLoadFromFilename() {
-	if tasklist, err := LoadFromFilename("testdata/todo.txt"); err != nil {
+func ExampleLoadFromPath() {
+	if tasklist, err := LoadFromPath("testdata/todo.txt"); err != nil {
 		log.Fatal(err)
 	} else {
 		fmt.Print(tasklist) // String representation of TaskList works as expected.
@@ -25,12 +25,12 @@ func ExampleLoadFromFilename() {
 	// x Download Todo.txt mobile app @Phone
 }
 
-func ExampleTaskList_LoadFromFilename() {
+func ExampleTaskList_LoadFromPath() {
 	var tasklist TaskList
 
 	// This will overwrite whatever was in the tasklist before.
 	// Irrelevant here since the list is still empty.
-	if err := tasklist.LoadFromFilename("testdata/todo.txt"); err != nil {
+	if err := tasklist.LoadFromPath("testdata/todo.txt"); err != nil {
 		log.Fatal(err)
 	}
 
