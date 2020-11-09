@@ -229,6 +229,11 @@ func (task *Task) HasCompletedDate() bool {
 	return !task.CompletedDate.IsZero() && task.Completed
 }
 
+// IsCompleted returns true if the task has already been completed.
+func (task *Task) IsCompleted() bool {
+	return task.Completed
+}
+
 // Complete sets Task.Completed to 'true' if the task was not already completed.
 // Also sets Task.CompletedDate to time.Now()
 func (task *Task) Complete() {

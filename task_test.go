@@ -443,6 +443,29 @@ func TestTaskAddonTags(t *testing.T) {
 	}
 }
 
+func TestTaskIsCompleted(t *testing.T) {
+	testTasklist.LoadFromPath(testInputTask)
+	var (
+		taskId   int
+		testGot1 bool
+		testGot2 bool
+	)
+
+	taskId = 31
+	testGot1 = testTasklist[taskId-1].Completed
+	testGot2 = testTasklist[taskId-1].IsCompleted()
+	if testGot1 != testGot2 {
+		t.Errorf("Expected Task[%d] to be completed '%v', but got '%v'", taskId, testGot1, testGot2)
+	}
+
+	taskId = 32
+	testGot1 = testTasklist[taskId-1].Completed
+	testGot2 = testTasklist[taskId-1].IsCompleted()
+	if testGot1 != testGot2 {
+		t.Errorf("Expected Task[%d] to be not completed '%v', but got '%v'", taskId, testGot1, testGot2)
+	}
+}
+
 func TestTaskCompleted(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 	taskId := 29
