@@ -724,36 +724,3 @@ func TestTaskReopen(t *testing.T) {
 		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 	}
 }
-
-func compareSlices(list1 []string, list2 []string) bool {
-	if len(list1) != len(list2) {
-		return false
-	}
-
-	for i := range list1 {
-		if list1[i] != list2[i] {
-			return false
-		}
-	}
-
-	return true
-}
-
-func compareMaps(map1 map[string]string, map2 map[string]string) bool {
-	if len(map1) != len(map2) {
-		return false
-	}
-
-	compare := func(map1 map[string]string, map2 map[string]string) bool {
-		for key, value := range map1 {
-			if value2, found := map2[key]; !found {
-				return false
-			} else if value != value2 {
-				return false
-			}
-		}
-		return true
-	}
-
-	return compare(map1, map2) && compare(map2, map1)
-}
