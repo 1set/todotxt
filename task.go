@@ -27,7 +27,7 @@ var (
 
 // Task represents a todo.txt task entry.
 type Task struct {
-	Id             int    // Internal task id.
+	ID             int    // Internal task id.
 	Original       string // Original raw task text.
 	Todo           string // Todo part of task text.
 	Priority       string
@@ -227,6 +227,11 @@ func (task *Task) HasDueDate() bool {
 // HasCompletedDate returns true if the task has a completed date.
 func (task *Task) HasCompletedDate() bool {
 	return !task.CompletedDate.IsZero() && task.Completed
+}
+
+// IsCompleted returns true if the task has already been completed.
+func (task *Task) IsCompleted() bool {
+	return task.Completed
 }
 
 // Complete sets Task.Completed to 'true' if the task was not already completed.

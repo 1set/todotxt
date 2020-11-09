@@ -10,9 +10,9 @@ var (
 
 func TestTaskSortByPriority(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
-	taskId := 0
+	taskID := 0
 
-	testTasklist = testTasklist[taskId : taskId+6]
+	testTasklist = testTasklist[taskID : taskID+6]
 
 	if err := testTasklist.Sort(SortPriorityAsc); err != nil {
 		t.Fatal(err)
@@ -97,9 +97,9 @@ func TestTaskSortByPriority(t *testing.T) {
 
 func TestTaskSortByCreatedDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
-	taskId := 6
+	taskID := 6
 
-	testTasklist = testTasklist[taskId : taskId+5]
+	testTasklist = testTasklist[taskID : taskID+5]
 
 	if err := testTasklist.Sort(SortCreatedDateAsc); err != nil {
 		t.Fatal(err)
@@ -172,9 +172,9 @@ func TestTaskSortByCreatedDate(t *testing.T) {
 
 func TestTaskSortByCompletedDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
-	taskId := 11
+	taskID := 11
 
-	testTasklist = testTasklist[taskId : taskId+6]
+	testTasklist = testTasklist[taskID : taskID+6]
 
 	if err := testTasklist.Sort(SortCompletedDateAsc); err != nil {
 		t.Fatal(err)
@@ -259,9 +259,9 @@ func TestTaskSortByCompletedDate(t *testing.T) {
 
 func TestTaskSortByDueDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
-	taskId := 17
+	taskID := 17
 
-	testTasklist = testTasklist[taskId : taskId+4]
+	testTasklist = testTasklist[taskID : taskID+4]
 
 	if err := testTasklist.Sort(SortDueDateAsc); err != nil {
 		t.Fatal(err)
