@@ -30,9 +30,9 @@ func TestNewTask(t *testing.T) {
 	task := NewTask()
 
 	testExpected = 0
-	testGot = task.Id
+	testGot = task.ID
 	if testGot != testExpected {
-		t.Errorf("Expected new Task to have default Id [%d], but got [%d]", testExpected, testGot)
+		t.Errorf("Expected new Task to have default ID [%d], but got [%d]", testExpected, testGot)
 	}
 
 	testExpected = ""
@@ -109,9 +109,9 @@ func TestParseTask(t *testing.T) {
 	}
 
 	testExpected = 0
-	testGot = task.Id
+	testGot = task.ID
 	if testGot != testExpected {
-		t.Errorf("Expected Task to have default Id [%d], but got [%d]", testExpected, testGot)
+		t.Errorf("Expected Task to have default ID [%d], but got [%d]", testExpected, testGot)
 	}
 
 	testExpected = "x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt"
@@ -185,21 +185,21 @@ func TestTaskId(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 
 	taskId := 1
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != taskId {
-		t.Errorf("Expected Task[%d] to have Id [%d], but got [%d]", taskId, taskId, testGot)
+		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskId, taskId, testGot)
 	}
 
 	taskId = 5
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != taskId {
-		t.Errorf("Expected Task[%d] to have Id [%d], but got [%d]", taskId, taskId, testGot)
+		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskId, taskId, testGot)
 	}
 
 	taskId = 27
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != taskId {
-		t.Errorf("Expected Task[%d] to have Id [%d], but got [%d]", taskId, taskId, testGot)
+		t.Errorf("Expected Task[%d] to have ID [%d], but got [%d]", taskId, taskId, testGot)
 	}
 }
 

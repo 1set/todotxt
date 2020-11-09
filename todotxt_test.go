@@ -258,7 +258,7 @@ func TestTaskListAddTask(t *testing.T) {
 		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
 	}
 	testExpected = 64
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%d], but got [%d]", taskId, testExpected, testGot)
 	}
@@ -277,7 +277,7 @@ func TestTaskListAddTask(t *testing.T) {
 		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
 	}
 	testExpected = 65
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%d], but got [%d]", taskId, testExpected, testGot)
 	}
@@ -297,19 +297,19 @@ func TestTaskListAddTask(t *testing.T) {
 		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
 	}
 	testExpected = 66
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%d], but got [%d]", taskId, testExpected, testGot)
 	}
 	taskId++
 
-	// add task with explicit Id, AddTask() should ignore this!
+	// add task with explicit ID, AddTask() should ignore this!
 	testTasklist.AddTask(&Task{
-		Id: 101,
+		ID: 101,
 	})
 
 	testExpected = 67
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%d], but got [%d]", taskId, testExpected, testGot)
 	}
@@ -331,7 +331,7 @@ func TestTaskListGetTask(t *testing.T) {
 		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
 	}
 	testExpected = 3
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%d], but got [%d]", taskId, testExpected, testGot)
 	}
@@ -353,7 +353,7 @@ func TestTaskListUpdateTask(t *testing.T) {
 		t.Errorf("Expected Task[%d] to be [%s], but got [%s]", taskId, testExpected, testGot)
 	}
 	testExpected = 3
-	testGot = testTasklist[taskId-1].Id
+	testGot = testTasklist[taskId-1].ID
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to be [%d], but got [%d]", taskId, testExpected, testGot)
 	}

@@ -34,15 +34,15 @@ func (tasklist TaskList) String() (text string) {
 	return text
 }
 
-// AddTask appends a Task to the current TaskList and takes care to set the Task.Id correctly, modifying the Task by the given pointer!
+// AddTask appends a Task to the current TaskList and takes care to set the Task.ID correctly, modifying the Task by the given pointer!
 func (tasklist *TaskList) AddTask(task *Task) {
-	task.Id = 0
+	task.ID = 0
 	for _, t := range *tasklist {
-		if t.Id > task.Id {
-			task.Id = t.Id
+		if t.ID > task.ID {
+			task.ID = t.ID
 		}
 	}
-	task.Id++
+	task.ID++
 
 	*tasklist = append(*tasklist, *task)
 }
@@ -51,7 +51,7 @@ func (tasklist *TaskList) AddTask(task *Task) {
 // Returns an error if Task could not be found.
 func (tasklist *TaskList) GetTask(id int) (*Task, error) {
 	for i := range *tasklist {
-		if ([]Task(*tasklist))[i].Id == id {
+		if ([]Task(*tasklist))[i].ID == id {
 			return &([]Task(*tasklist))[i], nil
 		}
 	}
@@ -65,7 +65,7 @@ func (tasklist *TaskList) RemoveTaskById(id int) error {
 
 	found := false
 	for _, t := range *tasklist {
-		if t.Id != id {
+		if t.ID != id {
 			newList = append(newList, t)
 		} else {
 			found = true
@@ -134,7 +134,7 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 		if err != nil {
 			return err
 		}
-		task.Id = taskId
+		task.ID = taskId
 
 		*tasklist = append(*tasklist, *task)
 		taskId++
