@@ -70,9 +70,8 @@ func (tasklist *TaskList) sortByTaskID(order int) *TaskList {
 	tasklist.sortBy(func(t1, t2 *Task) bool {
 		if t1.ID < t2.ID {
 			return order == SortTaskIDAsc
-		} else {
-			return order == SortTaskIDDesc
 		}
+		return order == SortTaskIDDesc
 	})
 	return tasklist
 }

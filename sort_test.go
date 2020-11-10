@@ -397,40 +397,6 @@ func TestTaskSortByTaskID(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
 	}
-
-	if err := testTasklist.Sort(SortTaskIDAsc); err != nil {
-		t.Fatal(err)
-	}
-
-	testExpected = "(B) Task 1"
-	testGot = testTasklist[0].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "(A) Task 2"
-	testGot = testTasklist[1].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "Task 3 due:2020-11-11"
-	testGot = testTasklist[2].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "(C) Task 4 due:2020-12-12"
-	testGot = testTasklist[3].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x Task 5"
-	testGot = testTasklist[4].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
 }
 
 func TestTaskSortError(t *testing.T) {
