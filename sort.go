@@ -8,7 +8,9 @@ import (
 
 // Flags for defining sort element and order.
 const (
-	SortPriorityAsc = iota + 1
+	SortTaskIDAsc = iota + 1
+	SortTaskIDDesc
+	SortPriorityAsc
 	SortPriorityDesc
 	SortCreatedDateAsc
 	SortCreatedDateDesc
@@ -19,9 +21,11 @@ const (
 )
 
 // Sort allows a TaskList to be sorted by certain predefined fields.
-// See constants SORT_* for fields and sort order.
+// See constants Sort* for fields and sort order.
 func (tasklist *TaskList) Sort(sortFlag int) error {
 	switch sortFlag {
+	case SortTaskIDAsc, SortTaskIDDesc:
+		tasklist.sortByTaskID(sortFlag)
 	case SortPriorityAsc, SortPriorityDesc:
 		tasklist.sortByPriority(sortFlag)
 	case SortCreatedDateAsc, SortCreatedDateDesc:
@@ -58,7 +62,17 @@ func (tasklist *TaskList) sortBy(by func(t1, t2 *Task) bool) *TaskList {
 		tasklists: *tasklist,
 		by:        by,
 	}
-	sort.Sort(ts)
+	sort.Stable(ts)
+	return tasklist
+}
+
+func (tasklist *TaskList) sortByTaskID(order int) *TaskList {
+	tasklist.sortBy(func(t1, t2 *Task) bool {
+		if t1.ID < t2.ID {
+			return order == SortTaskIDAsc
+		}
+		return order == SortTaskIDDesc
+	})
 	return tasklist
 }
 

@@ -26,3 +26,10 @@ x 2014-01-04 2014-01-01 Create some more golang library test cases @Go +go-todot
 x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt
 x 2014-01-03 due:2014-01-05 Create golang library @Go +go-todotxt 
 x (C) 2014-01-01 Create golang library documentation @Go due:2014-01-12 +go-todotxt 
+
+# Sort Task ID
+(B) Task 1
+(A) Task 2
+Task 3 due:2020-11-11
+(C) Task 4 due:2020-12-12
+x Task 5
