@@ -31,5 +31,5 @@ x (C) 2014-01-01 Create golang library documentation @Go due:2014-01-12 +go-todo
 (B) Task 1
 (A) Task 2
 Task 3 due:2020-11-11
-Task 4 due:2020-12-12
+(C) Task 4 due:2020-12-12
 x Task 5
