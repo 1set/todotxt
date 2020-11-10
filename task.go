@@ -186,7 +186,7 @@ func ParseTask(text string) (*Task, error) {
 				} else {
 					return nil, err
 				}
-			} else if key != emptyStr && value != emptyStr {
+			} else if isNotEmpty(key) && isNotEmpty(value) {
 				tags[key] = value
 			}
 		}
@@ -208,7 +208,7 @@ func (task *Task) Task() string {
 
 // HasPriority returns true if the task has a priority.
 func (task *Task) HasPriority() bool {
-	return task.Priority != emptyStr
+	return isNotEmpty(task.Priority)
 }
 
 // HasCreatedDate returns true if the task has a created date.
