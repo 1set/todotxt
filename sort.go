@@ -18,38 +18,6 @@ const (
 	SortDueDateDesc
 )
 
-func (tasklist *TaskList) SortBy(sortFlags ...int) error {
-	var err error
-	tasklist.sortBy(func(t1, t2 *Task) bool {
-		for _, flag := range sortFlags {
-			switch flag {
-			case SortPriorityAsc, SortPriorityDesc:
-				if t1.HasPriority() && t2.HasPriority() {
-					if t1.Priority == t2.Priority {
-						continue
-					}
-					if t1.Priority < t2.Priority {
-						return flag == SortPriorityAsc
-					} else {
-						return flag == SortPriorityDesc
-					}
-				} else if !t1.HasPriority() && !t2.HasPriority() {
-					continue
-				} else if t1.HasPriority() {
-					return flag == SortPriorityAsc
-				} else {
-					return flag == SortPriorityDesc
-				}
-			default:
-				// TODO: check this earlier
-				err = errors.New("unrecognized sort option")
-			}
-		}
-		return false
-	})
-	return err
-}
-
 // Sort allows a TaskList to be sorted by certain predefined fields.
 // See constants Sort* for fields and sort order.
 func (tasklist *TaskList) Sort(sortFlag int) error {
@@ -90,7 +58,7 @@ func (tasklist *TaskList) sortBy(by func(t1, t2 *Task) bool) *TaskList {
 		tasklists: *tasklist,
 		by:        by,
 	}
-	sort.Sort(ts)
+	sort.Stable(ts)
 	return tasklist
 }
 
