@@ -10,6 +10,8 @@ import (
 const (
 	SortTaskIDAsc = iota + 1
 	SortTaskIDDesc
+	SortTodoTextAsc
+	SortTodoTextDesc
 	SortPriorityAsc
 	SortPriorityDesc
 	SortCreatedDateAsc
@@ -30,6 +32,8 @@ func (tasklist *TaskList) Sort(sortFlag int) error {
 	switch sortFlag {
 	case SortTaskIDAsc, SortTaskIDDesc:
 		tasklist.sortByTaskID(sortFlag)
+	case SortTodoTextAsc, SortTodoTextDesc:
+		tasklist.sortByTodoText(sortFlag)
 	case SortPriorityAsc, SortPriorityDesc:
 		tasklist.sortByPriority(sortFlag)
 	case SortCreatedDateAsc, SortCreatedDateDesc:
@@ -80,6 +84,16 @@ func (tasklist *TaskList) sortByTaskID(order int) *TaskList {
 			return order == SortTaskIDAsc
 		}
 		return order == SortTaskIDDesc
+	})
+	return tasklist
+}
+
+func (tasklist *TaskList) sortByTodoText(order int) *TaskList {
+	tasklist.sortBy(func(t1, t2 *Task) bool {
+		if t1.Todo < t2.Todo {
+			return order == SortTodoTextAsc
+		}
+		return order == SortTodoTextDesc
 	})
 	return tasklist
 }

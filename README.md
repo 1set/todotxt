@@ -16,6 +16,8 @@ Based on [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) from [Fabio 
 - [x] Go mod support
 - [x] Segments for task string
 - [x] Negative `Due()` duration
+- [x] More sorting options: by ID, text, context, project
+- [ ] Preset filters
 
 ## Credits
 

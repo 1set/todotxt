@@ -3,6 +3,7 @@ package todotxt
 import (
 	"fmt"
 	"strings"
+	"testing"
 )
 
 func compareSlices(list1 []string, list2 []string) bool {
@@ -63,4 +64,16 @@ func strTaskSegmentList(l []*TaskSegment) string {
 		parts = append(parts, fmt.Sprintf("%v", *s))
 	}
 	return strings.Join(parts, ", ")
+}
+
+func checkTaskListOrder(t *testing.T, gotList TaskList, expStrList []string) {
+	if len(gotList) < len(expStrList) {
+		t.Errorf("Got less elements (%d) than expected (%d)", len(gotList), len(expStrList))
+	}
+
+	for i, expected := range expStrList {
+		if got := gotList[i].Task(); got != expected {
+			t.Errorf("Expected Task[%d] after Sort() to be [%s], but got [%s]", i, expected, got)
+		}
+	}
 }
