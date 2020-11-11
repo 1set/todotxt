@@ -51,70 +51,26 @@ func TestTaskSortByCreatedDate(t *testing.T) {
 	if err := testTasklist.Sort(SortCreatedDateAsc); err != nil {
 		t.Fatal(err)
 	}
-
-	testExpected = "x 2014-01-03 Create golang library @Go +go-todotxt due:2014-01-05"
-	testGot = testTasklist[0].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	testExpectedList = []string{
+		"x 2014-01-03 Create golang library @Go +go-todotxt due:2014-01-05",
+		"(A) Call Mom @Call @Phone +Family",
+		"2013-02-22 Pick up milk @GroceryStore",
+		"x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt",
+		"x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12",
 	}
-
-	testExpected = "(A) Call Mom @Call @Phone +Family"
-	testGot = testTasklist[1].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "2013-02-22 Pick up milk @GroceryStore"
-	testGot = testTasklist[2].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt"
-	testGot = testTasklist[3].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12"
-	testGot = testTasklist[4].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
 
 	if err := testTasklist.Sort(SortCreatedDateDesc); err != nil {
 		t.Fatal(err)
 	}
-
-	testExpected = "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12"
-	testGot = testTasklist[0].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	testExpectedList = []string{
+		"x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12",
+		"x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt",
+		"2013-02-22 Pick up milk @GroceryStore",
+		"(A) Call Mom @Call @Phone +Family",
+		"x 2014-01-03 Create golang library @Go +go-todotxt due:2014-01-05",
 	}
-
-	testExpected = "x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt"
-	testGot = testTasklist[1].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "2013-02-22 Pick up milk @GroceryStore"
-	testGot = testTasklist[2].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "(A) Call Mom @Call @Phone +Family"
-	testGot = testTasklist[3].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x 2014-01-03 Create golang library @Go +go-todotxt due:2014-01-05"
-	testGot = testTasklist[4].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
 }
 
 func TestTaskSortByCompletedDate(t *testing.T) {
@@ -126,82 +82,28 @@ func TestTaskSortByCompletedDate(t *testing.T) {
 	if err := testTasklist.Sort(SortCompletedDateAsc); err != nil {
 		t.Fatal(err)
 	}
-
-	testExpected = "x Download Todo.txt mobile app @Phone"
-	testGot = testTasklist[0].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	testExpectedList = []string{
+		"x Download Todo.txt mobile app @Phone",
+		"x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12",
+		"2013-02-22 Pick up milk @GroceryStore",
+		"x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt",
+		"x 2014-01-03 Create golang library @Go +go-todotxt due:2014-01-05",
+		"x 2014-01-04 2014-01-01 Create some more golang library test cases @Go +go-todotxt",
 	}
-
-	testExpected = "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12"
-	testGot = testTasklist[1].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "2013-02-22 Pick up milk @GroceryStore"
-	testGot = testTasklist[2].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt"
-	testGot = testTasklist[3].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x 2014-01-03 Create golang library @Go +go-todotxt due:2014-01-05"
-	testGot = testTasklist[4].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x 2014-01-04 2014-01-01 Create some more golang library test cases @Go +go-todotxt"
-	testGot = testTasklist[5].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[6] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
 
 	if err := testTasklist.Sort(SortCompletedDateDesc); err != nil {
 		t.Fatal(err)
 	}
-
-	testExpected = "x 2014-01-04 2014-01-01 Create some more golang library test cases @Go +go-todotxt"
-	testGot = testTasklist[0].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	testExpectedList = []string{
+		"x 2014-01-04 2014-01-01 Create some more golang library test cases @Go +go-todotxt",
+		"x 2014-01-03 Create golang library @Go +go-todotxt due:2014-01-05",
+		"x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt",
+		"2013-02-22 Pick up milk @GroceryStore",
+		"x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12",
+		"x Download Todo.txt mobile app @Phone",
 	}
-
-	testExpected = "x 2014-01-03 Create golang library @Go +go-todotxt due:2014-01-05"
-	testGot = testTasklist[1].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt"
-	testGot = testTasklist[2].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "2013-02-22 Pick up milk @GroceryStore"
-	testGot = testTasklist[3].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12"
-	testGot = testTasklist[4].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
-
-	testExpected = "x Download Todo.txt mobile app @Phone"
-	testGot = testTasklist[5].Task()
-	if testGot != testExpected {
-		t.Errorf("Expected Task[6] after Sort() to be [%s], but got [%s]", testExpected, testGot)
-	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
 }
 
 func TestTaskSortByDueDate(t *testing.T) {
