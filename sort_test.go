@@ -400,6 +400,97 @@ func TestTaskSortByTaskID(t *testing.T) {
 	}
 }
 
+func TestTaskSortByContext(t *testing.T) {
+	testTasklist.LoadFromPath(testInputSort)
+	taskID := 26
+
+	testTasklist = testTasklist[taskID : taskID+6]
+
+	if err := testTasklist.Sort(SortCreatedDateAsc); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := testTasklist.Sort(SortContextAsc); err != nil {
+		t.Fatal(err)
+	}
+
+	testExpected = "2020-12-19 Task 3 @Apple"
+	testGot = testTasklist[0].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-10-19 Task 2 @Apple @Banana"
+	testGot = testTasklist[1].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-11-09 Task 1 @Apple @Banana"
+	testGot = testTasklist[2].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-11-11 Task 6 @Apple @Coconut"
+	testGot = testTasklist[3].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-11-19 Task 4 @Banana"
+	testGot = testTasklist[4].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-12-09 Task 5"
+	testGot = testTasklist[5].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[6] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	if err := testTasklist.Sort(SortContextDesc); err != nil {
+		t.Fatal(err)
+	}
+
+	testExpected = "2020-12-09 Task 5"
+	testGot = testTasklist[0].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-11-19 Task 4 @Banana"
+	testGot = testTasklist[1].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-11-11 Task 6 @Apple @Coconut"
+	testGot = testTasklist[2].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-10-19 Task 2 @Apple @Banana"
+	testGot = testTasklist[3].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-11-09 Task 1 @Apple @Banana"
+	testGot = testTasklist[4].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-12-19 Task 3 @Apple"
+	testGot = testTasklist[5].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[6] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+}
+
 func TestTaskSortError(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
 
@@ -420,8 +511,7 @@ func Test_lessStrings(t *testing.T) {
 		{[]string{"a", "b", "c"}, []string{"a", "b"}, false},
 		{[]string{"a", "b", "c"}, []string{"a", "c"}, true},
 		{[]string{"a", "b", "c"}, []string{"b"}, true},
-		{[]string{"a", "b", "c"}, []string{""}, false},
-		{[]string{"a", "b", "c"}, []string{}, false},
+		{[]string{"a", "b", "c"}, []string{}, true},
 		{[]string{"a", "b"}, []string{"a", "b", "c"}, true},
 		{[]string{"a", "b"}, []string{"a", "a"}, false},
 		{[]string{"a", "b"}, []string{"a", "c"}, true},
@@ -442,21 +532,15 @@ func Test_lessStrings(t *testing.T) {
 		{[]string{"b"}, []string{"b"}, false},
 		{[]string{"b"}, []string{"b", "a"}, true},
 		{[]string{"b"}, []string{"c"}, true},
-		{[]string{"b"}, []string{""}, false},
-		{[]string{"b"}, []string{}, false},
+		{[]string{"b"}, []string{}, true},
 		{[]string{"b", "a"}, []string{"a", "b", "c"}, false},
 		{[]string{"b", "a"}, []string{"b"}, false},
 		{[]string{"b", "a"}, []string{"b", "a"}, false},
 		{[]string{"b", "a"}, []string{"c"}, true},
 		{[]string{"c"}, []string{"a", "b", "c"}, false},
 		{[]string{"c"}, []string{"b"}, false},
-		{[]string{""}, []string{"a", "b", "c"}, true},
-		{[]string{""}, []string{"c"}, true},
-		{[]string{""}, []string{""}, false},
-		{[]string{""}, []string{}, false},
-		{[]string{}, []string{"a", "b", "c"}, true},
-		{[]string{}, []string{"c"}, true},
-		{[]string{}, []string{""}, true},
+		{[]string{}, []string{"a", "b", "c"}, false},
+		{[]string{}, []string{"c"}, false},
 		{[]string{}, []string{}, false},
 	}
 	for i, tt := range tests {

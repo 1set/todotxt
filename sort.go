@@ -138,9 +138,9 @@ func lessStrings(a, b []string) bool {
 	if la == 0 && lb == 0 {
 		return false
 	} else if la == 0 && lb > 0 {
-		return true
-	} else if la > 0 && lb == 0 {
 		return false
+	} else if la > 0 && lb == 0 {
+		return true
 	}
 
 	if min = la; la > lb {
