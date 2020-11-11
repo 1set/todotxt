@@ -244,6 +244,37 @@ func TestTaskSortByProject(t *testing.T) {
 	checkTaskListOrder(t, testTasklist, testExpectedList)
 }
 
+func TestTaskSortByTodoText(t *testing.T) {
+	testTasklist.LoadFromPath(testInputSort)
+	taskID := 38
+
+	testTasklist = testTasklist[taskID : taskID+5]
+
+	if err := testTasklist.Sort(SortTodoTextAsc); err != nil {
+		t.Fatal(err)
+	}
+	testExpectedList = []string{
+		"2020-10-09 Task 1 +Apple +Banana",
+		"2020-10-19 Task 2 +Apple +Brown",
+		"2020-12-29 Task 3 +Apple",
+		"2020-12-19 Task 4 +Banana",
+		"2020-11-11 Task 5 +Coconut",
+	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
+
+	if err := testTasklist.Sort(SortTodoTextDesc); err != nil {
+		t.Fatal(err)
+	}
+	testExpectedList = []string{
+		"2020-11-11 Task 5 +Coconut",
+		"2020-12-19 Task 4 +Banana",
+		"2020-12-29 Task 3 +Apple",
+		"2020-10-19 Task 2 +Apple +Brown",
+		"2020-10-09 Task 1 +Apple +Banana",
+	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
+}
+
 func TestTaskSortError(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
 
