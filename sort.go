@@ -136,7 +136,7 @@ func (tasklist *TaskList) sortByDueDate(order int) *TaskList {
 	return tasklist
 }
 
-// lessStrings checks if the string slices a is exactly less than b.
+// lessStrings checks if the string slices a is exactly less than b in lexicographical order.
 func lessStrings(a, b []string) bool {
 	la, lb, min := len(a), len(b), 0
 	if la == 0 && lb == 0 {
