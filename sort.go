@@ -18,6 +18,10 @@ const (
 	SortCompletedDateDesc
 	SortDueDateAsc
 	SortDueDateDesc
+	SortContextAsc
+	SortContextDesc
+	SortProjectAsc
+	SortProjectDesc
 )
 
 // Sort allows a TaskList to be sorted by certain predefined fields.
@@ -34,6 +38,10 @@ func (tasklist *TaskList) Sort(sortFlag int) error {
 		tasklist.sortByCompletedDate(sortFlag)
 	case SortDueDateAsc, SortDueDateDesc:
 		tasklist.sortByDueDate(sortFlag)
+	case SortContextAsc, SortContextDesc:
+		tasklist.sortByContext(sortFlag)
+	case SortProjectAsc, SortProjectDesc:
+		tasklist.sortByProject(sortFlag)
 	default:
 		return errors.New("unrecognized sort option")
 	}
@@ -124,6 +132,54 @@ func (tasklist *TaskList) sortByCompletedDate(order int) *TaskList {
 func (tasklist *TaskList) sortByDueDate(order int) *TaskList {
 	tasklist.sortBy(func(t1, t2 *Task) bool {
 		return sortByDate(order == SortDueDateAsc, t1.HasDueDate(), t2.HasDueDate(), t1.DueDate, t2.DueDate)
+	})
+	return tasklist
+}
+
+// lessStrings checks if the string slices a is exactly less than b in lexicographical order.
+func lessStrings(a, b []string) bool {
+	la, lb, min := len(a), len(b), 0
+	if la == 0 && lb == 0 {
+		return false
+	} else if la == 0 && lb > 0 {
+		return false
+	} else if la > 0 && lb == 0 {
+		return true
+	}
+
+	if min = la; la > lb {
+		min = lb
+	}
+	for i := 0; i < min; i++ {
+		if a[i] < b[i] {
+			return true
+		} else if a[i] > b[i] {
+			return false
+		}
+	}
+
+	if la == lb {
+		return false
+	}
+	return la < lb
+}
+
+func (tasklist *TaskList) sortByContext(order int) *TaskList {
+	tasklist.sortBy(func(t1, t2 *Task) bool {
+		if order == SortContextAsc {
+			return lessStrings(t1.Contexts, t2.Contexts)
+		}
+		return lessStrings(t2.Contexts, t1.Contexts)
+	})
+	return tasklist
+}
+
+func (tasklist *TaskList) sortByProject(order int) *TaskList {
+	tasklist.sortBy(func(t1, t2 *Task) bool {
+		if order == SortProjectAsc {
+			return lessStrings(t1.Projects, t2.Projects)
+		}
+		return lessStrings(t2.Projects, t1.Projects)
 	})
 	return tasklist
 }

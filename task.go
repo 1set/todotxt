@@ -12,9 +12,6 @@ var (
 	// DateLayout is used for formatting time.Time into todo.txt date format and vice-versa.
 	DateLayout = "2006-01-02"
 
-	emptyStr    string
-	whitespaces = "\t\n\r "
-
 	priorityRx = regexp.MustCompile(`^(x|x \d{4}-\d{2}-\d{2}|)\s*\(([A-Z])\)\s+`) // Match priority: '(A) ...' or 'x (A) ...' or 'x 2012-12-12 (A) ...'
 	// Match created date: '(A) 2012-12-12 ...' or 'x 2012-12-12 (A) 2012-12-12 ...' or 'x (A) 2012-12-12 ...'or 'x 2012-12-12 2012-12-12 ...' or '2012-12-12 ...'
 	createdDateRx   = regexp.MustCompile(`^(\([A-Z]\)|x \d{4}-\d{2}-\d{2} \([A-Z]\)|x \([A-Z]\)|x \d{4}-\d{2}-\d{2}|)\s*(\d{4}-\d{2}-\d{2})\s+`)
@@ -38,6 +35,19 @@ type Task struct {
 	DueDate        time.Time
 	CompletedDate  time.Time
 	Completed      bool
+}
+
+// NewTask creates a new empty Task with default values. (CreatedDate is set to Now())
+func NewTask() Task {
+	task := Task{}
+	task.CreatedDate = time.Now()
+	return task
+}
+
+// Task returns a complete task string in todo.txt format.
+// See *Task.String() for further information.
+func (task *Task) Task() string {
+	return task.String()
 }
 
 // String returns a complete task string in todo.txt format.
@@ -99,13 +109,6 @@ func (task Task) String() string {
 	}
 
 	return text
-}
-
-// NewTask creates a new empty Task with default values. (CreatedDate is set to Now())
-func NewTask() Task {
-	task := Task{}
-	task.CreatedDate = time.Now()
-	return task
 }
 
 // ParseTask parses the input text string into a Task struct.
@@ -189,7 +192,7 @@ func ParseTask(text string) (*Task, error) {
 				} else {
 					return nil, err
 				}
-			} else if key != emptyStr && value != emptyStr {
+			} else if isNotEmpty(key) && isNotEmpty(value) {
 				tags[key] = value
 			}
 		}
@@ -203,25 +206,29 @@ func ParseTask(text string) (*Task, error) {
 	return &task, err
 }
 
-// Task returns a complete task string in todo.txt format.
-// See *Task.String() for further information.
-func (task *Task) Task() string {
-	return task.String()
+// HasProjects returns true if the task has any projects.
+func (task *Task) HasProjects() bool {
+	return len(task.Projects) > 0
+}
+
+// HasContexts returns true if the task has any contexts.
+func (task *Task) HasContexts() bool {
+	return len(task.Contexts) > 0
+}
+
+// HasAdditionalTags returns true if the task has any additional tags.
+func (task *Task) HasAdditionalTags() bool {
+	return len(task.AdditionalTags) > 0
 }
 
 // HasPriority returns true if the task has a priority.
 func (task *Task) HasPriority() bool {
-	return task.Priority != emptyStr
+	return isNotEmpty(task.Priority)
 }
 
 // HasCreatedDate returns true if the task has a created date.
 func (task *Task) HasCreatedDate() bool {
 	return !task.CreatedDate.IsZero()
-}
-
-// HasDueDate returns true if the task has a due date.
-func (task *Task) HasDueDate() bool {
-	return !task.DueDate.IsZero()
 }
 
 // HasCompletedDate returns true if the task has a completed date.
@@ -250,6 +257,11 @@ func (task *Task) Reopen() {
 		task.Completed = false
 		task.CompletedDate = time.Time{} // time.IsZero() value
 	}
+}
+
+// HasDueDate returns true if the task has a due date.
+func (task *Task) HasDueDate() bool {
+	return !task.DueDate.IsZero()
 }
 
 // IsOverdue returns true if due date is in the past.
