@@ -206,6 +206,21 @@ func ParseTask(text string) (*Task, error) {
 	return &task, err
 }
 
+// HasProjects returns true if the task has any projects.
+func (task *Task) HasProjects() bool {
+	return len(task.Projects) > 0
+}
+
+// HasContexts returns true if the task has any contexts.
+func (task *Task) HasContexts() bool {
+	return len(task.Contexts) > 0
+}
+
+// HasAdditionalTags returns true if the task has any additional tags.
+func (task *Task) HasAdditionalTags() bool {
+	return len(task.AdditionalTags) > 0
+}
+
 // HasPriority returns true if the task has a priority.
 func (task *Task) HasPriority() bool {
 	return isNotEmpty(task.Priority)
