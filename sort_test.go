@@ -1,6 +1,7 @@
 package todotxt
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -406,5 +407,63 @@ func TestTaskSortError(t *testing.T) {
 		t.Errorf("Expected Sort() to fail because of unrecognized sort option, but it didn't!")
 	} else if err.Error() != "unrecognized sort option" {
 		t.Error(err)
+	}
+}
+
+func Test_lessStrings(t *testing.T) {
+	tests := []struct {
+		a    []string
+		b    []string
+		want bool
+	}{
+		{[]string{"a", "b", "c"}, []string{"a", "b", "c"}, false},
+		{[]string{"a", "b", "c"}, []string{"a", "b"}, false},
+		{[]string{"a", "b", "c"}, []string{"a", "c"}, true},
+		{[]string{"a", "b", "c"}, []string{"b"}, true},
+		{[]string{"a", "b", "c"}, []string{""}, false},
+		{[]string{"a", "b", "c"}, []string{}, false},
+		{[]string{"a", "b"}, []string{"a", "b", "c"}, true},
+		{[]string{"a", "b"}, []string{"a", "a"}, false},
+		{[]string{"a", "b"}, []string{"a", "c"}, true},
+		{[]string{"a", "b"}, []string{"b"}, true},
+		{[]string{"a", "a"}, []string{"a", "b", "c"}, true},
+		{[]string{"a", "a"}, []string{"a", "b"}, true},
+		{[]string{"a", "a"}, []string{"a", "a"}, false},
+		{[]string{"a", "a"}, []string{"a", "c"}, true},
+		{[]string{"a", "a"}, []string{"b"}, true},
+		{[]string{"a", "a"}, []string{"b", "a"}, true},
+		{[]string{"a", "a"}, []string{"c"}, true},
+		{[]string{"a", "c"}, []string{"a", "b", "c"}, false},
+		{[]string{"a", "c"}, []string{"a", "c"}, false},
+		{[]string{"a", "c"}, []string{"b"}, true},
+		{[]string{"a", "c"}, []string{"c"}, true},
+		{[]string{"b"}, []string{"a", "b", "c"}, false},
+		{[]string{"b"}, []string{"a", "c"}, false},
+		{[]string{"b"}, []string{"b"}, false},
+		{[]string{"b"}, []string{"b", "a"}, true},
+		{[]string{"b"}, []string{"c"}, true},
+		{[]string{"b"}, []string{""}, false},
+		{[]string{"b"}, []string{}, false},
+		{[]string{"b", "a"}, []string{"a", "b", "c"}, false},
+		{[]string{"b", "a"}, []string{"b"}, false},
+		{[]string{"b", "a"}, []string{"b", "a"}, false},
+		{[]string{"b", "a"}, []string{"c"}, true},
+		{[]string{"c"}, []string{"a", "b", "c"}, false},
+		{[]string{"c"}, []string{"b"}, false},
+		{[]string{""}, []string{"a", "b", "c"}, true},
+		{[]string{""}, []string{"c"}, true},
+		{[]string{""}, []string{""}, false},
+		{[]string{""}, []string{}, false},
+		{[]string{}, []string{"a", "b", "c"}, true},
+		{[]string{}, []string{"c"}, true},
+		{[]string{}, []string{""}, true},
+		{[]string{}, []string{}, false},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("Case#%d", i+1), func(t *testing.T) {
+			if got := lessStrings(tt.a, tt.b); got != tt.want {
+				t.Errorf("lessStrings() %v < %v got = %v, want %v", tt.a, tt.b, got, tt.want)
+			}
+		})
 	}
 }
