@@ -20,6 +20,8 @@ const (
 	SortDueDateDesc
 	SortContextAsc
 	SortContextDesc
+	SortProjectAsc
+	SortProjectDesc
 )
 
 // Sort allows a TaskList to be sorted by certain predefined fields.
@@ -38,6 +40,8 @@ func (tasklist *TaskList) Sort(sortFlag int) error {
 		tasklist.sortByDueDate(sortFlag)
 	case SortContextAsc, SortContextDesc:
 		tasklist.sortByContext(sortFlag)
+	case SortProjectAsc, SortProjectDesc:
+		tasklist.sortByProject(sortFlag)
 	default:
 		return errors.New("unrecognized sort option")
 	}
@@ -166,6 +170,16 @@ func (tasklist *TaskList) sortByContext(order int) *TaskList {
 			return lessStrings(t1.Contexts, t2.Contexts)
 		}
 		return lessStrings(t2.Contexts, t1.Contexts)
+	})
+	return tasklist
+}
+
+func (tasklist *TaskList) sortByProject(order int) *TaskList {
+	tasklist.sortBy(func(t1, t2 *Task) bool {
+		if order == SortProjectAsc {
+			return lessStrings(t1.Projects, t2.Projects)
+		}
+		return lessStrings(t2.Projects, t1.Projects)
 	})
 	return tasklist
 }

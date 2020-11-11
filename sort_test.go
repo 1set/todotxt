@@ -491,6 +491,97 @@ func TestTaskSortByContext(t *testing.T) {
 	}
 }
 
+func TestTaskSortByProject(t *testing.T) {
+	testTasklist.LoadFromPath(testInputSort)
+	taskID := 32
+
+	testTasklist = testTasklist[taskID : taskID+6]
+
+	if err := testTasklist.Sort(SortCreatedDateAsc); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := testTasklist.Sort(SortProjectAsc); err != nil {
+		t.Fatal(err)
+	}
+
+	testExpected = "2020-12-29 Task 3 +Apple"
+	testGot = testTasklist[0].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-10-09 Task 1 +Apple +Banana"
+	testGot = testTasklist[1].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-10-19 Task 2 +Apple +Banana"
+	testGot = testTasklist[2].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-12-19 Task 4 +Banana"
+	testGot = testTasklist[3].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-11-11 Task 6 +Coconut"
+	testGot = testTasklist[4].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-12-09 Task 5"
+	testGot = testTasklist[5].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[6] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	if err := testTasklist.Sort(SortProjectDesc); err != nil {
+		t.Fatal(err)
+	}
+
+	testExpected = "2020-12-09 Task 5"
+	testGot = testTasklist[0].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[1] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-11-11 Task 6 +Coconut"
+	testGot = testTasklist[1].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[2] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-12-19 Task 4 +Banana"
+	testGot = testTasklist[2].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[3] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-10-09 Task 1 +Apple +Banana"
+	testGot = testTasklist[3].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[4] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-10-19 Task 2 +Apple +Banana"
+	testGot = testTasklist[4].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[5] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = "2020-12-29 Task 3 +Apple"
+	testGot = testTasklist[5].Task()
+	if testGot != testExpected {
+		t.Errorf("Expected Task[6] after Sort() to be [%s], but got [%s]", testExpected, testGot)
+	}
+}
+
 func TestTaskSortError(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
 
