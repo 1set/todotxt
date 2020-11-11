@@ -16,6 +16,7 @@ var (
 	testOutput                          = "testdata/output_todo.txt"
 	testExpectedOutput                  = "testdata/expected_todo.txt"
 	testTasklist                        TaskList
+	testExpectedList                    []string
 	testExpected                        interface{}
 	testGot                             interface{}
 )
