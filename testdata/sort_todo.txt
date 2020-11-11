@@ -33,3 +33,11 @@ x (C) 2014-01-01 Create golang library documentation @Go due:2014-01-12 +go-todo
 Task 3 due:2020-11-11
 (C) Task 4 due:2020-12-12
 x Task 5
+
+# Sort By Context - 26+6
+2020-11-09 Task 1 @Apple @Banana
+2020-10-19 Task 2 @Apple @Banana
+2020-12-19 Task 3 @Apple
+2020-11-19 Task 4 @Banana
+2020-12-09 Task 5
+2020-11-11 Task 6 @Apple @Coconut
