@@ -59,16 +59,34 @@ func TestNewTask(t *testing.T) {
 		t.Errorf("Expected new Task to have %d projects, but got [%d]", testExpected, testGot)
 	}
 
+	testExpected = false
+	testGot = task.HasProjects()
+	if testGot != testExpected {
+		t.Errorf("Expected new Task to have no projects, but got [%v]", testGot)
+	}
+
 	testExpected = 0
 	testGot = len(task.Contexts)
 	if testGot != testExpected {
 		t.Errorf("Expected new Task to have %d contexts, but got [%d]", testExpected, testGot)
 	}
 
+	testExpected = false
+	testGot = task.HasContexts()
+	if testGot != testExpected {
+		t.Errorf("Expected new Task to have no contexts, but got [%v]", testGot)
+	}
+
 	testExpected = 0
 	testGot = len(task.AdditionalTags)
 	if testGot != testExpected {
 		t.Errorf("Expected new Task to have %d additional tags, but got [%d]", testExpected, testGot)
+	}
+
+	testExpected = false
+	testGot = task.HasAdditionalTags()
+	if testGot != testExpected {
+		t.Errorf("Expected new Task to have no additional tags, but got [%v]", testGot)
 	}
 
 	testExpected = true
@@ -97,12 +115,12 @@ func TestNewTask(t *testing.T) {
 }
 
 func TestParseTask(t *testing.T) {
-	task, err := ParseTask("x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt   ")
+	task, err := ParseTask("x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world   ")
 	if err != nil {
 		t.Error(err)
 	}
 
-	testExpected = "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12"
+	testExpected = "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt hello:world due:2014-01-12"
 	testGot = task.Task()
 	if testGot != testExpected {
 		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
@@ -114,7 +132,7 @@ func TestParseTask(t *testing.T) {
 		t.Errorf("Expected Task to have default ID [%d], but got [%d]", testExpected, testGot)
 	}
 
-	testExpected = "x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt"
+	testExpected = "x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world"
 	testGot = task.Original
 	if testGot != testExpected {
 		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
@@ -144,16 +162,34 @@ func TestParseTask(t *testing.T) {
 		t.Errorf("Expected Task to have %d projects, but got [%d]", testExpected, testGot)
 	}
 
+	testExpected = true
+	testGot = task.HasProjects()
+	if testGot != testExpected {
+		t.Errorf("Expected new Task to have projects, but got [%v]", testGot)
+	}
+
 	testExpected = 1
 	testGot = len(task.Contexts)
 	if testGot != testExpected {
 		t.Errorf("Expected Task to have %d contexts, but got [%d]", testExpected, testGot)
 	}
 
-	testExpected = 0
+	testExpected = true
+	testGot = task.HasContexts()
+	if testGot != testExpected {
+		t.Errorf("Expected new Task to have contexts, but got [%v]", testGot)
+	}
+
+	testExpected = 1
 	testGot = len(task.AdditionalTags)
 	if testGot != testExpected {
 		t.Errorf("Expected Task to have %d additional tags, but got [%d]", testExpected, testGot)
+	}
+
+	testExpected = true
+	testGot = task.HasAdditionalTags()
+	if testGot != testExpected {
+		t.Errorf("Expected new Task to have additional tags, but got [%v]", testGot)
 	}
 
 	testExpected = true
