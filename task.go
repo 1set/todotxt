@@ -37,6 +37,19 @@ type Task struct {
 	Completed      bool
 }
 
+// NewTask creates a new empty Task with default values. (CreatedDate is set to Now())
+func NewTask() Task {
+	task := Task{}
+	task.CreatedDate = time.Now()
+	return task
+}
+
+// Task returns a complete task string in todo.txt format.
+// See *Task.String() for further information.
+func (task *Task) Task() string {
+	return task.String()
+}
+
 // String returns a complete task string in todo.txt format.
 //
 // Contexts, Projects and additional tags are alphabetically sorted,
@@ -96,13 +109,6 @@ func (task Task) String() string {
 	}
 
 	return text
-}
-
-// NewTask creates a new empty Task with default values. (CreatedDate is set to Now())
-func NewTask() Task {
-	task := Task{}
-	task.CreatedDate = time.Now()
-	return task
 }
 
 // ParseTask parses the input text string into a Task struct.
@@ -200,12 +206,6 @@ func ParseTask(text string) (*Task, error) {
 	return &task, err
 }
 
-// Task returns a complete task string in todo.txt format.
-// See *Task.String() for further information.
-func (task *Task) Task() string {
-	return task.String()
-}
-
 // HasPriority returns true if the task has a priority.
 func (task *Task) HasPriority() bool {
 	return isNotEmpty(task.Priority)
@@ -214,11 +214,6 @@ func (task *Task) HasPriority() bool {
 // HasCreatedDate returns true if the task has a created date.
 func (task *Task) HasCreatedDate() bool {
 	return !task.CreatedDate.IsZero()
-}
-
-// HasDueDate returns true if the task has a due date.
-func (task *Task) HasDueDate() bool {
-	return !task.DueDate.IsZero()
 }
 
 // HasCompletedDate returns true if the task has a completed date.
@@ -247,6 +242,11 @@ func (task *Task) Reopen() {
 		task.Completed = false
 		task.CompletedDate = time.Time{} // time.IsZero() value
 	}
+}
+
+// HasDueDate returns true if the task has a due date.
+func (task *Task) HasDueDate() bool {
+	return !task.DueDate.IsZero()
 }
 
 // IsOverdue returns true if due date is in the past.
