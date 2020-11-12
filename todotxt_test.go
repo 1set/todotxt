@@ -365,7 +365,7 @@ func TestTaskListUpdateTask(t *testing.T) {
 
 	task.Priority = "C"
 	task.Todo = "Go home!"
-	date, err := time.Parse(DateLayout, "2011-11-11")
+	date, err := parseTime("2011-11-11")
 	if err != nil {
 		t.Error(err)
 	}

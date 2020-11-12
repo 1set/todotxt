@@ -312,7 +312,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 	taskID := 10
 
-	testExpected, err := time.Parse(DateLayout, "2012-01-30")
+	testExpected, err := parseTime("2012-01-30")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -322,7 +322,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2013-02-22")
+	testExpected, err = parseTime("2013-02-22")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -332,7 +332,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2014-01-01")
+	testExpected, err = parseTime("2014-01-01")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -342,7 +342,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2013-12-30")
+	testExpected, err = parseTime("2013-12-30")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -352,7 +352,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2014-01-01")
+	testExpected, err = parseTime("2014-01-01")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -428,7 +428,7 @@ func TestTaskDueDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 	taskID := 23
 
-	testExpected, err := time.Parse(DateLayout, "2014-02-17")
+	testExpected, err := parseTime("2014-02-17")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -441,6 +441,14 @@ func TestTaskDueDate(t *testing.T) {
 	if testTasklist[taskID-1].HasDueDate() {
 		t.Errorf("Expected Task[%d] to have no due date, but got '%v'", taskID, testTasklist[taskID-1].DueDate)
 	}
+
+	task, err := ParseTask("Hello Today due:2020-11-13")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("DueDate: %v", task.DueDate)
+	t.Logf("Due: %v", task.Due())
+	t.Logf("IsOver: %v", task.IsOverdue())
 }
 
 func TestTaskAddonTags(t *testing.T) {
@@ -550,7 +558,7 @@ func TestTaskCompletedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err := time.Parse(DateLayout, "2014-01-03")
+	testExpected, err := parseTime("2014-01-03")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -565,7 +573,7 @@ func TestTaskCompletedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2014-01-02")
+	testExpected, err = parseTime("2014-01-02")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -575,7 +583,7 @@ func TestTaskCompletedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2014-01-03")
+	testExpected, err = parseTime("2014-01-03")
 	if err != nil {
 		t.Fatal(err)
 	}
