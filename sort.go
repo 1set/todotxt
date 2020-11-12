@@ -26,14 +26,17 @@ const (
 	SortProjectDesc
 )
 
-// Sort allows a TaskList to be sorted by certain predefined fields.
+// Sort allows a TaskList to be sorted by certain predefined fields, multiple-key sorting is supported.
 // See constants Sort* for fields and sort order.
-func (tasklist *TaskList) Sort(flags ...int) error {
-	if len(flags) == 0 {
-		return errors.New("missing sort options")
-	}
+func (tasklist *TaskList) Sort(flag int, flags ...int) error {
+	combined := make([]int, 0, len(flags)+1)
 	for i := len(flags) - 1; i >= 0; i-- {
-		switch flag := flags[i]; flag {
+		combined = append(combined, flags[i])
+	}
+	combined = append(combined, flag)
+
+	for _, flag := range combined {
+		switch flag {
 		case SortTaskIDAsc, SortTaskIDDesc:
 			tasklist.sortByTaskID(flag)
 		case SortTodoTextAsc, SortTodoTextDesc:
