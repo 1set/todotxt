@@ -275,6 +275,69 @@ func TestTaskSortByTodoText(t *testing.T) {
 	checkTaskListOrder(t, testTasklist, testExpectedList)
 }
 
+func TestTaskSortByMultipleFlags(t *testing.T) {
+	testTasklist.LoadFromPath(testInputSort)
+	taskID := 43
+
+	testTasklist = testTasklist[taskID : taskID+7]
+
+	if err := testTasklist.Sort(SortTodoTextAsc, SortPriorityDesc); err != nil {
+		t.Fatal(err)
+	}
+	testExpectedList = []string{
+		"(A) 2020-10-09 Task 1 +Apple +Banana",
+		"2020-10-19 Task 2 +Apple +Brown",
+		"2020-12-29 Task 3",
+		"(C) 2020-12-29 Task 3 +Apple",
+		"2020-12-19 Task 4 +Banana",
+		"(D) 2020-11-11 Task 5 +Coconut",
+		"2020-12-29 Task 6",
+	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
+
+	if err := testTasklist.Sort(SortPriorityAsc, SortTodoTextAsc); err != nil {
+		t.Fatal(err)
+	}
+	testExpectedList = []string{
+		"(A) 2020-10-09 Task 1 +Apple +Banana",
+		"(C) 2020-12-29 Task 3 +Apple",
+		"(D) 2020-11-11 Task 5 +Coconut",
+		"2020-10-19 Task 2 +Apple +Brown",
+		"2020-12-29 Task 3",
+		"2020-12-19 Task 4 +Banana",
+		"2020-12-29 Task 6",
+	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
+
+	if err := testTasklist.Sort(SortPriorityAsc, SortCreatedDateAsc, SortTodoTextDesc); err != nil {
+		t.Fatal(err)
+	}
+	testExpectedList = []string{
+		"(A) 2020-10-09 Task 1 +Apple +Banana",
+		"(C) 2020-12-29 Task 3 +Apple",
+		"(D) 2020-11-11 Task 5 +Coconut",
+		"2020-10-19 Task 2 +Apple +Brown",
+		"2020-12-19 Task 4 +Banana",
+		"2020-12-29 Task 6",
+		"2020-12-29 Task 3",
+	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
+
+	if err := testTasklist.Sort(SortPriorityAsc, SortProjectAsc, SortTaskIDAsc); err != nil {
+		t.Fatal(err)
+	}
+	testExpectedList = []string{
+		"(A) 2020-10-09 Task 1 +Apple +Banana",
+		"(C) 2020-12-29 Task 3 +Apple",
+		"(D) 2020-11-11 Task 5 +Coconut",
+		"2020-10-19 Task 2 +Apple +Brown",
+		"2020-12-19 Task 4 +Banana",
+		"2020-12-29 Task 3",
+		"2020-12-29 Task 6",
+	}
+	checkTaskListOrder(t, testTasklist, testExpectedList)
+}
+
 func TestTaskSortError(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
 
