@@ -56,3 +56,12 @@ x Task 5
 2020-12-19 Task 4 +Banana
 2020-12-29 Task 3 +Apple
 2020-10-19 Task 2 +Apple +Brown
+
+# Multiple Sorts - 43+7
+(D) 2020-11-11 Task 5 +Coconut
+(A) 2020-10-09 Task 1 +Apple +Banana
+2020-12-19 Task 4 +Banana
+(C) 2020-12-29 Task 3 +Apple
+2020-10-19 Task 2 +Apple +Brown
+2020-12-29 Task 3
+2020-12-29 Task 6

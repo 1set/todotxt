@@ -283,6 +283,12 @@ func TestTaskSortError(t *testing.T) {
 	} else if err.Error() != "unrecognized sort option" {
 		t.Error(err)
 	}
+
+	if err := testTasklist.Sort(); err == nil {
+		t.Errorf("Expected Sort() to fail because of missing sort options, but it didn't!")
+	} else if err.Error() != "missing sort options" {
+		t.Error(err)
+	}
 }
 
 func Test_lessStrings(t *testing.T) {
