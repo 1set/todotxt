@@ -29,11 +29,13 @@ const (
 // Sort allows a TaskList to be sorted by certain predefined fields, multiple-key sorting is supported.
 // See constants Sort* for fields and sort order.
 func (tasklist *TaskList) Sort(flag int, flags ...int) error {
-	combined := make([]int, 0, len(flags)+1)
+	combined := make([]int, len(flags)+1)
+	j := 0
 	for i := len(flags) - 1; i >= 0; i-- {
-		combined = append(combined, flags[i])
+		combined[j] = flags[i]
+		j++
 	}
-	combined = append(combined, flag)
+	combined[j] = flag
 
 	for _, flag := range combined {
 		switch flag {
