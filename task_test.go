@@ -1,6 +1,7 @@
 package todotxt
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
@@ -312,7 +313,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 	taskID := 10
 
-	testExpected, err := time.Parse(DateLayout, "2012-01-30")
+	testExpected, err := parseTime("2012-01-30")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -322,7 +323,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2013-02-22")
+	testExpected, err = parseTime("2013-02-22")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -332,7 +333,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2014-01-01")
+	testExpected, err = parseTime("2014-01-01")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -342,7 +343,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2013-12-30")
+	testExpected, err = parseTime("2013-12-30")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -352,7 +353,7 @@ func TestTaskCreatedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2014-01-01")
+	testExpected, err = parseTime("2014-01-01")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -428,7 +429,7 @@ func TestTaskDueDate(t *testing.T) {
 	testTasklist.LoadFromPath(testInputTask)
 	taskID := 23
 
-	testExpected, err := time.Parse(DateLayout, "2014-02-17")
+	testExpected, err := parseTime("2014-02-17")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -440,6 +441,39 @@ func TestTaskDueDate(t *testing.T) {
 
 	if testTasklist[taskID-1].HasDueDate() {
 		t.Errorf("Expected Task[%d] to have no due date, but got '%v'", taskID, testTasklist[taskID-1].DueDate)
+	}
+
+	task, err := ParseTask(fmt.Sprintf("Hello Yesterday Task due:%s", time.Now().AddDate(0, 0, -1).Format(DateLayout)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if due := task.Due(); due > 0 {
+		t.Errorf("Expected Due() to be non-positive, but got %v", due)
+	}
+	if od := task.IsOverdue(); !od {
+		t.Errorf("Expected IsOverdue() to be true, but got %v", od)
+	}
+
+	task, err = ParseTask(fmt.Sprintf("Hello Today Task due:%s", time.Now().Format(DateLayout)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if due := task.Due(); due > 24*time.Hour {
+		t.Errorf("Expected Due() to be less than one day, but got %v", due)
+	}
+	if od := task.IsOverdue(); od {
+		t.Errorf("Expected IsOverdue() to be false, but got %v", od)
+	}
+
+	task, err = ParseTask(fmt.Sprintf("Hello Tomorrow Task due:%s", time.Now().AddDate(0, 0, 1).Format(DateLayout)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if due := task.Due(); !((24*time.Hour < due) && (due <= 48*time.Hour)) {
+		t.Errorf("Expected Due() to be 1~2 days, but got %v", due)
+	}
+	if od := task.IsOverdue(); od {
+		t.Errorf("Expected IsOverdue() to be false, but got %v", od)
 	}
 }
 
@@ -550,7 +584,7 @@ func TestTaskCompletedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err := time.Parse(DateLayout, "2014-01-03")
+	testExpected, err := parseTime("2014-01-03")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -565,7 +599,7 @@ func TestTaskCompletedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2014-01-02")
+	testExpected, err = parseTime("2014-01-02")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -575,7 +609,7 @@ func TestTaskCompletedDate(t *testing.T) {
 	}
 	taskID++
 
-	testExpected, err = time.Parse(DateLayout, "2014-01-03")
+	testExpected, err = parseTime("2014-01-03")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -604,7 +638,7 @@ func TestTaskIsOverdue(t *testing.T) {
 	if testGot.(bool) {
 		t.Errorf("Expected Task[%d] not to be overdue, but got '%v'", taskID, testGot)
 	}
-	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, 1)
+	testTasklist[taskID-1].DueDate = time.Now()
 	testGot = testTasklist[taskID-1].Due()
 	if testGot.(time.Duration).Hours() < 23 ||
 		testGot.(time.Duration).Hours() > 25 {
@@ -616,13 +650,13 @@ func TestTaskIsOverdue(t *testing.T) {
 	if !testGot.(bool) {
 		t.Errorf("Expected Task[%d] to be overdue, but got '%v'", taskID, testGot)
 	}
-	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, -3)
+	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, -4)
 	testGot = -testTasklist[taskID-1].Due()
 	if testGot.(time.Duration).Hours() < 71 || testGot.(time.Duration).Hours() > 73 {
 		t.Errorf("Expected Task[%d] to be due since 72 hours, but got '%v'", taskID, testGot)
 	}
 
-	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, 3)
+	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, 2)
 	testGot = testTasklist[taskID-1].Due()
 	if testGot.(time.Duration).Hours() < 71 || testGot.(time.Duration).Hours() > 73 {
 		t.Errorf("Expected Task[%d] to be due in 72 hours, but got '%v'", taskID, testGot)

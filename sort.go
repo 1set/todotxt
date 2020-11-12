@@ -26,28 +26,38 @@ const (
 	SortProjectDesc
 )
 
-// Sort allows a TaskList to be sorted by certain predefined fields.
+// Sort allows a TaskList to be sorted by certain predefined fields, multiple-key sorting is supported.
 // See constants Sort* for fields and sort order.
-func (tasklist *TaskList) Sort(sortFlag int) error {
-	switch sortFlag {
-	case SortTaskIDAsc, SortTaskIDDesc:
-		tasklist.sortByTaskID(sortFlag)
-	case SortTodoTextAsc, SortTodoTextDesc:
-		tasklist.sortByTodoText(sortFlag)
-	case SortPriorityAsc, SortPriorityDesc:
-		tasklist.sortByPriority(sortFlag)
-	case SortCreatedDateAsc, SortCreatedDateDesc:
-		tasklist.sortByCreatedDate(sortFlag)
-	case SortCompletedDateAsc, SortCompletedDateDesc:
-		tasklist.sortByCompletedDate(sortFlag)
-	case SortDueDateAsc, SortDueDateDesc:
-		tasklist.sortByDueDate(sortFlag)
-	case SortContextAsc, SortContextDesc:
-		tasklist.sortByContext(sortFlag)
-	case SortProjectAsc, SortProjectDesc:
-		tasklist.sortByProject(sortFlag)
-	default:
-		return errors.New("unrecognized sort option")
+func (tasklist *TaskList) Sort(flag int, flags ...int) error {
+	combined := make([]int, len(flags)+1)
+	j := 0
+	for i := len(flags) - 1; i >= 0; i-- {
+		combined[j] = flags[i]
+		j++
+	}
+	combined[j] = flag
+
+	for _, flag := range combined {
+		switch flag {
+		case SortTaskIDAsc, SortTaskIDDesc:
+			tasklist.sortByTaskID(flag)
+		case SortTodoTextAsc, SortTodoTextDesc:
+			tasklist.sortByTodoText(flag)
+		case SortPriorityAsc, SortPriorityDesc:
+			tasklist.sortByPriority(flag)
+		case SortCreatedDateAsc, SortCreatedDateDesc:
+			tasklist.sortByCreatedDate(flag)
+		case SortCompletedDateAsc, SortCompletedDateDesc:
+			tasklist.sortByCompletedDate(flag)
+		case SortDueDateAsc, SortDueDateDesc:
+			tasklist.sortByDueDate(flag)
+		case SortContextAsc, SortContextDesc:
+			tasklist.sortByContext(flag)
+		case SortProjectAsc, SortProjectDesc:
+			tasklist.sortByProject(flag)
+		default:
+			return errors.New("unrecognized sort option")
+		}
 	}
 	return nil
 }

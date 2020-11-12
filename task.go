@@ -124,7 +124,7 @@ func ParseTask(text string) (*Task, error) {
 		task.Completed = true
 		// Check for completed date
 		if completedDateRx.MatchString(task.Original) {
-			if date, err := time.Parse(DateLayout, completedDateRx.FindStringSubmatch(task.Original)[1]); err == nil {
+			if date, err := parseTime(completedDateRx.FindStringSubmatch(task.Original)[1]); err == nil {
 				task.CompletedDate = date
 			} else {
 				return nil, err
@@ -144,7 +144,7 @@ func ParseTask(text string) (*Task, error) {
 
 	// Check for created date
 	if createdDateRx.MatchString(task.Original) {
-		if date, err := time.Parse(DateLayout, createdDateRx.FindStringSubmatch(task.Original)[2]); err == nil {
+		if date, err := parseTime(createdDateRx.FindStringSubmatch(task.Original)[2]); err == nil {
 			task.CreatedDate = date
 			task.Todo = createdDateRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 		} else {
@@ -187,7 +187,7 @@ func ParseTask(text string) (*Task, error) {
 		for _, match := range matches {
 			key, value := match[2], match[3]
 			if key == "due" { // due date is a known addon tag, it has its own struct field
-				if date, err := time.Parse(DateLayout, value); err == nil {
+				if date, err := parseTime(value); err == nil {
 					task.DueDate = date
 				} else {
 					return nil, err
@@ -270,7 +270,7 @@ func (task *Task) HasDueDate() bool {
 // You should check Task.Completed first if needed.
 func (task *Task) IsOverdue() bool {
 	if task.HasDueDate() {
-		return task.DueDate.Before(time.Now())
+		return task.Due() < 0
 	}
 	return false
 }
@@ -280,5 +280,5 @@ func (task *Task) IsOverdue() bool {
 // Just as with IsOverdue(), this function does also not take the Completed flag into consideration.
 // You should check Task.Completed first if needed.
 func (task *Task) Due() time.Duration {
-	return time.Until(task.DueDate)
+	return time.Until(task.DueDate.AddDate(0, 0, 1))
 }
