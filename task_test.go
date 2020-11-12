@@ -1,6 +1,7 @@
 package todotxt
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
@@ -442,13 +443,38 @@ func TestTaskDueDate(t *testing.T) {
 		t.Errorf("Expected Task[%d] to have no due date, but got '%v'", taskID, testTasklist[taskID-1].DueDate)
 	}
 
-	task, err := ParseTask("Hello Today due:2020-11-13")
+	task, err := ParseTask(fmt.Sprintf("Hello Yesterday Task due:%s", time.Now().AddDate(0, 0, -1).Format(DateLayout)))
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("DueDate: %v", task.DueDate)
-	t.Logf("Due: %v", task.Due())
-	t.Logf("IsOver: %v", task.IsOverdue())
+	if due := task.Due(); due > 0 {
+		t.Errorf("Expected Due() to be non-positive, but got %v", due)
+	}
+	if od := task.IsOverdue(); !od {
+		t.Errorf("Expected IsOverdue() to be true, but got %v", od)
+	}
+
+	task, err = ParseTask(fmt.Sprintf("Hello Today Task due:%s", time.Now().Format(DateLayout)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if due := task.Due(); due > 24*time.Hour {
+		t.Errorf("Expected Due() to be less than one day, but got %v", due)
+	}
+	if od := task.IsOverdue(); od {
+		t.Errorf("Expected IsOverdue() to be false, but got %v", od)
+	}
+
+	task, err = ParseTask(fmt.Sprintf("Hello Tomorrow Task due:%s", time.Now().AddDate(0, 0, 1).Format(DateLayout)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if due := task.Due(); !((24*time.Hour < due) && (due <= 48*time.Hour)) {
+		t.Errorf("Expected Due() to be 1~2 days, but got %v", due)
+	}
+	if od := task.IsOverdue(); od {
+		t.Errorf("Expected IsOverdue() to be false, but got %v", od)
+	}
 }
 
 func TestTaskAddonTags(t *testing.T) {
@@ -612,7 +638,7 @@ func TestTaskIsOverdue(t *testing.T) {
 	if testGot.(bool) {
 		t.Errorf("Expected Task[%d] not to be overdue, but got '%v'", taskID, testGot)
 	}
-	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, 1)
+	testTasklist[taskID-1].DueDate = time.Now()
 	testGot = testTasklist[taskID-1].Due()
 	if testGot.(time.Duration).Hours() < 23 ||
 		testGot.(time.Duration).Hours() > 25 {
@@ -624,13 +650,13 @@ func TestTaskIsOverdue(t *testing.T) {
 	if !testGot.(bool) {
 		t.Errorf("Expected Task[%d] to be overdue, but got '%v'", taskID, testGot)
 	}
-	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, -3)
+	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, -4)
 	testGot = -testTasklist[taskID-1].Due()
 	if testGot.(time.Duration).Hours() < 71 || testGot.(time.Duration).Hours() > 73 {
 		t.Errorf("Expected Task[%d] to be due since 72 hours, but got '%v'", taskID, testGot)
 	}
 
-	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, 3)
+	testTasklist[taskID-1].DueDate = time.Now().AddDate(0, 0, 2)
 	testGot = testTasklist[taskID-1].Due()
 	if testGot.(time.Duration).Hours() < 71 || testGot.(time.Duration).Hours() > 73 {
 		t.Errorf("Expected Task[%d] to be due in 72 hours, but got '%v'", taskID, testGot)

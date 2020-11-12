@@ -270,7 +270,7 @@ func (task *Task) HasDueDate() bool {
 // You should check Task.Completed first if needed.
 func (task *Task) IsOverdue() bool {
 	if task.HasDueDate() {
-		return task.DueDate.Before(time.Now())
+		return task.Due() < 0
 	}
 	return false
 }
@@ -280,5 +280,5 @@ func (task *Task) IsOverdue() bool {
 // Just as with IsOverdue(), this function does also not take the Completed flag into consideration.
 // You should check Task.Completed first if needed.
 func (task *Task) Due() time.Duration {
-	return time.Until(task.DueDate)
+	return time.Until(task.DueDate.AddDate(0, 0, 1))
 }
