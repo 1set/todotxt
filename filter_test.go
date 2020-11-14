@@ -8,7 +8,7 @@ func TestTaskListFilter(t *testing.T) {
 	}
 
 	// Filter list to get only completed tasks
-	completedList := testTasklist.Filter(func(t Task) bool { return t.Completed })
+	completedList := testTasklist.Filter(FilterCompleted)
 	testExpected = 33
 	testGot = len(*completedList)
 	if testGot != testExpected {

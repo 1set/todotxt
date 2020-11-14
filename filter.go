@@ -11,3 +11,8 @@ func (tasklist *TaskList) Filter(predicate func(Task) bool) *TaskList {
 	}
 	return &newList
 }
+
+// FilterCompleted filters completed tasks.
+func FilterCompleted(t Task) bool {
+	return t.Completed
+}
