@@ -16,7 +16,7 @@ func TestTaskListFilter(t *testing.T) {
 	}
 
 	// Filter list to get only tasks with a due date
-	dueDateList := testTasklist.Filter(func(t Task) bool { return t.HasDueDate() })
+	dueDateList := testTasklist.Filter(FilterHasDueDate)
 	testExpected = 26
 	testGot = len(*dueDateList)
 	if testGot != testExpected {
@@ -24,9 +24,7 @@ func TestTaskListFilter(t *testing.T) {
 	}
 
 	// Filter list to get only tasks with "B" priority
-	prioBList := testTasklist.Filter(func(t Task) bool {
-		return t.HasPriority() && t.Priority == "B"
-	})
+	prioBList := testTasklist.Filter(FilterByPriority("B"))
 	testExpected = 17
 	testGot = len(*prioBList)
 	if testGot != testExpected {
