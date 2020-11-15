@@ -24,7 +24,7 @@ func TestTaskListFilter(t *testing.T) {
 	}
 
 	// Filter list to get only tasks with "B" priority
-	prioBList := testTasklist.Filter(FilterByPriority("B"))
+	prioBList := testTasklist.Filter(FilterByPriority("b"))
 	testExpected = 17
 	testGot = len(*prioBList)
 	if testGot != testExpected {
