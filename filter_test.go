@@ -36,10 +36,20 @@ func TestTaskListFilterHelpers(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputFilter); err != nil {
 		t.Fatal(err)
 	}
-	filteredList := testTasklist.Filter(FilterCompleted)
-	testExpected = 9
-	testGot = len(*filteredList)
-	if testGot != testExpected {
-		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
+	testCases := []struct {
+		predicate func(Task) bool
+		number    int
+	}{
+		{FilterCompleted, 9},
+		{FilterNotCompleted, 17},
+	}
+
+	for i, tt := range testCases {
+		filteredList := testTasklist.Filter(tt.predicate)
+		testExpected = tt.number
+		testGot = len(*filteredList)
+		if testGot != testExpected {
+			t.Errorf("Case #%d, Expected TaskList to contain %d tasks, but got %d: [%v]", i+1, testExpected, testGot, filteredList.String())
+		}
 	}
 }
