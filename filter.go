@@ -14,14 +14,16 @@ func (tasklist *TaskList) Filter(predicate func(Task) bool) *TaskList {
 	return &newList
 }
 
+// FilterReverse returns a reversed filter for existing predicate.
+func FilterReverse(predicate func(Task) bool) func(Task) bool {
+	return func(t Task) bool {
+		return !predicate(t)
+	}
+}
+
 // FilterCompleted filters completed tasks.
 func FilterCompleted(t Task) bool {
 	return t.Completed
-}
-
-// FilterNotCompleted filters tasks that have not been completed.
-func FilterNotCompleted(t Task) bool {
-	return !t.Completed
 }
 
 // FilterDueToday filters tasks that are due today.

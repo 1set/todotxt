@@ -39,6 +39,7 @@ func TestTaskListFilterHelpers(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputFilter); err != nil {
 		t.Fatal(err)
 	}
+
 	now := time.Now()
 	testTasklist[0].DueDate = now.AddDate(0, 0, -1)
 	testTasklist[1].DueDate = now
@@ -49,7 +50,8 @@ func TestTaskListFilterHelpers(t *testing.T) {
 		number    int
 	}{
 		{FilterCompleted, 9},
-		{FilterNotCompleted, 17},
+		{FilterReverse(FilterCompleted), 17},
+		{FilterReverse(FilterReverse(FilterCompleted)), 9},
 		{FilterDueToday, 1},
 		{FilterOverdue, 9},
 		{FilterHasDueDate, 12},
