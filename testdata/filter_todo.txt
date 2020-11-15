@@ -1,4 +1,4 @@
-This is a task should be due yester due:2020-11-15
+This is a task should be due yesterday due:2020-11-15
 This is a task should be due today due:2020-11-16
 This is a task should be due tomorrow due:2020-11-17
 (A) @Phone Call Mom @Call +Family

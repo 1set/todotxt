@@ -1,6 +1,9 @@
 package todotxt
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func TestTaskListFilter(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
@@ -36,12 +39,31 @@ func TestTaskListFilterHelpers(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputFilter); err != nil {
 		t.Fatal(err)
 	}
+	now := time.Now()
+	testTasklist[0].DueDate = now.AddDate(0, 0, -1)
+	testTasklist[1].DueDate = now
+	testTasklist[2].DueDate = now.AddDate(0, 0, 1)
+
 	testCases := []struct {
 		predicate func(Task) bool
 		number    int
 	}{
 		{FilterCompleted, 9},
 		{FilterNotCompleted, 17},
+		{FilterDueToday, 1},
+		{FilterOverdue, 9},
+		{FilterHasDueDate, 12},
+		{FilterHasPriority, 9},
+		{FilterByPriority("a"), 2},
+		{FilterByPriority("B"), 5},
+		{FilterByPriority("c"), 2},
+		{FilterByPriority("e"), 0},
+		{FilterByProject("unknown"), 0},
+		{FilterByProject("Family"), 2},
+		{FilterByProject("planning"), 2},
+		{FilterByContext("unknown"), 0},
+		{FilterByContext("call"), 2},
+		{FilterByContext("go"), 9},
 	}
 
 	for i, tt := range testCases {
