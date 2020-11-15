@@ -31,3 +31,15 @@ func TestTaskListFilter(t *testing.T) {
 		t.Errorf("Expected TaskList to contain %d tasks, but got %d", testExpected, testGot)
 	}
 }
+
+func TestTaskListFilterHelpers(t *testing.T) {
+	if err := testTasklist.LoadFromPath(testInputFilter); err != nil {
+		t.Fatal(err)
+	}
+	filteredList := testTasklist.Filter(FilterCompleted)
+	testExpected = 9
+	testGot = len(*filteredList)
+	if testGot != testExpected {
+		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
+	}
+}

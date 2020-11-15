@@ -7,8 +7,9 @@ import (
 )
 
 var (
-	testInputSort                       = "testdata/sort_todo.txt"
 	testInputTask                       = "testdata/task_todo.txt"
+	testInputSort                       = "testdata/sort_todo.txt"
+	testInputFilter                     = "testdata/filter_todo.txt"
 	testInputTasklist                   = "testdata/tasklist_todo.txt"
 	testInputTasklistCreatedDateError   = "testdata/tasklist_createdDate_error.txt"
 	testInputTasklistDueDateError       = "testdata/tasklist_dueDate_error.txt"
