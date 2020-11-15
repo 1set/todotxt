@@ -7,20 +7,6 @@ import (
 	"time"
 )
 
-var (
-	testInputTasklist                   = "testdata/tasklist_todo.txt"
-	testInputTasklistCreatedDateError   = "testdata/tasklist_createdDate_error.txt"
-	testInputTasklistDueDateError       = "testdata/tasklist_dueDate_error.txt"
-	testInputTasklistCompletedDateError = "testdata/tasklist_completedDate_error.txt"
-	testInputTasklistScannerError       = "testdata/tasklist_scanner_error.txt"
-	testOutput                          = "testdata/output_todo.txt"
-	testExpectedOutput                  = "testdata/expected_todo.txt"
-	testTasklist                        TaskList
-	testExpectedList                    []string
-	testExpected                        interface{}
-	testGot                             interface{}
-)
-
 func BenchmarkLoadFromPath(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, _ = LoadFromPath(testInputTasklist)

@@ -6,10 +6,6 @@ import (
 	"time"
 )
 
-var (
-	testInputTask = "testdata/task_todo.txt"
-)
-
 func BenchmarkParseTask(b *testing.B) {
 	s := "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12   "
 	b.ResetTimer()

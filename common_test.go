@@ -6,6 +6,22 @@ import (
 	"testing"
 )
 
+var (
+	testInputSort                       = "testdata/sort_todo.txt"
+	testInputTask                       = "testdata/task_todo.txt"
+	testInputTasklist                   = "testdata/tasklist_todo.txt"
+	testInputTasklistCreatedDateError   = "testdata/tasklist_createdDate_error.txt"
+	testInputTasklistDueDateError       = "testdata/tasklist_dueDate_error.txt"
+	testInputTasklistCompletedDateError = "testdata/tasklist_completedDate_error.txt"
+	testInputTasklistScannerError       = "testdata/tasklist_scanner_error.txt"
+	testOutput                          = "testdata/output_todo.txt"
+	testExpectedOutput                  = "testdata/expected_todo.txt"
+	testTasklist                        TaskList
+	testExpectedList                    []string
+	testExpected                        interface{}
+	testGot                             interface{}
+)
+
 func compareSlices(list1 []string, list2 []string) bool {
 	if len(list1) != len(list2) {
 		return false
