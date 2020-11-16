@@ -5,6 +5,14 @@ import (
 	"time"
 )
 
+func BenchmarkTaskList_Filter(b *testing.B) {
+	testTasklist.LoadFromPath(testInputFilter)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = testTasklist.Filter(FilterNot(FilterCompleted)).Filter(FilterByPriority("A"), FilterByPriority("B"))
+	}
+}
+
 func TestTaskListFilter(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
 		t.Fatal(err)

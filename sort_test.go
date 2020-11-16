@@ -5,6 +5,14 @@ import (
 	"testing"
 )
 
+func BenchmarkTaskList_Sort(b *testing.B) {
+	testTasklist.LoadFromPath(testInputSort)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = testTasklist.Sort(SortPriorityAsc, SortCreatedDateAsc, SortTodoTextDesc)
+	}
+}
+
 func TestTaskSortByPriority(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
 	taskID := 0

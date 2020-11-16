@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func BenchmarkTaskSegments(b *testing.B) {
+func BenchmarkTask_Segments(b *testing.B) {
 	s := "x 2014-01-02 (B) 2013-12-30 Create golang library test cases @Go +go-todotxt test:benchmark due:2014-01-12   "
 	task, _ := ParseTask(s)
 	b.ResetTimer()
