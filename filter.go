@@ -36,14 +36,18 @@ func FilterOverdue(t Task) bool {
 	return t.IsOverdue()
 }
 
+// FilterHasDueDate filters tasks that have due date.
 func FilterHasDueDate(t Task) bool {
 	return t.HasDueDate()
 }
 
+// FilterHasPriority filters tasks that have priority.
 func FilterHasPriority(t Task) bool {
 	return t.HasPriority()
 }
 
+// FilterByPriority returns a filter for tasks that have the given priority.
+// String comparison in the filters is case-insensitive.
 func FilterByPriority(priority string) func(Task) bool {
 	priority = strings.ToUpper(priority)
 	return func(t Task) bool {
@@ -51,6 +55,8 @@ func FilterByPriority(priority string) func(Task) bool {
 	}
 }
 
+// FilterByProject returns a filter for tasks that have the given project.
+// String comparison in the filters is case-insensitive.
 func FilterByProject(project string) func(Task) bool {
 	return func(t Task) bool {
 		for _, p := range t.Projects {
@@ -62,6 +68,8 @@ func FilterByProject(project string) func(Task) bool {
 	}
 }
 
+// FilterByContext returns a filter for tasks that have the given context.
+// String comparison in the filters is case-insensitive.
 func FilterByContext(context string) func(Task) bool {
 	return func(t Task) bool {
 		for _, c := range t.Contexts {
