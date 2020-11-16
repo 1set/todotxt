@@ -19,7 +19,7 @@ Based on [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) from [Fabio 
 - [x] Negative `Due()` for overdue tasks
 - [x] More sorting options: by ID, text, context, project
 - [x] Sort with multiple options
-- [ ] Preset filters
+- [x] Preset filters
 
 ## Credits
 
