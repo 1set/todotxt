@@ -2,9 +2,12 @@ package todotxt
 
 import "strings"
 
-// Filter filters the current TaskList for the given predicate (a function that takes a task as input and returns a bool),
+// Predicate is a function that takes a task as input and returns a bool.
+type Predicate func(Task) bool
+
+// Filter filters the current TaskList for the given predicate,
 // and returns a new TaskList. The original TaskList is not modified.
-func (tasklist *TaskList) Filter(predicate func(Task) bool) *TaskList {
+func (tasklist *TaskList) Filter(predicate Predicate) *TaskList {
 	var newList TaskList
 	for _, t := range *tasklist {
 		if predicate(t) {
@@ -15,7 +18,7 @@ func (tasklist *TaskList) Filter(predicate func(Task) bool) *TaskList {
 }
 
 // FilterReverse returns a reversed filter for existing predicate.
-func FilterReverse(predicate func(Task) bool) func(Task) bool {
+func FilterReverse(predicate Predicate) Predicate {
 	return func(t Task) bool {
 		return !predicate(t)
 	}
@@ -48,7 +51,7 @@ func FilterHasPriority(t Task) bool {
 
 // FilterByPriority returns a filter for tasks that have the given priority.
 // String comparison in the filters is case-insensitive.
-func FilterByPriority(priority string) func(Task) bool {
+func FilterByPriority(priority string) Predicate {
 	priority = strings.ToUpper(priority)
 	return func(t Task) bool {
 		return t.Priority == priority
@@ -57,7 +60,7 @@ func FilterByPriority(priority string) func(Task) bool {
 
 // FilterByProject returns a filter for tasks that have the given project.
 // String comparison in the filters is case-insensitive.
-func FilterByProject(project string) func(Task) bool {
+func FilterByProject(project string) Predicate {
 	return func(t Task) bool {
 		for _, p := range t.Projects {
 			if strings.EqualFold(p, project) {
@@ -70,7 +73,7 @@ func FilterByProject(project string) func(Task) bool {
 
 // FilterByContext returns a filter for tasks that have the given context.
 // String comparison in the filters is case-insensitive.
-func FilterByContext(context string) func(Task) bool {
+func FilterByContext(context string) Predicate {
 	return func(t Task) bool {
 		for _, c := range t.Contexts {
 			if strings.EqualFold(c, context) {

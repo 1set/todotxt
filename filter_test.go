@@ -46,7 +46,7 @@ func TestTaskListFilterHelpers(t *testing.T) {
 	testTasklist[2].DueDate = now.AddDate(0, 0, 1)
 
 	testCases := []struct {
-		predicate func(Task) bool
+		predicate Predicate
 		number    int
 	}{
 		{FilterCompleted, 9},
