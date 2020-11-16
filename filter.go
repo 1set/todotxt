@@ -35,6 +35,11 @@ func FilterCompleted(t Task) bool {
 	return t.Completed
 }
 
+// FilterNotCompleted filters tasks that are not completed.
+func FilterNotCompleted(t Task) bool {
+	return !t.Completed
+}
+
 // FilterDueToday filters tasks that are due today.
 func FilterDueToday(t Task) bool {
 	return t.IsDueToday()

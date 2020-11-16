@@ -92,6 +92,7 @@ func TestTaskListFilterHelpers(t *testing.T) {
 		number    int
 	}{
 		{FilterCompleted, 9},
+		{FilterNotCompleted, 17},
 		{FilterNot(FilterCompleted), 17},
 		{FilterNot(FilterNot(FilterCompleted)), 9},
 		{FilterDueToday, 1},

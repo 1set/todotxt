@@ -50,6 +50,7 @@ func ExampleTaskList_Sort() {
 		log.Fatal(err)
 	}
 
+	// sort tasks by project and then priority in ascending order
 	if err := tasklist.Sort(SortProjectAsc, SortPriorityAsc); err != nil {
 		log.Fatal(err)
 	}
@@ -71,7 +72,8 @@ func ExampleTaskList_Filter() {
 		log.Fatal(err)
 	}
 
-	tasklist = *tasklist.Filter(FilterNot(FilterCompleted)).Filter(FilterByPriority("A"), FilterByPriority("B"))
+	// filter tasks that are not overdue and are priority A or B.
+	tasklist = *tasklist.Filter(FilterNot(FilterOverdue)).Filter(FilterByPriority("A"), FilterByPriority("B"))
 
 	fmt.Println(tasklist[0].Todo)
 	fmt.Println(tasklist[1].Projects)
