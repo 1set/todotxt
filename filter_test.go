@@ -63,8 +63,8 @@ func TestTaskListFilterHelpers(t *testing.T) {
 		number    int
 	}{
 		{FilterCompleted, 9},
-		{FilterReverse(FilterCompleted), 17},
-		{FilterReverse(FilterReverse(FilterCompleted)), 9},
+		{FilterNot(FilterCompleted), 17},
+		{FilterNot(FilterNot(FilterCompleted)), 9},
 		{FilterDueToday, 1},
 		{FilterOverdue, 9},
 		{FilterHasDueDate, 12},

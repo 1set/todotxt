@@ -23,8 +23,8 @@ func (tasklist *TaskList) Filter(predicate Predicate, predicates ...Predicate) *
 	return &newList
 }
 
-// FilterReverse returns a reversed filter for existing predicate.
-func FilterReverse(predicate Predicate) Predicate {
+// FilterNot returns a reversed filter for existing predicate.
+func FilterNot(predicate Predicate) Predicate {
 	return func(t Task) bool {
 		return !predicate(t)
 	}
