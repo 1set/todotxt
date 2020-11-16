@@ -43,3 +43,42 @@ func ExampleTaskList_LoadFromPath() {
 	// C
 	// true
 }
+
+func ExampleTaskList_Sort() {
+	var tasklist TaskList
+	if err := tasklist.LoadFromPath("testdata/todo.txt"); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := tasklist.Sort(SortProjectAsc, SortPriorityAsc); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(tasklist[0].Todo)
+	fmt.Println(tasklist[1].Projects)
+	fmt.Println(tasklist[2].Priority)
+	fmt.Println(tasklist[3].Contexts)
+	// Output:
+	// Call Mom
+	// [Health]
+	// B
+	// [Computer]
+}
+
+func ExampleTaskList_Filter() {
+	var tasklist TaskList
+	if err := tasklist.LoadFromPath("testdata/todo.txt"); err != nil {
+		log.Fatal(err)
+	}
+
+	tasklist = *tasklist.Filter(FilterNot(FilterCompleted)).Filter(FilterByPriority("A"), FilterByPriority("B"))
+
+	fmt.Println(tasklist[0].Todo)
+	fmt.Println(tasklist[1].Projects)
+	fmt.Println(tasklist[2].Priority)
+
+	// Output:
+	// Call Mom
+	// [Health]
+	// B
+}
