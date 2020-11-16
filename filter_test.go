@@ -35,6 +35,19 @@ func TestTaskListFilter(t *testing.T) {
 	}
 }
 
+func TestTaskListFilterByMultiplePredicates(t *testing.T) {
+	if err := testTasklist.LoadFromPath(testInputFilter); err != nil {
+		t.Fatal(err)
+	}
+
+	filteredList := testTasklist.Filter(FilterHasPriority).Filter(FilterOverdue).Filter(FilterCompleted)
+	testExpected = 2
+	testGot = len(*filteredList)
+	if testGot != testExpected {
+		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
+	}
+}
+
 func TestTaskListFilterHelpers(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputFilter); err != nil {
 		t.Fatal(err)
