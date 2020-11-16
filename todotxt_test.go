@@ -7,20 +7,6 @@ import (
 	"time"
 )
 
-var (
-	testInputTasklist                   = "testdata/tasklist_todo.txt"
-	testInputTasklistCreatedDateError   = "testdata/tasklist_createdDate_error.txt"
-	testInputTasklistDueDateError       = "testdata/tasklist_dueDate_error.txt"
-	testInputTasklistCompletedDateError = "testdata/tasklist_completedDate_error.txt"
-	testInputTasklistScannerError       = "testdata/tasklist_scanner_error.txt"
-	testOutput                          = "testdata/output_todo.txt"
-	testExpectedOutput                  = "testdata/expected_todo.txt"
-	testTasklist                        TaskList
-	testExpectedList                    []string
-	testExpected                        interface{}
-	testGot                             interface{}
-)
-
 func BenchmarkLoadFromPath(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, _ = LoadFromPath(testInputTasklist)
@@ -472,38 +458,6 @@ func TestTaskListRemoveTask(t *testing.T) {
 
 	if err := testTasklist.RemoveTask(NewTask()); err == nil {
 		t.Errorf("Expected no Task to be found for removal")
-	}
-}
-
-func TestTaskListFilter(t *testing.T) {
-	if err := testTasklist.LoadFromPath(testInputTasklist); err != nil {
-		t.Fatal(err)
-	}
-
-	// Filter list to get only completed tasks
-	completedList := testTasklist.Filter(func(t Task) bool { return t.Completed })
-	testExpected = 33
-	testGot = len(*completedList)
-	if testGot != testExpected {
-		t.Errorf("Expected TaskList to contain %d tasks, but got %d", testExpected, testGot)
-	}
-
-	// Filter list to get only tasks with a due date
-	dueDateList := testTasklist.Filter(func(t Task) bool { return t.HasDueDate() })
-	testExpected = 26
-	testGot = len(*dueDateList)
-	if testGot != testExpected {
-		t.Errorf("Expected TaskList to contain %d tasks, but got %d", testExpected, testGot)
-	}
-
-	// Filter list to get only tasks with "B" priority
-	prioBList := testTasklist.Filter(func(t Task) bool {
-		return t.HasPriority() && t.Priority == "B"
-	})
-	testExpected = 17
-	testGot = len(*prioBList)
-	if testGot != testExpected {
-		t.Errorf("Expected TaskList to contain %d tasks, but got %d", testExpected, testGot)
 	}
 }
 

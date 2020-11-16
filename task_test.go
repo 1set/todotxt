@@ -6,10 +6,6 @@ import (
 	"time"
 )
 
-var (
-	testInputTask = "testdata/task_todo.txt"
-)
-
 func BenchmarkParseTask(b *testing.B) {
 	s := "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt due:2014-01-12   "
 	b.ResetTimer()
@@ -442,6 +438,9 @@ func TestTaskDueDate(t *testing.T) {
 	if testTasklist[taskID-1].HasDueDate() {
 		t.Errorf("Expected Task[%d] to have no due date, but got '%v'", taskID, testTasklist[taskID-1].DueDate)
 	}
+	if dt := testTasklist[taskID-1].IsDueToday(); dt {
+		t.Errorf("Expected IsDueToday() to be false, but got %v", dt)
+	}
 
 	task, err := ParseTask(fmt.Sprintf("Hello Yesterday Task due:%s", time.Now().AddDate(0, 0, -1).Format(DateLayout)))
 	if err != nil {
@@ -453,16 +452,22 @@ func TestTaskDueDate(t *testing.T) {
 	if od := task.IsOverdue(); !od {
 		t.Errorf("Expected IsOverdue() to be true, but got %v", od)
 	}
+	if dt := task.IsDueToday(); dt {
+		t.Errorf("Expected IsDueToday() to be false, but got %v", dt)
+	}
 
 	task, err = ParseTask(fmt.Sprintf("Hello Today Task due:%s", time.Now().Format(DateLayout)))
 	if err != nil {
 		t.Fatal(err)
 	}
 	if due := task.Due(); due > 24*time.Hour {
-		t.Errorf("Expected Due() to be less than one day, but got %v", due)
+		t.Errorf("Expected Due() to be not greater than one day, but got %v", due)
 	}
 	if od := task.IsOverdue(); od {
 		t.Errorf("Expected IsOverdue() to be false, but got %v", od)
+	}
+	if dt := task.IsDueToday(); !dt {
+		t.Errorf("Expected IsDueToday() to be true, but got %v", dt)
 	}
 
 	task, err = ParseTask(fmt.Sprintf("Hello Tomorrow Task due:%s", time.Now().AddDate(0, 0, 1).Format(DateLayout)))
@@ -474,6 +479,9 @@ func TestTaskDueDate(t *testing.T) {
 	}
 	if od := task.IsOverdue(); od {
 		t.Errorf("Expected IsOverdue() to be false, but got %v", od)
+	}
+	if dt := task.IsDueToday(); dt {
+		t.Errorf("Expected IsDueToday() to be false, but got %v", dt)
 	}
 }
 

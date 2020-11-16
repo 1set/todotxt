@@ -275,6 +275,15 @@ func (task *Task) IsOverdue() bool {
 	return false
 }
 
+// IsDueToday returns true if the task is due todasy.
+func (task *Task) IsDueToday() bool {
+	if task.HasDueDate() {
+		due := task.Due()
+		return 0 < due && due <= oneDay
+	}
+	return false
+}
+
 // Due returns the duration left until due date from now. The duration is negative if the task is overdue.
 //
 // Just as with IsOverdue(), this function does also not take the Completed flag into consideration.

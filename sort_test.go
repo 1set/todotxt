@@ -5,10 +5,6 @@ import (
 	"testing"
 )
 
-var (
-	testInputSort = "testdata/sort_todo.txt"
-)
-
 func TestTaskSortByPriority(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
 	taskID := 0

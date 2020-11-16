@@ -5,6 +5,7 @@ import "time"
 var (
 	emptyStr    string
 	whitespaces = "\t\n\r "
+	oneDay      = 24 * time.Hour
 )
 
 // isEmpty checks if the string is empty.
