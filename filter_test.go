@@ -40,7 +40,7 @@ func TestTaskListFilterByMultiplePredicates(t *testing.T) {
 		t.Fatal(err)
 	}
 	now := time.Now()
-	testTasklist[0].DueDate = now.AddDate(0, 0, -1)
+	testTasklist[0].DueDate = now.AddDate(0, 0, -2)
 	testTasklist[1].DueDate = now
 	testTasklist[2].DueDate = now.AddDate(0, 0, 1)
 
@@ -75,7 +75,7 @@ func TestTaskListFilterHelpers(t *testing.T) {
 	}
 
 	now := time.Now()
-	testTasklist[0].DueDate = now.AddDate(0, 0, -1)
+	testTasklist[0].DueDate = now.AddDate(0, 0, -2)
 	testTasklist[1].DueDate = now
 	testTasklist[2].DueDate = now.AddDate(0, 0, 1)
 
