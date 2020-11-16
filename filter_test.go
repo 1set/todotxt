@@ -39,9 +39,30 @@ func TestTaskListFilterByMultiplePredicates(t *testing.T) {
 	if err := testTasklist.LoadFromPath(testInputFilter); err != nil {
 		t.Fatal(err)
 	}
+	now := time.Now()
+	testTasklist[0].DueDate = now.AddDate(0, 0, -1)
+	testTasklist[1].DueDate = now
+	testTasklist[2].DueDate = now.AddDate(0, 0, 1)
 
+	// and
 	filteredList := testTasklist.Filter(FilterHasPriority).Filter(FilterOverdue).Filter(FilterCompleted)
 	testExpected = 2
+	testGot = len(*filteredList)
+	if testGot != testExpected {
+		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
+	}
+
+	// or -- filters tasks with priority A or B
+	filteredList = testTasklist.Filter(FilterByPriority("a"), FilterByPriority("b"))
+	testExpected = 7
+	testGot = len(*filteredList)
+	if testGot != testExpected {
+		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
+	}
+
+	// or -- filters incompleted tasks that are overdue or have set priority
+	filteredList = testTasklist.Filter(FilterNot(FilterCompleted)).Filter(FilterOverdue, FilterHasPriority)
+	testExpected = 10
 	testGot = len(*filteredList)
 	if testGot != testExpected {
 		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
