@@ -1,3 +1,3 @@
-module github.com/vt128/todotxt
+module github.com/1set/todotxt
 
 go 1.15

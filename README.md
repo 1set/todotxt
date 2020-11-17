@@ -2,12 +2,12 @@
 
 Yet another a Go library for Gina Trapani's todo.txt files. ✅
 
-[![GoDoc](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/vt128/todotxt)
-[![License](https://img.shields.io/github/license/vt128/todotxt)](https://github.com/vt128/todotxt/blob/master/LICENSE)
-[![GitHub Action Workflow](https://github.com/vt128/todotxt/workflows/build/badge.svg)](https://github.com/vt128/todotxt/actions?workflow=build)
-[![Go Report Card](https://goreportcard.com/badge/github.com/vt128/todotxt)](https://goreportcard.com/report/github.com/vt128/todotxt)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8d2b395a310c4d2e92ffa1c0f5010900)](https://app.codacy.com/gh/vt128/todotxt?utm_source=github.com&utm_medium=referral&utm_content=vt128/todotxt&utm_campaign=Badge_Grade)
-[![Codecov](https://codecov.io/gh/vt128/todotxt/branch/master/graph/badge.svg)](https://codecov.io/gh/vt128/todotxt)
+[![GoDoc](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/1set/todotxt)
+[![License](https://img.shields.io/github/license/1set/todotxt)](https://github.com/1set/todotxt/blob/master/LICENSE)
+[![GitHub Action Workflow](https://github.com/1set/todotxt/workflows/build/badge.svg)](https://github.com/1set/todotxt/actions?workflow=build)
+[![Go Report Card](https://goreportcard.com/badge/github.com/1set/todotxt)](https://goreportcard.com/report/github.com/1set/todotxt)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8d2b395a310c4d2e92ffa1c0f5010900)](https://app.codacy.com/gh/1set/todotxt?utm_source=github.com&utm_medium=referral&utm_content=1set/todotxt&utm_campaign=Badge_Grade)
+[![Codecov](https://codecov.io/gh/1set/todotxt/branch/master/graph/badge.svg)](https://codecov.io/gh/1set/todotxt)
 
 ## Features
 
