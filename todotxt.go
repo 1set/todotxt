@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
+
+	ys "github.com/1set/gut/ystring"
 )
 
 // TaskList represents a list of todo.txt task entries.
@@ -29,7 +31,7 @@ func NewTaskList() TaskList {
 // String returns a complete list of tasks in todo.txt format.
 func (tasklist TaskList) String() (text string) {
 	for _, task := range tasklist {
-		text += fmt.Sprintf("%s%s", task.String(), newLineStr)
+		text += fmt.Sprintf("%s%s", task.String(), ys.NewLine)
 	}
 	return text
 }
