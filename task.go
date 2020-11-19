@@ -24,7 +24,7 @@ var (
 
 // Task represents a todo.txt task entry.
 type Task struct {
-	ID             int    // Internal task id.
+	ID             int    // Internal task ID.
 	Original       string // Original raw task text.
 	Todo           string // Todo part of task text.
 	Priority       string
