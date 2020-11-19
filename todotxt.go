@@ -3,7 +3,6 @@ package todotxt
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -29,11 +28,13 @@ func NewTaskList() TaskList {
 }
 
 // String returns a complete list of tasks in todo.txt format.
-func (tasklist TaskList) String() (text string) {
+func (tasklist TaskList) String() string {
+	var sb strings.Builder
 	for _, task := range tasklist {
-		text += fmt.Sprintf("%s%s", task.String(), ys.NewLine)
+		sb.WriteString(task.String())
+		sb.WriteString(ys.NewLine)
 	}
-	return text
+	return sb.String()
 }
 
 // AddTask appends a Task to the current TaskList and takes care to set the Task.ID correctly, modifying the Task by the given pointer!
