@@ -59,36 +59,36 @@ func (task *Task) Task() string {
 // For example:
 //  "(A) 2013-07-23 Call Dad @Home @Phone +Family due:2013-07-31 customTag1:Important!"
 func (task Task) String() string {
-	var text string
+	var sb strings.Builder
 
 	if task.Completed {
-		text += "x "
+		sb.WriteString("x ")
 		if task.HasCompletedDate() {
-			text += fmt.Sprintf("%s ", task.CompletedDate.Format(DateLayout))
+			sb.WriteString(fmt.Sprintf("%s ", task.CompletedDate.Format(DateLayout)))
 		}
 	}
 
 	if task.HasPriority() {
-		text += fmt.Sprintf("(%s) ", task.Priority)
+		sb.WriteString(fmt.Sprintf("(%s) ", task.Priority))
 	}
 
 	if task.HasCreatedDate() {
-		text += fmt.Sprintf("%s ", task.CreatedDate.Format(DateLayout))
+		sb.WriteString(fmt.Sprintf("%s ", task.CreatedDate.Format(DateLayout)))
 	}
 
-	text += task.Todo
+	sb.WriteString(task.Todo)
 
 	if len(task.Contexts) > 0 {
 		sort.Strings(task.Contexts)
 		for _, context := range task.Contexts {
-			text += fmt.Sprintf(" @%s", context)
+			sb.WriteString(fmt.Sprintf(" @%s", context))
 		}
 	}
 
 	if len(task.Projects) > 0 {
 		sort.Strings(task.Projects)
 		for _, project := range task.Projects {
-			text += fmt.Sprintf(" +%s", project)
+			sb.WriteString(fmt.Sprintf(" +%s", project))
 		}
 	}
 
@@ -100,15 +100,15 @@ func (task Task) String() string {
 		}
 		sort.Strings(keys)
 		for _, key := range keys {
-			text += fmt.Sprintf(" %s:%s", key, task.AdditionalTags[key])
+			sb.WriteString(fmt.Sprintf(" %s:%s", key, task.AdditionalTags[key]))
 		}
 	}
 
 	if task.HasDueDate() {
-		text += fmt.Sprintf(" due:%s", task.DueDate.Format(DateLayout))
+		sb.WriteString(fmt.Sprintf(" due:%s", task.DueDate.Format(DateLayout)))
 	}
 
-	return text
+	return sb.String()
 }
 
 // ParseTask parses the input text string into a Task struct.
