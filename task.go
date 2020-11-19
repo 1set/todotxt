@@ -115,16 +115,17 @@ func (task Task) String() string {
 func ParseTask(text string) (*Task, error) {
 	var err error
 
+	oriText := strings.Trim(text, whitespaces)
 	task := Task{}
-	task.Original = strings.Trim(text, whitespaces)
-	task.Todo = task.Original
+	task.Original = oriText
+	task.Todo = oriText
 
 	// Check for completed
-	if completedRx.MatchString(task.Original) {
+	if completedRx.MatchString(oriText) {
 		task.Completed = true
 		// Check for completed date
-		if completedDateRx.MatchString(task.Original) {
-			if date, err := parseTime(completedDateRx.FindStringSubmatch(task.Original)[1]); err == nil {
+		if completedDateRx.MatchString(oriText) {
+			if date, err := parseTime(completedDateRx.FindStringSubmatch(oriText)[1]); err == nil {
 				task.CompletedDate = date
 			} else {
 				return nil, err
@@ -137,14 +138,14 @@ func ParseTask(text string) (*Task, error) {
 	}
 
 	// Check for priority
-	if priorityRx.MatchString(task.Original) {
-		task.Priority = priorityRx.FindStringSubmatch(task.Original)[2]
+	if priorityRx.MatchString(oriText) {
+		task.Priority = priorityRx.FindStringSubmatch(oriText)[2]
 		task.Todo = priorityRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 	}
 
 	// Check for created date
-	if createdDateRx.MatchString(task.Original) {
-		if date, err := parseTime(createdDateRx.FindStringSubmatch(task.Original)[2]); err == nil {
+	if createdDateRx.MatchString(oriText) {
+		if date, err := parseTime(createdDateRx.FindStringSubmatch(oriText)[2]); err == nil {
 			task.CreatedDate = date
 			task.Todo = createdDateRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 		} else {
@@ -154,7 +155,7 @@ func ParseTask(text string) (*Task, error) {
 
 	// function for collecting projects/contexts as slices from text
 	getSlice := func(rx *regexp.Regexp) []string {
-		matches := rx.FindAllStringSubmatch(task.Original, -1)
+		matches := rx.FindAllStringSubmatch(oriText, -1)
 		slice := make([]string, 0, len(matches))
 		seen := make(map[string]bool, len(matches))
 		for _, match := range matches {
@@ -169,20 +170,20 @@ func ParseTask(text string) (*Task, error) {
 	}
 
 	// Check for contexts
-	if contextRx.MatchString(task.Original) {
+	if contextRx.MatchString(oriText) {
 		task.Contexts = getSlice(contextRx)
 		task.Todo = contextRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 	}
 
 	// Check for projects
-	if projectRx.MatchString(task.Original) {
+	if projectRx.MatchString(oriText) {
 		task.Projects = getSlice(projectRx)
 		task.Todo = projectRx.ReplaceAllString(task.Todo, emptyStr) // Remove from Todo text
 	}
 
 	// Check for additional tags
-	if addonTagRx.MatchString(task.Original) {
-		matches := addonTagRx.FindAllStringSubmatch(task.Original, -1)
+	if addonTagRx.MatchString(oriText) {
+		matches := addonTagRx.FindAllStringSubmatch(oriText, -1)
 		tags := make(map[string]string, len(matches))
 		for _, match := range matches {
 			key, value := match[2], match[3]
