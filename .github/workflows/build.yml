@@ -34,10 +34,6 @@ jobs:
           go get github.com/sqs/goreturns
           go get golang.org/x/tools/cmd/goimports
           go get -v -t -d ./...
-          if [ -f Gopkg.toml ]; then
-              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-              dep ensure
-          fi
 
       - name: Go format
         shell: bash
