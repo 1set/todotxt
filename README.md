@@ -21,6 +21,35 @@ Based on [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) from [Fabio 
 - [x] More sorting options: by ID, text, context, project
 - [x] Preset filters
 
+## Usage
+
+A quick start example:
+
+```go
+import (
+	todo "github.com/1set/todotxt"
+)
+
+// ...
+
+if tasklist, err := todo.LoadFromPath("todo.txt"); err != nil {
+    log.Fatal(err)
+} else {
+    tasks := tasklist.Filter(todo.FilterNotCompleted).Filter(todo.FilterDueToday, todo.FilterHasPriority)
+    _ = tasks.Sort(todo.SortPriorityAsc, todo.SortProjectAsc)
+    for i, t := range tasks {
+        fmt.Println(t.Todo)
+        // oh really?
+        tasks[i].Complete()
+    }
+    if err = tasks.WriteToPath("today-todo.txt"); err != nil {
+        log.Fatal(err)
+    }
+}
+```
+
+For more examples and details, please check the [Go Doc](https://pkg.go.dev/github.com/1set/todotxt).
+
 ## Credits
 
 - Original [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) authored by [Fabio Berchtold](https://github.com/JamesClonk)
