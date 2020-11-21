@@ -73,7 +73,7 @@ func ExampleTaskList_Filter() {
 	}
 
 	// filter tasks that are not overdue and are priority A or B.
-	tasklist = *tasklist.Filter(FilterNot(FilterOverdue)).Filter(FilterByPriority("A"), FilterByPriority("B"))
+	tasklist = tasklist.Filter(FilterNot(FilterOverdue)).Filter(FilterByPriority("A"), FilterByPriority("B"))
 
 	fmt.Println(tasklist[0].Todo)
 	fmt.Println(tasklist[1].Projects)
