@@ -25,7 +25,7 @@ var _TaskSegmentType_index = [...]uint8{0, 11, 24, 32, 43, 51, 58, 65, 68, 75}
 
 func (i TaskSegmentType) String() string {
 	i -= 1
-	if i < 0 || i >= TaskSegmentType(len(_TaskSegmentType_index)-1) {
+	if i >= TaskSegmentType(len(_TaskSegmentType_index)-1) {
 		return "TaskSegmentType(" + strconv.FormatInt(int64(i+1), 10) + ")"
 	}
 	return _TaskSegmentType_name[_TaskSegmentType_index[i]:_TaskSegmentType_index[i+1]]
