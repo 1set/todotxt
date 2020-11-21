@@ -26,7 +26,7 @@ const (
 	SortProjectDesc
 )
 
-// Sort allows a TaskList to be sorted by certain predefined fields, multiple-key sorting is supported.
+// Sort allows a TaskList to be sorted by certain predefined fields. Multiple-key sorting is supported.
 // See constants Sort* for fields and sort order.
 func (tasklist *TaskList) Sort(flag int, flags ...int) error {
 	combined := make([]int, len(flags)+1)
