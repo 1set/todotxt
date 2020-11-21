@@ -137,6 +137,8 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 // WriteToFile writes a TaskList to *os.File.
 //
 // Using *os.File instead of a filename allows to also use os.Stdout.
+//
+// Note: Comments from original file will be omitted and not written to target *os.File, if IgnoreComments is set to 'true'.
 func (tasklist *TaskList) WriteToFile(file *os.File) error {
 	writer := bufio.NewWriter(file)
 	if _, err := writer.WriteString(tasklist.String()); err != nil {
@@ -177,6 +179,8 @@ func LoadFromFile(file *os.File) (TaskList, error) {
 // WriteToFile writes a TaskList to *os.File.
 //
 // Using *os.File instead of a filename allows to also use os.Stdout.
+//
+// Note: Comments from original file will be omitted and not written to target *os.File, if IgnoreComments is set to 'true'.
 func WriteToFile(tasklist *TaskList, file *os.File) error {
 	return tasklist.WriteToFile(file)
 }
