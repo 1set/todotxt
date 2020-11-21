@@ -13,6 +13,26 @@ func BenchmarkTask_Segments(b *testing.B) {
 	}
 }
 
+func TestTaskTaskSegmentType(t *testing.T) {
+	names := map[TaskSegmentType]string{
+		SegmentIsCompleted:   "IsCompleted",
+		SegmentCompletedDate: "CompletedDate",
+		SegmentPriority:      "Priority",
+		SegmentCreatedDate:   "CreatedDate",
+		SegmentTodoText:      "TodoText",
+		SegmentContext:       "Context",
+		SegmentProject:       "Project",
+		SegmentTag:           "Tag",
+		SegmentDueDate:       "DueDate",
+		0:                    "TaskSegmentType(0)",
+	}
+	for n, s := range names {
+		if ss := n.String(); ss != s {
+			t.Errorf("Expected Segment %v is %q, but got: %q", n, s, ss)
+		}
+	}
+}
+
 func TestTaskSegments(t *testing.T) {
 	cases := []struct {
 		text string
