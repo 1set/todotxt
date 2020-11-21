@@ -21,7 +21,7 @@ func TestTaskListFilter(t *testing.T) {
 	// Filter list to get only completed tasks
 	completedList := testTasklist.Filter(FilterCompleted)
 	testExpected = 33
-	testGot = len(*completedList)
+	testGot = len(completedList)
 	if testGot != testExpected {
 		t.Errorf("Expected TaskList to contain %d tasks, but got %d", testExpected, testGot)
 	}
@@ -29,7 +29,7 @@ func TestTaskListFilter(t *testing.T) {
 	// Filter list to get only tasks with a due date
 	dueDateList := testTasklist.Filter(FilterHasDueDate)
 	testExpected = 26
-	testGot = len(*dueDateList)
+	testGot = len(dueDateList)
 	if testGot != testExpected {
 		t.Errorf("Expected TaskList to contain %d tasks, but got %d", testExpected, testGot)
 	}
@@ -37,7 +37,7 @@ func TestTaskListFilter(t *testing.T) {
 	// Filter list to get only tasks with "B" priority
 	prioBList := testTasklist.Filter(FilterByPriority("b"))
 	testExpected = 17
-	testGot = len(*prioBList)
+	testGot = len(prioBList)
 	if testGot != testExpected {
 		t.Errorf("Expected TaskList to contain %d tasks, but got %d", testExpected, testGot)
 	}
@@ -55,7 +55,7 @@ func TestTaskListFilterByMultiplePredicates(t *testing.T) {
 	// and
 	filteredList := testTasklist.Filter(FilterHasPriority).Filter(FilterOverdue).Filter(FilterCompleted)
 	testExpected = 2
-	testGot = len(*filteredList)
+	testGot = len(filteredList)
 	if testGot != testExpected {
 		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
 	}
@@ -63,7 +63,7 @@ func TestTaskListFilterByMultiplePredicates(t *testing.T) {
 	// or -- filters tasks with priority A or B
 	filteredList = testTasklist.Filter(FilterByPriority("a"), FilterByPriority("b"))
 	testExpected = 7
-	testGot = len(*filteredList)
+	testGot = len(filteredList)
 	if testGot != testExpected {
 		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
 	}
@@ -71,7 +71,7 @@ func TestTaskListFilterByMultiplePredicates(t *testing.T) {
 	// or -- filters incompleted tasks that are overdue or have set priority
 	filteredList = testTasklist.Filter(FilterNot(FilterCompleted)).Filter(FilterOverdue, FilterHasPriority)
 	testExpected = 10
-	testGot = len(*filteredList)
+	testGot = len(filteredList)
 	if testGot != testExpected {
 		t.Errorf("Expected TaskList to contain %d tasks, but got %d: [%v]", testExpected, testGot, filteredList.String())
 	}
@@ -114,7 +114,7 @@ func TestTaskListFilterHelpers(t *testing.T) {
 	for i, tt := range testCases {
 		filteredList := testTasklist.Filter(tt.predicate)
 		testExpected = tt.number
-		testGot = len(*filteredList)
+		testGot = len(filteredList)
 		if testGot != testExpected {
 			t.Errorf("Case #%d, Expected TaskList to contain %d tasks, but got %d: [%v]", i+1, testExpected, testGot, filteredList.String())
 		}

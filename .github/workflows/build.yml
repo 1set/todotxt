@@ -51,6 +51,13 @@ jobs:
         shell: bash
         run: go test -parallel=4 -run="none" -benchtime="2s" -benchmem -bench .
 
+      - name: Go generate
+        shell: bash
+        run: |
+          go get golang.org/x/tools/cmd/stringer
+          go generate
+        if: startsWith(matrix.vm-os, 'ubuntu')
+
       - name: Upload report to Codecov
         uses: codecov/codecov-action@v1.0.14
         with:

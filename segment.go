@@ -6,7 +6,8 @@ import (
 )
 
 // TaskSegmentType represents type of segment in task string.
-type TaskSegmentType int
+//go:generate stringer -type TaskSegmentType -trimprefix Segment -output segment_type.go
+type TaskSegmentType uint8
 
 // Flags for indicating type of segment in task string.
 const (

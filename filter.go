@@ -5,14 +5,13 @@ import "strings"
 // Predicate is a function that takes a task as input and returns a bool.
 type Predicate func(Task) bool
 
-// Filter filters the current TaskList for the given predicate,
-// and returns a new TaskList. The original TaskList is not modified.
-func (tasklist *TaskList) Filter(predicate Predicate, predicates ...Predicate) *TaskList {
+// Filter filters the current TaskList for the given predicate, and returns a new TaskList. The original TaskList is not modified.
+func (tasklist TaskList) Filter(predicate Predicate, predicates ...Predicate) TaskList {
 	combined := []Predicate{predicate}
 	combined = append(combined, predicates...)
 
 	var newList TaskList
-	for _, t := range *tasklist {
+	for _, t := range tasklist {
 		for _, p := range combined {
 			if p(t) {
 				newList = append(newList, t)
@@ -20,7 +19,7 @@ func (tasklist *TaskList) Filter(predicate Predicate, predicates ...Predicate) *
 			}
 		}
 	}
-	return &newList
+	return newList
 }
 
 // FilterNot returns a reversed filter for existing predicate.
