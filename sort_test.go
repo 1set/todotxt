@@ -13,6 +13,33 @@ func BenchmarkTaskList_Sort(b *testing.B) {
 	}
 }
 
+func TestTaskSortByType(t *testing.T) {
+	names := map[TaskSortByType]string{
+		SortTaskIDAsc:         "TaskIDAsc",
+		SortTaskIDDesc:        "TaskIDDesc",
+		SortTodoTextAsc:       "TodoTextAsc",
+		SortTodoTextDesc:      "TodoTextDesc",
+		SortPriorityAsc:       "PriorityAsc",
+		SortPriorityDesc:      "PriorityDesc",
+		SortCreatedDateAsc:    "CreatedDateAsc",
+		SortCreatedDateDesc:   "CreatedDateDesc",
+		SortCompletedDateAsc:  "CompletedDateAsc",
+		SortCompletedDateDesc: "CompletedDateDesc",
+		SortDueDateAsc:        "DueDateAsc",
+		SortDueDateDesc:       "DueDateDesc",
+		SortContextAsc:        "ContextAsc",
+		SortContextDesc:       "ContextDesc",
+		SortProjectAsc:        "ProjectAsc",
+		SortProjectDesc:       "ProjectDesc",
+		0:                     "TaskSortByType(0)",
+	}
+	for n, s := range names {
+		if ss := n.String(); ss != s {
+			t.Errorf("Expected TaskSortByType %v is %q, but got: %q", n, s, ss)
+		}
+	}
+}
+
 func TestTaskSortByPriority(t *testing.T) {
 	testTasklist.LoadFromPath(testInputSort)
 	taskID := 0
