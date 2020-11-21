@@ -68,8 +68,8 @@ func TestLoadFromPath(t *testing.T) {
 }
 
 func TestWriteFile(t *testing.T) {
-	os.Remove(testOutput)
-	os.Create(testOutput)
+	_ = os.Remove(testOutput)
+	_, _ = os.Create(testOutput)
 	var err error
 
 	fileInput, err := os.Open(testInputTasklist)
@@ -114,8 +114,8 @@ func TestWriteFile(t *testing.T) {
 }
 
 func TestTaskListWriteFile(t *testing.T) {
-	os.Remove(testOutput)
-	os.Create(testOutput)
+	_ = os.Remove(testOutput)
+	_, _ = os.Create(testOutput)
 	testTasklist := TaskList{}
 
 	fileInput, err := os.Open(testInputTasklist)
