@@ -7,7 +7,7 @@ import (
 )
 
 // TaskSortByType represents type of sorting element and order.
-//go:generate stringer -type TaskSortBy -trimprefix Sort -output sort_type.go
+//go:generate stringer -type TaskSortByType -trimprefix Sort -output sort_type.go
 type TaskSortByType uint8
 
 // Flags for defining sorting element and order.
