@@ -68,7 +68,7 @@ func (task Task) String() string {
 		}
 	}
 
-	if task.HasPriority() {
+	if task.HasPriority() && (!task.Completed || !RemoveCompletedPriority) {
 		sb.WriteString(fmt.Sprintf("(%s) ", task.Priority))
 	}
 

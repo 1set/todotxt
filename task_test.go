@@ -807,3 +807,42 @@ func TestTaskReopen(t *testing.T) {
 		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 	}
 }
+
+func TestRemoveCompletedPriority(t *testing.T) {
+	task, _ := ParseTask("(A) Hello World @Work")
+	testExpected = "(A) Hello World @Work"
+	testGot = task.String()
+	if testGot != testExpected {
+		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	RemoveCompletedPriority = false
+	task.Complete()
+	task.CompletedDate = time.Date(2020, 11, 30, 0, 0, 0, 0, time.Local)
+	testExpected = "x 2020-11-30 (A) Hello World @Work"
+	testGot = task.String()
+	if testGot != testExpected {
+		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = 5
+	testGot = len(task.Segments())
+	if testGot != testExpected {
+		t.Errorf("Expected Task to has %d segments, but got %d", testExpected, testGot)
+	}
+
+	RemoveCompletedPriority = true
+	testExpected = "x 2020-11-30 Hello World @Work"
+	testGot = task.String()
+	if testGot != testExpected {
+		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = 4
+	testGot = len(task.Segments())
+	if testGot != testExpected {
+		t.Errorf("Expected Task to has %d segments, but got %d", testExpected, testGot)
+	}
+
+	RemoveCompletedPriority = false
+}

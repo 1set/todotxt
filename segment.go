@@ -54,7 +54,7 @@ func (task *Task) Segments() []*TaskSegment {
 		}
 	}
 
-	if task.HasPriority() {
+	if task.HasPriority() && (!task.Completed || !RemoveCompletedPriority) {
 		segs = append(segs, newTaskSeg(SegmentPriority, task.Priority, fmt.Sprintf("(%s)", task.Priority)))
 	}
 
