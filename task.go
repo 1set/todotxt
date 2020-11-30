@@ -17,7 +17,7 @@ var (
 	createdDateRx   = regexp.MustCompile(`^(\([A-Z]\)|x \d{4}-\d{2}-\d{2} \([A-Z]\)|x \([A-Z]\)|x \d{4}-\d{2}-\d{2}|)\s*(\d{4}-\d{2}-\d{2})\s+`)
 	completedRx     = regexp.MustCompile(`^x\s+`)                       // Match completed: 'x ...'
 	completedDateRx = regexp.MustCompile(`^x\s*(\d{4}-\d{2}-\d{2})\s+`) // Match completed date: 'x 2012-12-12 ...'
-	addonTagRx      = regexp.MustCompile(`(^|\s+)([^:\s]+):([^:\s]+)`)       // Match additional tags date: '... due:2012-12-12 ...'
+	addonTagRx      = regexp.MustCompile(`(^|\s+)([^:\s]+):([^:\s]+)`)  // Match additional tags date: '... due:2012-12-12 ...'
 	contextRx       = regexp.MustCompile(`(^|\s+)@(\S+)`)               // Match contexts: '@Context ...' or '... @Context ...'
 	projectRx       = regexp.MustCompile(`(^|\s+)\+(\S+)`)              // Match projects: '+Project...' or '... +Project ...')
 )
@@ -78,21 +78,21 @@ func (task Task) String() string {
 
 	sb.WriteString(task.Todo)
 
-	if len(task.Contexts) > 0 {
+	if task.HasContexts() {
 		sort.Strings(task.Contexts)
 		for _, context := range task.Contexts {
 			sb.WriteString(fmt.Sprintf(" @%s", context))
 		}
 	}
 
-	if len(task.Projects) > 0 {
+	if task.HasProjects() {
 		sort.Strings(task.Projects)
 		for _, project := range task.Projects {
 			sb.WriteString(fmt.Sprintf(" +%s", project))
 		}
 	}
 
-	if len(task.AdditionalTags) > 0 {
+	if task.HasAdditionalTags() {
 		// Sort map alphabetically by keys
 		keys := make([]string, 0, len(task.AdditionalTags))
 		for key := range task.AdditionalTags {
