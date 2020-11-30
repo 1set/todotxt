@@ -112,12 +112,12 @@ func TestNewTask(t *testing.T) {
 }
 
 func TestParseTask(t *testing.T) {
-	task, err := ParseTask("x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world   ")
+	task, err := ParseTask("x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world not::tag  ")
 	if err != nil {
 		t.Error(err)
 	}
 
-	testExpected = "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt hello:world due:2014-01-12"
+	testExpected = "x (C) 2014-01-01 Create golang library documentation not::tag @Go +go-todotxt hello:world due:2014-01-12"
 	testGot = task.Task()
 	if testGot != testExpected {
 		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
@@ -129,13 +129,13 @@ func TestParseTask(t *testing.T) {
 		t.Errorf("Expected Task to have default ID [%d], but got [%d]", testExpected, testGot)
 	}
 
-	testExpected = "x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world"
+	testExpected = "x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world not::tag"
 	testGot = task.Original
 	if testGot != testExpected {
 		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
 	}
 
-	testExpected = "Create golang library documentation"
+	testExpected = "Create golang library documentation not::tag"
 	testGot = task.Todo
 	if testGot != testExpected {
 		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
