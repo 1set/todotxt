@@ -23,6 +23,11 @@ var (
 	testGot                             interface{}
 )
 
+var _ = func() interface{} {
+	RemoveCompletedPriority = false
+	return nil
+}()
+
 func compareSlices(list1 []string, list2 []string) bool {
 	if len(list1) != len(list2) {
 		return false

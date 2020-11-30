@@ -20,6 +20,10 @@ var (
 	// IgnoreComments is used to switch ignoring of comments (lines starting with "#").
 	// If this is set to 'false', then lines starting with "#" will be parsed as tasks.
 	IgnoreComments = true
+
+	// RemoveCompletedPriority is used to switch discarding priority on task completion like many todo.txt clients do.
+	// If this is set to 'false', then the priority of completed task will be kept as it is.
+	RemoveCompletedPriority = true
 )
 
 // NewTaskList creates a new empty TaskList.

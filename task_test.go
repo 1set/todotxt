@@ -112,12 +112,12 @@ func TestNewTask(t *testing.T) {
 }
 
 func TestParseTask(t *testing.T) {
-	task, err := ParseTask("x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world   ")
+	task, err := ParseTask("x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world not::tag  ")
 	if err != nil {
 		t.Error(err)
 	}
 
-	testExpected = "x (C) 2014-01-01 Create golang library documentation @Go +go-todotxt hello:world due:2014-01-12"
+	testExpected = "x (C) 2014-01-01 Create golang library documentation not::tag @Go +go-todotxt hello:world due:2014-01-12"
 	testGot = task.Task()
 	if testGot != testExpected {
 		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
@@ -129,13 +129,13 @@ func TestParseTask(t *testing.T) {
 		t.Errorf("Expected Task to have default ID [%d], but got [%d]", testExpected, testGot)
 	}
 
-	testExpected = "x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world"
+	testExpected = "x (C) 2014-01-01 @Go due:2014-01-12 Create golang library documentation +go-todotxt  hello:world not::tag"
 	testGot = task.Original
 	if testGot != testExpected {
 		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
 	}
 
-	testExpected = "Create golang library documentation"
+	testExpected = "Create golang library documentation not::tag"
 	testGot = task.Todo
 	if testGot != testExpected {
 		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
@@ -806,4 +806,43 @@ func TestTaskReopen(t *testing.T) {
 	if testGot != testExpected {
 		t.Errorf("Expected Task[%d] to have a completed date, but got '%v'", taskID, testGot)
 	}
+}
+
+func TestRemoveCompletedPriority(t *testing.T) {
+	task, _ := ParseTask("(A) Hello World @Work")
+	testExpected = "(A) Hello World @Work"
+	testGot = task.String()
+	if testGot != testExpected {
+		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	RemoveCompletedPriority = false
+	task.Complete()
+	task.CompletedDate = time.Date(2020, 11, 30, 0, 0, 0, 0, time.Local)
+	testExpected = "x 2020-11-30 (A) Hello World @Work"
+	testGot = task.String()
+	if testGot != testExpected {
+		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = 5
+	testGot = len(task.Segments())
+	if testGot != testExpected {
+		t.Errorf("Expected Task to has %d segments, but got %d", testExpected, testGot)
+	}
+
+	RemoveCompletedPriority = true
+	testExpected = "x 2020-11-30 Hello World @Work"
+	testGot = task.String()
+	if testGot != testExpected {
+		t.Errorf("Expected Task to be [%s], but got [%s]", testExpected, testGot)
+	}
+
+	testExpected = 4
+	testGot = len(task.Segments())
+	if testGot != testExpected {
+		t.Errorf("Expected Task to has %d segments, but got %d", testExpected, testGot)
+	}
+
+	RemoveCompletedPriority = false
 }

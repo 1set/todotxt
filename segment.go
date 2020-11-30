@@ -54,7 +54,7 @@ func (task *Task) Segments() []*TaskSegment {
 		}
 	}
 
-	if task.HasPriority() {
+	if task.HasPriority() && (!task.Completed || !RemoveCompletedPriority) {
 		segs = append(segs, newTaskSeg(SegmentPriority, task.Priority, fmt.Sprintf("(%s)", task.Priority)))
 	}
 
@@ -64,21 +64,21 @@ func (task *Task) Segments() []*TaskSegment {
 
 	segs = append(segs, newBasicTaskSeg(SegmentTodoText, task.Todo))
 
-	if len(task.Contexts) > 0 {
+	if task.HasContexts() {
 		sort.Strings(task.Contexts)
 		for _, context := range task.Contexts {
 			segs = append(segs, newTaskSeg(SegmentContext, context, fmt.Sprintf("@%s", context)))
 		}
 	}
 
-	if len(task.Projects) > 0 {
+	if task.HasProjects() {
 		sort.Strings(task.Projects)
 		for _, project := range task.Projects {
 			segs = append(segs, newTaskSeg(SegmentProject, project, fmt.Sprintf("+%s", project)))
 		}
 	}
 
-	if len(task.AdditionalTags) > 0 {
+	if task.HasAdditionalTags() {
 		// Sort map alphabetically by keys
 		keys := make([]string, 0, len(task.AdditionalTags))
 		for key := range task.AdditionalTags {
