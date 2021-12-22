@@ -108,12 +108,12 @@ func (tasklist *TaskList) RemoveTask(task Task) error {
 	return nil
 }
 
-// LoadFrom loads a TaskList from an *io.Reader
+// LoadFrom loads a TaskList from an io.Reader
 //
 // os.File and os.Stdin are interfaces that include io.Reader, which is also bufio.Scanner's input type
 //
 // Note: This will clear the current TaskList and replace its contents with the reader's output.
-func (tasklist *TaskList) LoadFrom(tasks *io.Reader) error {
+func (tasklist *TaskList) LoadFrom(tasks io.Reader) error {
 	*tasklist = []Task{} // Empty task list
 
 	taskID := 1
@@ -177,7 +177,7 @@ func (tasklist *TaskList) WriteToPath(filename string) error {
 	return ioutil.WriteFile(filename, []byte(tasklist.String()), 0640)
 }
 
-func LoadFrom(todos *io.Reader) (TaskList, error) {
+func LoadFrom(todos io.Reader) (TaskList, error) {
 	tasklist := TaskList{}
 	if err := tasklist.LoadFrom(todos); err != nil {
 		return nil, err
