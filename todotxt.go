@@ -108,12 +108,12 @@ func (tasklist *TaskList) RemoveTask(task Task) error {
 	return nil
 }
 
-// LoadFromReader loads a TaskList from an *io.Reader
+// LoadFrom loads a TaskList from an *io.Reader
 //
 // os.File and os.Stdin are interfaces that include io.Reader, which is also bufio.Scanner's input type
 //
 // Note: This will clear the current TaskList and replace its contents with the reader's output.
-func (tasklist *TaskList) LoadFromReader(tasks *io.Reader) error {
+func (tasklist *TaskList) LoadFrom(tasks *io.Reader) error {
 	*tasklist = []Task{} // Empty task list
 
 	taskID := 1
@@ -139,10 +139,10 @@ func (tasklist *TaskList) LoadFromReader(tasks *io.Reader) error {
 	return scanner.Err()
 }
 
-// LoadFromFile loads a TaskList from *os.File using LoadFromReader
+// LoadFromFile loads a TaskList from *os.File using LoadFrom
 func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 	// passthrough method to generic form
-	return tasklist.LoadFromReader(file)
+	return tasklist.LoadFrom(file)
 }
 
 // LoadFromPath loads a TaskList from a file (most likely called "todo.txt").
@@ -153,14 +153,17 @@ func (tasklist *TaskList) LoadFromPath(filename string) error {
 	}
 	defer file.Close()
 
-	return tasklist.LoadFromReader(file)
+	return tasklist.LoadFrom(file)
 }
 
-// WriteToFile writes a TaskList to *os.File.
+// WriteTo
 //
 // Using *os.File instead of a filename allows to also use os.Stdout.
 //
 // Note: Comments from original file will be omitted and not written to target *os.File, if IgnoreComments is set to 'true'.
+
+// WriteToFile writes a TaskList to *os.File.
+//
 func (tasklist *TaskList) WriteToFile(file *os.File) error {
 	writer := bufio.NewWriter(file)
 	if _, err := writer.WriteString(tasklist.String()); err != nil {
@@ -174,15 +177,18 @@ func (tasklist *TaskList) WriteToPath(filename string) error {
 	return ioutil.WriteFile(filename, []byte(tasklist.String()), 0640)
 }
 
-// LoadFromFile loads and returns a TaskList from *os.File.
-//
-// Using *os.File instead of a filename allows to also use os.Stdin.
-func LoadFromFile(file *os.File) (TaskList, error) {
+func LoadFrom(todos *io.Reader) (TaskList, error) {
 	tasklist := TaskList{}
-	if err := tasklist.LoadFromFile(file); err != nil {
+	if err := tasklist.LoadFrom(todos); err != nil {
 		return nil, err
 	}
 	return tasklist, nil
+}
+
+// LoadFromFile creates a new TaskList and loads it from an *os.File using TaskList.LoadFrom
+func LoadFromFile(file *os.File) (TaskList, error) {
+	// passthrough to generic function
+	return LoadFrom(file)
 }
 
 // WriteToFile writes a TaskList to *os.File.
