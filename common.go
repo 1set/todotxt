@@ -1,6 +1,9 @@
 package todotxt
 
-import "time"
+import (
+    "strings"
+    "time"
+)
 
 var (
 	emptyStr    string
@@ -12,10 +15,12 @@ var (
 //      a '#' to detect if a line should be ignored. Empty lines are
 //      ignored automatically.
 func ignoreLine(line string) bool {
-    return isEmpty(line) || (
-        IgnoreComments && 
-        strings.HasPrefix(line, "#")
-    )
+    if isEmpty(line) {
+        return true
+    } else if IgnoreComments && strings.HasPrefix(line, "#") {
+        return true
+    }
+    return false
 }
 
 // isEmpty checks if the string is empty.

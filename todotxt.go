@@ -184,7 +184,7 @@ func LoadFrom(todos io.Reader) (TaskList, error) {
 	if err := newTaskList.LoadFrom(todos); err != nil {
 		return nil, err
 	}
-	return tasklist, nil
+	return newTaskList, nil
 }
 
 // LoadFromFile creates a new TaskList and loads it from an *os.File using TaskList.LoadFrom
