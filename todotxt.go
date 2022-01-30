@@ -121,21 +121,23 @@ func (tasklist *TaskList) LoadFrom(tasks io.Reader) error {
 	for scanner.Scan() {
 		text := strings.Trim(scanner.Text(), whitespaces) // Read line
 
-		// Ignore blank or comment lines
-		if isEmpty(text) || (IgnoreComments && strings.HasPrefix(text, "#")) {
+		if ignoreLine(text) { 
 			continue
 		}
 
 		task, err := ParseTask(text)
+
 		if err != nil {
 			return err
 		}
+
 		task.ID = taskID
 
 		*tasklist = append(*tasklist, *task)
 		taskID++
 	}
 
+    // if everything ran as expected, this will be nil
 	return scanner.Err()
 }
 
@@ -177,9 +179,10 @@ func (tasklist *TaskList) WriteToPath(filename string) error {
 	return ioutil.WriteFile(filename, []byte(tasklist.String()), 0640)
 }
 
+// LoadFrom creates and returns a new TaskList
 func LoadFrom(todos io.Reader) (TaskList, error) {
-	tasklist := TaskList{}
-	if err := tasklist.LoadFrom(todos); err != nil {
+	newTaskList := TaskList{}
+	if err := newTaskList.LoadFrom(todos); err != nil {
 		return nil, err
 	}
 	return tasklist, nil
