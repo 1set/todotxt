@@ -113,6 +113,10 @@ func (task Task) String() string {
 
 // ParseTask parses the input text string into a Task struct.
 func ParseTask(text string) (*Task, error) {
+    if ignoreLine(text) {
+        return nil, nil
+    }
+
 	var err error
 
 	oriText := strings.Trim(text, whitespaces)

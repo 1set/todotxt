@@ -120,20 +120,16 @@ func (tasklist *TaskList) LoadFrom(tasks io.Reader) error {
 	scanner := bufio.NewScanner(tasks)
 
     // scan in each line
-    var scanErr error
 	for scanner.Scan() {
 		text := strings.Trim(scanner.Text(), whitespaces) // Read line
-
-		if ignoreLine(text) { 
-			continue
-		}
-
 		task, err := ParseTask(text)
 
 		if err != nil {
-            scanErr = err
-            break
-		}
+            return err
+		} else if task == nil {
+            // if task pointer is empty do not create task
+            continue 
+        }
 
 		task.ID = taskID
 
@@ -141,7 +137,7 @@ func (tasklist *TaskList) LoadFrom(tasks io.Reader) error {
 		taskID++
 	}
 
-	return scanErr || scanner.Err()
+	return scanner.Err()
 }
 
 // LoadFromFile loads a TaskList from *os.File using LoadFrom
