@@ -113,7 +113,9 @@ func (task Task) String() string {
 
 // ParseTask parses the input text string into a Task struct.
 func ParseTask(text string) (*Task, error) {
-    if ignoreLine(text) {
+    // bail out early by returning a nil pointer
+    //      if there is no task to create
+    if isEmpty(text) || (IgnoreComments && strings.HasPrefix(text, "#"))  {
         return nil, nil
     }
 
