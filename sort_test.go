@@ -6,7 +6,10 @@ import (
 )
 
 func BenchmarkTaskList_Sort(b *testing.B) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		b.Fatal(err)
+	}
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_ = testTasklist.Sort(SortPriorityAsc, SortCreatedDateAsc, SortTodoTextDesc)
@@ -41,7 +44,10 @@ func TestTaskSortByType(t *testing.T) {
 }
 
 func TestTaskSortByPriority(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 0
 
 	testTasklist = testTasklist[taskID : taskID+6]
@@ -74,7 +80,10 @@ func TestTaskSortByPriority(t *testing.T) {
 }
 
 func TestTaskSortByCreatedDate(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 6
 
 	testTasklist = testTasklist[taskID : taskID+5]
@@ -105,7 +114,10 @@ func TestTaskSortByCreatedDate(t *testing.T) {
 }
 
 func TestTaskSortByCompletedDate(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 11
 
 	testTasklist = testTasklist[taskID : taskID+6]
@@ -138,7 +150,10 @@ func TestTaskSortByCompletedDate(t *testing.T) {
 }
 
 func TestTaskSortByDueDate(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 17
 
 	testTasklist = testTasklist[taskID : taskID+4]
@@ -167,7 +182,10 @@ func TestTaskSortByDueDate(t *testing.T) {
 }
 
 func TestTaskSortByTaskID(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 21
 
 	testTasklist = testTasklist[taskID : taskID+5]
@@ -202,7 +220,10 @@ func TestTaskSortByTaskID(t *testing.T) {
 }
 
 func TestTaskSortByContext(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 26
 
 	testTasklist = testTasklist[taskID : taskID+6]
@@ -239,7 +260,10 @@ func TestTaskSortByContext(t *testing.T) {
 }
 
 func TestTaskSortByProject(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 32
 
 	testTasklist = testTasklist[taskID : taskID+6]
@@ -276,7 +300,10 @@ func TestTaskSortByProject(t *testing.T) {
 }
 
 func TestTaskSortByTodoText(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 38
 
 	testTasklist = testTasklist[taskID : taskID+5]
@@ -307,7 +334,10 @@ func TestTaskSortByTodoText(t *testing.T) {
 }
 
 func TestTaskSortByMultipleFlags(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 43
 
 	testTasklist = testTasklist[taskID : taskID+7]
@@ -370,7 +400,9 @@ func TestTaskSortByMultipleFlags(t *testing.T) {
 }
 
 func TestTaskSortError(t *testing.T) {
-	testTasklist.LoadFromPath(testInputSort)
+	if err := testTasklist.LoadFromPath(testInputSort); err != nil {
+		t.Fatal(err)
+	}
 
 	if err := testTasklist.Sort(123); err == nil {
 		t.Errorf("Expected Sort() to fail because of unrecognized sort option, but it didn't!")

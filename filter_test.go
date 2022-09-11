@@ -6,7 +6,10 @@ import (
 )
 
 func BenchmarkTaskList_Filter(b *testing.B) {
-	testTasklist.LoadFromPath(testInputFilter)
+	if err := testTasklist.LoadFromPath(testInputFilter); err != nil {
+		b.Fatal(err)
+	}
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_ = testTasklist.Filter(FilterNot(FilterCompleted)).Filter(FilterByPriority("A"), FilterByPriority("B"))

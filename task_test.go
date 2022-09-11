@@ -215,7 +215,9 @@ func TestParseTask(t *testing.T) {
 }
 
 func TestTaskID(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
 
 	taskID := 1
 	testGot = testTasklist[taskID-1].ID
@@ -237,7 +239,10 @@ func TestTaskID(t *testing.T) {
 }
 
 func TestTaskString(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 1
 
 	testExpected = "2013-02-22 Pick up milk @GroceryStore"
@@ -276,7 +281,10 @@ func TestTaskString(t *testing.T) {
 }
 
 func TestTaskPriority(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 6
 
 	testExpected = "B"
@@ -306,7 +314,10 @@ func TestTaskPriority(t *testing.T) {
 }
 
 func TestTaskCreatedDate(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 10
 
 	testExpected, err := parseTime("2012-01-30")
@@ -365,7 +376,10 @@ func TestTaskCreatedDate(t *testing.T) {
 }
 
 func TestTaskContexts(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 16
 
 	testExpected = []string{"Call", "Phone"}
@@ -397,7 +411,10 @@ func TestTaskContexts(t *testing.T) {
 }
 
 func TestTasksProjects(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 20
 
 	testExpected = []string{"Gardening", "Improving", "Planning", "Relaxing-Work"}
@@ -422,7 +439,10 @@ func TestTasksProjects(t *testing.T) {
 }
 
 func TestTaskDueDate(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 23
 
 	testExpected, err := parseTime("2014-02-17")
@@ -486,7 +506,10 @@ func TestTaskDueDate(t *testing.T) {
 }
 
 func TestTaskAddonTags(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 25
 
 	testExpected = map[string]string{"Level": "5", "private": "false"}
@@ -522,7 +545,10 @@ func TestTaskAddonTags(t *testing.T) {
 }
 
 func TestTaskIsCompleted(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	var (
 		taskID   int
 		testGot1 bool
@@ -545,7 +571,10 @@ func TestTaskIsCompleted(t *testing.T) {
 }
 
 func TestTaskCompleted(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 29
 
 	testExpected = true
@@ -584,7 +613,10 @@ func TestTaskCompleted(t *testing.T) {
 }
 
 func TestTaskCompletedDate(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 34
 
 	if testTasklist[taskID-1].HasCompletedDate() {
@@ -633,7 +665,10 @@ func TestTaskCompletedDate(t *testing.T) {
 }
 
 func TestTaskIsOverdue(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 40
 
 	testGot = testTasklist[taskID-1].IsOverdue()
@@ -678,7 +713,10 @@ func TestTaskIsOverdue(t *testing.T) {
 }
 
 func TestTaskComplete(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 44
 
 	// first 4 tasks should all match the same tests
@@ -736,7 +774,10 @@ func TestTaskComplete(t *testing.T) {
 }
 
 func TestTaskReopen(t *testing.T) {
-	testTasklist.LoadFromPath(testInputTask)
+	if err := testTasklist.LoadFromPath(testInputTask); err != nil {
+		t.Fatal(err)
+	}
+
 	taskID := 49
 
 	// the first 2 tasks should match the same tests
