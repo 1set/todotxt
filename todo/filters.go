@@ -1,26 +1,14 @@
-package todotxt
+package todo
 
 import "strings"
 
-// Predicate is a function that takes a task as input and returns a bool.
-type Predicate func(Task) bool
-
-// Filter filters the current TaskList for the given predicate, and returns a new TaskList. The original TaskList is not modified.
-func (tasklist TaskList) Filter(predicate Predicate, predicates ...Predicate) TaskList {
-	combined := []Predicate{predicate}
-	combined = append(combined, predicates...)
-
-	var newList TaskList
-	for _, t := range tasklist {
-		for _, p := range combined {
-			if p(t) {
-				newList = append(newList, t)
-				break
-			}
-		}
-	}
-	return newList
-}
+// ----------------------------------------------------------------------------
+//  Filter functions
+// ----------------------------------------------------------------------------
+//  These functions are used to filter a TaskList for specific tasks.
+//
+//  These filters uses the "Functional Options Pattern" like style. Which returns
+//  a function of type Predicate.
 
 // FilterNot returns a reversed filter for existing predicate.
 func FilterNot(predicate Predicate) Predicate {
@@ -63,6 +51,7 @@ func FilterHasPriority(t Task) bool {
 // String comparison in the filters is case-insensitive.
 func FilterByPriority(priority string) Predicate {
 	priority = strings.ToUpper(priority)
+
 	return func(t Task) bool {
 		return t.Priority == priority
 	}
@@ -77,6 +66,7 @@ func FilterByProject(project string) Predicate {
 				return true
 			}
 		}
+
 		return false
 	}
 }
@@ -90,6 +80,7 @@ func FilterByContext(context string) Predicate {
 				return true
 			}
 		}
+
 		return false
 	}
 }

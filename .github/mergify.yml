@@ -1,0 +1,22 @@
+# This file lets Mergify service to automatically merge the changes
+# if the PR only contains the changes in the `go.mod` and `go.sum`.
+pull_request_rules:
+  - name: Automatic merge on approval
+    conditions:
+      - author=KEINOS
+      - base=main
+      - title~=^Changes
+      - files=go.mod
+      - files=go.sum
+      - "#files=2"
+      - check-success=CodeQL-Build
+      - check-success=build
+      - check-success=Run tests on Go via container
+      - check-success=golangci-lint
+      - check-success=Unit test (ubuntu-latest)
+      - check-success=Unit test (macos-latest)
+      - check-success=Unit test (windows-latest)
+      - check-success=CodeQL
+    actions:
+      merge:
+        method: merge

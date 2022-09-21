@@ -1,0 +1,51 @@
+# =============================================================================
+#  Weekly Module Update
+# =============================================================================
+# This workflow runs weekly to update and test the latest `go.mod` version.
+#
+# If all the tests succeeds to run in all Go versions, it will create a new PR
+# of the `go.mod` and `go.sum`.
+#
+# NOTE:
+# You need to set the `PERSONAL_ACCESS_TOKEN` environment variable in the repo's
+#     [Settings]-[Secrets]-[Actions secrets]
+# To generate a new token go to:
+#     https://github.com/settings/tokens
+#     * You need add the "repo" scope to the token but no more.
+# =============================================================================
+name: Weekly Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs at 22:30 UTC on Sun (JST: AM 07:30 on every Monday)
+    - cron: '30 22 * * SUN'
+
+jobs:
+  automated_build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update go.mod and go.sum on Go 1.15 env
+        run: |
+          set -eu
+          docker-compose run tidy
+
+      - name: Run tests in all Go versions
+        # Test only with the latest version of Go. Since on PR, the CIs will
+        # run on all Go versions.
+        run: |
+          set -eu
+          docker-compose run latest
+
+      - name: Create Pull Request on Change
+        uses: peter-evans/create-pull-request@v4
+        with:
+            token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

@@ -1,0 +1,28 @@
+# This workflow updates the code coverage of Codecov.
+# It runs the unit test and pushes the measured code coverage analysis.
+name: "Codecov"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1'
+          check-latest: true
+          cache: true
+
+      - name: Run coverage
+        run: go test -coverprofile=coverage.out -covermode=atomic ./...
+
+      - name: Upload coverage to Codecov
+        run: bash <(curl -s https://codecov.io/bash)

@@ -15,4 +15,5 @@
 # vendor/
 
 # Go test files
-/coverage.txt
+coverage.txt
+go-carpet-coverage*
