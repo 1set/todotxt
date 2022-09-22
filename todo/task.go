@@ -15,9 +15,13 @@ import (
 
 // Task represents a todo.txt task entry.
 //
-// For the todo.txt format specification see:
+// The 'Contexts' and 'Projects' are both used to categorize tasks.
+// The difference is that 'Contexts' are used to categorize tasks by location or
+// situation where you'll work on the job, while 'Projects' are used to categorize
+// tasks by project.
 //
-//	https://github.com/todotxt/todo.txt#todotxt-format-rules
+// For the "todo.txt" format specification see:
+// https://github.com/todotxt/todo.txt#todotxt-format-rules
 //
 //nolint:godox // The todo in the comment below is not a TODO.
 type Task struct {
