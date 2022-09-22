@@ -32,7 +32,6 @@ func ExampleTaskList_LoadFromPath() {
 	var tasklist TaskList
 
 	// This will overwrite whatever was in the tasklist before.
-	// Irrelevant here since the list is still empty.
 	if err := tasklist.LoadFromPath("testdata/todo.txt"); err != nil {
 		log.Fatal(err)
 	}
@@ -74,6 +73,25 @@ func ExampleTaskList_CustomSort() {
 	// Task 4
 }
 
+func ExampleTaskList_Filter() {
+	var tasklist TaskList
+	if err := tasklist.LoadFromPath("testdata/filter_todo.txt"); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Before:", tasklist[0].String())
+
+	// Get tasks that are not overdue and are priority A or B.
+	tasklist = tasklist.Filter(FilterNot(FilterOverdue)).Filter(
+		FilterByPriority("A"), FilterByPriority("B"),
+	)
+
+	fmt.Println("After :", tasklist[0].String())
+	// Output:
+	// Before: This is a task should be due yesterday due:2020-11-15
+	// After : (A) Call Mom @Call @Phone +Family
+}
+
 func ExampleTaskList_Sort() {
 	var tasklist TaskList
 	if err := tasklist.LoadFromPath("testdata/sort_todo.txt"); err != nil {
@@ -99,24 +117,4 @@ func ExampleTaskList_Sort() {
 	// After  #1: [Apple]
 	// After  #2: [Apple]
 	// After  #3: [Apple]
-}
-
-func ExampleTaskList_Filter() {
-	var tasklist TaskList
-	if err := tasklist.LoadFromPath("testdata/filter_todo.txt"); err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Before:", tasklist[0].String())
-
-	// Get tasks that are not overdue and are priority A or B.
-	tasklist = tasklist.Filter(FilterNot(FilterOverdue)).Filter(
-		FilterByPriority("A"), FilterByPriority("B"),
-	)
-
-	fmt.Println("After :", tasklist[0].String())
-
-	// Output:
-	// Before: This is a task should be due yesterday due:2020-11-15
-	// After : (A) Call Mom @Call @Phone +Family
 }
