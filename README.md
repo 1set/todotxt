@@ -1,7 +1,8 @@
 <!-- markdownlint-disable MD033 MD050 -->
 # go-todotxt
 
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/KEINOS/go-todotxt)](https://pkg.go.dev/github.com/KEINOS/go-todotxt)
+[![go1.16+](https://img.shields.io/badge/Go-1.16+-blue?logo=go)](https://github.com/KEINOS/go-todotxt/blob/main/.github/workflows/unit-tests.yml#L81 "Supported versions")
+[![Go Reference](https://pkg.go.dev/badge/github.com/KEINOS/go-todotxt.svg)](https://pkg.go.dev/github.com/KEINOS/go-todotxt/todo "View document")
 [![License](https://img.shields.io/github/license/KEINOS/go-todotxt)](https://github.com/KEINOS/go-todotxt/blob/master/LICENSE)
 
 `github.com/KEINOS/go-todotxt` is a **Go package that parses and manipulates tasks and to-do lists in [todo.txt format](https://github.com/todotxt/todo.txt)** by [Gina Trapani](https://github.com/ginatrapani).
@@ -9,7 +10,6 @@
 It implements the custom user sort functionality as well.
 
 > __Note__ This package is based on [**todotxt**](https://github.com/1set/todotxt) from [Kevin Tang](https://github.com/vt128) and [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) from [Fabio Berchtold](https://github.com/JamesClonk).
-
 
 ## Usage
 
@@ -86,7 +86,7 @@ func ExampleTaskList_CustomSort() {
 }
 ```
 
-For more examples and details, please check the [Go Doc](https://pkg.go.dev/github.com/KEINOS/go-todotxt).
+For more examples and details, please check the [Go Doc](https://pkg.go.dev/github.com/KEINOS/go-todotxt/todo#pkg-examples).
 
 ## Todo.txt format
 
@@ -96,12 +96,15 @@ For more examples and details, please check the [Go Doc](https://pkg.go.dev/gith
 
 ## Contributing
 
+[![go1.16+](https://img.shields.io/badge/Go-1.16+-blue?logo=go)](https://github.com/KEINOS/go-todotxt/blob/main/.github/workflows/unit-tests.yml#L81 "Supported versions")
+[![Go Reference](https://pkg.go.dev/badge/github.com/KEINOS/go-todotxt.svg)](https://pkg.go.dev/github.com/KEINOS/go-todotxt/todo "View document")
+
 Any contribution for the better is welcome. Please feel free to open an issue or a pull request.
 
 - Branch to PR:
   - `main` ([Draft PR](https://github.blog/2019-02-14-introducing-draft-pull-requests/) is recommended)
 - [Open an issue](https://github.com/KEINOS/go-todotxt/issues)
-  - Please attach a reproducible simple test code if possible. This helps us to fix the issue faster.
+  - Please attach a simple and reproducible test code if possible. This helps us alot and to fix the issue faster.
 - [CI](https://en.wikipedia.org/wiki/Continuous_integration)/[CD](https://en.wikipedia.org/wiki/Continuous_delivery):
   - The below tests will run on Push/Pull Request via GitHub Actions. You need to pass all the tests before requesting a review.
     - Unit testing on various Go versions (1.15 ... latest)
@@ -110,6 +113,16 @@ Any contribution for the better is welcome. Please feel free to open an issue or
       - Configuration: [.golangci.yml](./.golangci.yml)
 
 > __Note__ : The branch `original` is a copy from the `master` branch of the [upstream repo](https://github.com/1set/todotxt). This is for the purpose of keeping the original code as is and contribute to the upstream. DO NOT PR to the `original` branch.
+
+## Statuses
+
+[![UnitTests](https://github.com/KEINOS/go-todotxt/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/KEINOS/go-todotxt/actions/workflows/unit-tests.yml)
+[![golangci-lint](https://github.com/KEINOS/go-todotxt/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/KEINOS/go-todotxt/actions/workflows/golangci-lint.yml)
+[![CodeQL-Analysis](https://github.com/KEINOS/go-todotxt/actions/workflows/codeQL-analysis.yml/badge.svg)](https://github.com/KEINOS/go-todotxt/actions/workflows/codeQL-analysis.yml)
+[![PlatformTests](https://github.com/KEINOS/go-todotxt/actions/workflows/platform-tests.yml/badge.svg)](https://github.com/KEINOS/go-todotxt/actions/workflows/platform-tests.yml "Tests on Win, macOS and Linux")
+
+[![codecov](https://codecov.io/gh/KEINOS/go-todotxt/branch/main/graph/badge.svg?token=JVY7WUeUFz)](https://codecov.io/gh/KEINOS/go-todotxt)
+[![Go Report Card](https://goreportcard.com/badge/github.com/KEINOS/go-todotxt)](https://goreportcard.com/report/github.com/KEINOS/go-todotxt)
 
 ## License and Credits
 
