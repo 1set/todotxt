@@ -90,9 +90,9 @@ For more examples and details, please check the [Go Doc](https://pkg.go.dev/gith
 
 ## Todo.txt format
 
-| <img src="https://raw.githubusercontent.com/todotxt/todo.txt/master/description.svg" width="100%" > |
-| :---: |
-| (Image from: [https://github.com/todotxt/todo.txt](https://github.com/todotxt/todo.txt) ) |
+![](https://raw.githubusercontent.com/todotxt/todo.txt/master/description.svg)
+
+- Image from: [https://github.com/todotxt/todo.txt](https://github.com/todotxt/todo.txt) 
 
 ## Contributing
 
