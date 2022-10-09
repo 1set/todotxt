@@ -3,6 +3,7 @@ package todotxt
 import (
 	"bufio"
 	"errors"
+	"io"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -107,28 +108,29 @@ func (tasklist *TaskList) RemoveTask(task Task) error {
 	return nil
 }
 
-// LoadFromFile loads a TaskList from *os.File.
+// LoadFrom loads a TaskList from an io.Reader
 //
-// Using *os.File instead of a filename allows to also use os.Stdin.
+// os.File and os.Stdin are interfaces that include io.Reader, which is also bufio.Scanner's input type
 //
-// Note: This will clear the current TaskList and overwrite it's contents with whatever is in *os.File.
-func (tasklist *TaskList) LoadFromFile(file *os.File) error {
+// Note: This will clear the current TaskList and replace its contents with the reader's output.
+func (tasklist *TaskList) LoadFrom(tasks io.Reader) error {
 	*tasklist = []Task{} // Empty task list
 
 	taskID := 1
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(tasks)
+
+    // scan in each line
 	for scanner.Scan() {
 		text := strings.Trim(scanner.Text(), whitespaces) // Read line
-
-		// Ignore blank or comment lines
-		if isEmpty(text) || (IgnoreComments && strings.HasPrefix(text, "#")) {
-			continue
-		}
-
 		task, err := ParseTask(text)
+
 		if err != nil {
-			return err
-		}
+            return err
+		} else if task == nil {
+            // if task pointer is empty do not create task
+            continue 
+        }
+
 		task.ID = taskID
 
 		*tasklist = append(*tasklist, *task)
@@ -138,11 +140,31 @@ func (tasklist *TaskList) LoadFromFile(file *os.File) error {
 	return scanner.Err()
 }
 
-// WriteToFile writes a TaskList to *os.File.
+// LoadFromFile loads a TaskList from *os.File using LoadFrom
+func (tasklist *TaskList) LoadFromFile(file *os.File) error {
+	// passthrough method to generic form
+	return tasklist.LoadFrom(file)
+}
+
+// LoadFromPath loads a TaskList from a file (most likely called "todo.txt").
+func (tasklist *TaskList) LoadFromPath(filename string) error {
+	file, err := os.Open(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	return tasklist.LoadFrom(file)
+}
+
+// WriteTo
 //
 // Using *os.File instead of a filename allows to also use os.Stdout.
 //
 // Note: Comments from original file will be omitted and not written to target *os.File, if IgnoreComments is set to 'true'.
+
+// WriteToFile writes a TaskList to *os.File.
+//
 func (tasklist *TaskList) WriteToFile(file *os.File) error {
 	writer := bufio.NewWriter(file)
 	if _, err := writer.WriteString(tasklist.String()); err != nil {
@@ -151,33 +173,24 @@ func (tasklist *TaskList) WriteToFile(file *os.File) error {
 	return writer.Flush()
 }
 
-// LoadFromPath loads a TaskList from a file (most likely called "todo.txt").
-//
-// Note: This will clear the current TaskList and overwrite it's contents with whatever is in the file.
-func (tasklist *TaskList) LoadFromPath(filename string) error {
-	file, err := os.Open(filename)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	return tasklist.LoadFromFile(file)
-}
-
 // WriteToPath writes a TaskList to the specified file (most likely called "todo.txt").
 func (tasklist *TaskList) WriteToPath(filename string) error {
 	return ioutil.WriteFile(filename, []byte(tasklist.String()), 0640)
 }
 
-// LoadFromFile loads and returns a TaskList from *os.File.
-//
-// Using *os.File instead of a filename allows to also use os.Stdin.
-func LoadFromFile(file *os.File) (TaskList, error) {
-	tasklist := TaskList{}
-	if err := tasklist.LoadFromFile(file); err != nil {
+// LoadFrom creates and returns a new TaskList
+func LoadFrom(todos io.Reader) (TaskList, error) {
+	newTaskList := TaskList{}
+	if err := newTaskList.LoadFrom(todos); err != nil {
 		return nil, err
 	}
-	return tasklist, nil
+	return newTaskList, nil
+}
+
+// LoadFromFile creates a new TaskList and loads it from an *os.File using TaskList.LoadFrom
+func LoadFromFile(file *os.File) (TaskList, error) {
+	// passthrough to generic function
+	return LoadFrom(file)
 }
 
 // WriteToFile writes a TaskList to *os.File.
