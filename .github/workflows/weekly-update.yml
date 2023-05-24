@@ -33,19 +33,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Update go.mod and go.sum on Go 1.15 env
+      - name: Update go.mod and go.sum on Go 1.18 env
         run: |
           set -eu
-          docker-compose run tidy
+          docker compose run tidy
 
       - name: Run tests in all Go versions
         # Test only with the latest version of Go. Since on PR, the CIs will
         # run on all Go versions.
         run: |
           set -eu
-          docker-compose run latest
+          docker compose run latest
 
       - name: Create Pull Request on Change
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v5
         with:
             token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

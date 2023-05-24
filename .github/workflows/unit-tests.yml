@@ -1,4 +1,4 @@
-# Unit testing on vaious Go versions, such as Go 1.15 and later.
+# Unit testing on vaious Go versions, such as Go 1.18 and later.
 # It will test the generated password hash verifying with PHP and Python.
 #
 # This workflow caches images built with Docker and docker-compose to speed up its execution.
@@ -37,7 +37,7 @@ jobs:
 
       - name: Enable Cache
         id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PATH_CACHE }}
           key: ${{ steps.imagetag.outputs.hash }}
@@ -45,8 +45,6 @@ jobs:
       - name: Load cached Docker images if any
         if: steps.cache.outputs.cache-hit == 'true'
         run: |
-          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_16_1.tar
-          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_17_1.tar
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_18_1.tar
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_19_1.tar
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_latest_1.tar
@@ -57,8 +55,6 @@ jobs:
           : # Clear docker cache
           docker system prune -af
           : # Pull images one-by-one for stability
-          docker pull golang:1.16-alpine
-          docker pull golang:1.17-alpine
           docker pull golang:1.18-alpine
           docker pull golang:1.19-alpine
           docker pull golang:alpine
@@ -72,16 +68,10 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           mkdir -p ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}
-          docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_16_1.tar" "go-todotxt_v1_16:latest"
-          docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_17_1.tar" "go-todotxt_v1_17:latest"
           docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_18_1.tar" "go-todotxt_v1_18:latest"
           docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_19_1.tar" "go-todotxt_v1_19:latest"
           docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_latest_1.tar" "go-todotxt_latest:latest"
 
-      - name: Run tests on Go 1.16
-        run: docker-compose run v1_16
-      - name: Run tests on Go 1.17
-        run: docker-compose run v1_17
       - name: Run tests on Go 1.18
         run: docker-compose run v1_18
       - name: Run tests on Go 1.19

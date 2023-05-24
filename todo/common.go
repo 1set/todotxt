@@ -55,7 +55,6 @@ var (
 var (
 	// Match priority: '(A) ...' or 'x (A) ...' or 'x 2012-12-12 (A) ...'.
 	priorityRx = regexp.MustCompile(`^(x|x \d{4}-\d{2}-\d{2}|)\s*\(([A-Z])\)\s+`)
-	//nolint:dupword // dupword is intentional
 	// Match created date:
 	//   '(A) 2012-12-12 ...' or 'x 2012-12-12 (A) 2012-12-12 ...'
 	// or

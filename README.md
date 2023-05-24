@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD033 MD050 -->
 # go-todotxt
 
-[![go1.16+](https://img.shields.io/badge/Go-1.16+-blue?logo=go)](https://github.com/KEINOS/go-todotxt/blob/main/.github/workflows/unit-tests.yml#L81 "Supported versions")
+[![go1.18+](https://img.shields.io/badge/Go-1.18+-blue?logo=go)](https://github.com/KEINOS/go-todotxt/blob/main/.github/workflows/unit-tests.yml#L81 "Supported versions")
 [![Go Reference](https://pkg.go.dev/badge/github.com/KEINOS/go-todotxt.svg)](https://pkg.go.dev/github.com/KEINOS/go-todotxt/todo "View document")
 [![License](https://img.shields.io/github/license/KEINOS/go-todotxt)](https://github.com/KEINOS/go-todotxt/blob/master/LICENSE)
 
@@ -92,11 +92,11 @@ For more examples and details, please check the [Go Doc](https://pkg.go.dev/gith
 
 ![](https://raw.githubusercontent.com/todotxt/todo.txt/master/description.svg)
 
-- Image from: [https://github.com/todotxt/todo.txt](https://github.com/todotxt/todo.txt) 
+- Image from: [https://github.com/todotxt/todo.txt](https://github.com/todotxt/todo.txt)
 
 ## Contributing
 
-[![go1.16+](https://img.shields.io/badge/Go-1.16+-blue?logo=go)](https://github.com/KEINOS/go-todotxt/blob/main/.github/workflows/unit-tests.yml#L81 "Supported versions")
+[![go1.18+](https://img.shields.io/badge/Go-1.18+-blue?logo=go)](https://github.com/KEINOS/go-todotxt/blob/main/.github/workflows/unit-tests.yml#L81 "Supported versions")
 [![Go Reference](https://pkg.go.dev/badge/github.com/KEINOS/go-todotxt.svg)](https://pkg.go.dev/github.com/KEINOS/go-todotxt/todo "View document")
 
 Any contribution for the better is welcome. Please feel free to open an issue or a pull request.
