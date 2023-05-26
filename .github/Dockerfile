@@ -9,10 +9,7 @@ ARG VARIANT="alpine"
 # -----------------------------------------------------------------------------
 FROM golang:${VARIANT}
 
-RUN apk add --no-cache \
-    git \
-    alpine-sdk \
-    build-base
+RUN apk add --no-cache gcc musl-dev
 
 WORKDIR /workspaces
 

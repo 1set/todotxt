@@ -99,7 +99,7 @@ For more examples and details, please check the [Go Doc](https://pkg.go.dev/gith
 [![go1.18+](https://img.shields.io/badge/Go-1.18+-blue?logo=go)](https://github.com/KEINOS/go-todotxt/blob/main/.github/workflows/unit-tests.yml#L81 "Supported versions")
 [![Go Reference](https://pkg.go.dev/badge/github.com/KEINOS/go-todotxt.svg)](https://pkg.go.dev/github.com/KEINOS/go-todotxt/todo "View document")
 
-Any contribution for the better is welcome. Please feel free to open an issue or a pull request.
+Any contribution for the better is welcome. We provide full code coverage of unit tests, so feel free to refactor or play around with the code.
 
 - Branch to PR:
   - `main` ([Draft PR](https://github.blog/2019-02-14-introducing-draft-pull-requests/) is recommended)
@@ -107,12 +107,18 @@ Any contribution for the better is welcome. Please feel free to open an issue or
   - Please attach a simple and reproducible test code if possible. This helps us alot and to fix the issue faster.
 - [CI](https://en.wikipedia.org/wiki/Continuous_integration)/[CD](https://en.wikipedia.org/wiki/Continuous_delivery):
   - The below tests will run on Push/Pull Request via GitHub Actions. You need to pass all the tests before requesting a review.
-    - Unit testing on various Go versions (1.15 ... latest)
+    - Unit testing on various Go versions (1.18 ... latest)
     - Unit testing on various platforms (Linux, macOS, Windows)
     - Static analysis/lint check by [golangci-lint](https://golangci-lint.run/).
       - Configuration: [.golangci.yml](./.golangci.yml)
+  - To **run tests locally**, we provide a convenient [Makefile](./Makefile). Please run the below command to run all the tests (`docker` and `compose` are required).
 
-> __Note__ : The branch `original` is a copy from the `master` branch of the [upstream repo](https://github.com/1set/todotxt). This is for the purpose of keeping the original code as is and contribute to the upstream. DO NOT PR to the `original` branch.
+    ```bash
+    # Runs unit tests on Go 1.18 to latest and `golangci-lint` check.
+    make test
+    ```
+
+> __Note__ : Please **DO NOT PR to the `original` branch** but to `main` branch. The branch `original` is simply a copy from the `master` branch of the [upstream repo](https://github.com/1set/todotxt). This is for the purpose of keeping the original code as is and contribute to the upstream.
 
 ## Statuses
 

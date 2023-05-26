@@ -3,26 +3,21 @@
 # =============================================================================
 # It is recommended to run specifying a specific Go version and not at once.
 #
-# # Recommended usage:
-#   - To unit test in Go v1.16:
+# ## Recommended usage:
 #
-#       $ docker compose run v1_16
+# - Use `make` in the root directory to ease the process.
 #
-#   - Lint check and static analysis:
+# ## Usage:
 #
-#       $ docker compose run lint
+#   docker compose --file ./.github/docker-compose.yml run --rm <service name>
 #
-#   - To run `go generate`:
+# - E.g.
 #
-#       $ docker compose run go_generate
+#   $ docker compose --file ./.github/docker-compose.yml run
 #
-#   - To update the `go.mod` to the latest version:
+# ## NOTE
 #
-#       $ docker compose run tidy
-#
-# # NOT RECOMMENDED
-#
-# It is not recommended to run all tests at once whith "up":
+# It is NOT RECOMMENDED to run all tests at once whith "up":
 #
 #     $ docker compose up
 #
@@ -39,58 +34,58 @@ services:
   # Service tidy updates the go.mod to the latest
   tidy:
     build:
-      context: .
+      context: ..
       dockerfile: ./.github/Dockerfile
       args:
         VARIANT: 1.18-alpine
     volumes:
-      - .:/workspaces
+      - ..:/workspaces
     entrypoint: [ "./.github/run_go_mod_tidy.sh" ]
   # Service go_generate generates stringer implementation
   go_generate:
     build:
-      context: .
+      context: ..
       dockerfile: ./.github/Dockerfile
       args:
         VARIANT: 1.18-alpine
     volumes:
-      - .:/workspaces
+      - ..:/workspaces
     entrypoint: [ "./.github/run_go_generate.sh" ]
   # Run latest golangci-lint
   lint:
     image: golangci/golangci-lint:latest
     working_dir: /workspaces
     volumes:
-      - .:/workspaces
+      - ..:/workspaces
       - GO_PKG_MOD:/go/pkg/mod
     entrypoint: [ "/usr/bin/golangci-lint", "run" ]
   # Service v1_18 runs the tests on Go v1.18
   v1_18:
     build:
-      context: .
+      context: ..
       dockerfile: ./.github/Dockerfile
       args:
         VARIANT: 1.18-alpine
     volumes:
-      - .:/workspaces
+      - ..:/workspaces
       - GO_PKG_MOD:/go/pkg/mod
   # Service v1_19 runs the tests on Go v1.19
   v1_19:
     build:
-      context: .
+      context: ..
       dockerfile: ./.github/Dockerfile
       args:
         VARIANT: 1.19-alpine
     volumes:
-      - .:/workspaces
+      - ..:/workspaces
       - GO_PKG_MOD:/go/pkg/mod
   # Service latest runs the tests on latest Go docker image
   latest:
     build:
-      context: .
+      context: ..
       dockerfile: ./.github/Dockerfile
       args:
         VARIANT: alpine
     volumes:
-      - .:/workspaces
+      - ..:/workspaces
       - GO_PKG_MOD:/go/pkg/mod

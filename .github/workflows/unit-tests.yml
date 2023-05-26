@@ -30,7 +30,7 @@ jobs:
           path: |
             ./go.mod
             ./go.sum
-            ./docker-compose.yml
+            ./.github/docker-compose.yml
             ./.github/Dockerfile
             ./.github/workflows/unit-tests.yml
           variant: $(TZ=UTC-9 date '+%Y%m')
@@ -45,9 +45,9 @@ jobs:
       - name: Load cached Docker images if any
         if: steps.cache.outputs.cache-hit == 'true'
         run: |
-          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_18_1.tar
-          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_19_1.tar
-          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_latest_1.tar
+          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github-v1_18.tar
+          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github-v1_19.tar
+          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github-latest.tar
 
       - name: Pull base images if no-cache
         if: steps.cache.outputs.cache-hit != 'true'
@@ -55,26 +55,23 @@ jobs:
           : # Clear docker cache
           docker system prune -af
           : # Pull images one-by-one for stability
-          docker pull golang:1.18-alpine
-          docker pull golang:1.19-alpine
-          docker pull golang:alpine
+          make test_pull
 
       - name: Build Docker images if no-cache
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          docker-compose build
+          make test_build
+
+      - name: Run tests
+        run: make test
 
       - name: Save/export built images to cache dir if no-cache
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
+          echo '--------'
+          docker image ls
+          echo '--------'
           mkdir -p ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}
-          docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_18_1.tar" "go-todotxt_v1_18:latest"
-          docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_v1_19_1.tar" "go-todotxt_v1_19:latest"
-          docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/go-todotxt_latest_1.tar" "go-todotxt_latest:latest"
-
-      - name: Run tests on Go 1.18
-        run: docker-compose run v1_18
-      - name: Run tests on Go 1.19
-        run: docker-compose run v1_19
-      - name: Run tests on latest Go
-        run: docker-compose run latest
+          docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github-v1_18.tar" "github-v1_18:latest"
+          docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github-v1_19.tar" "github-v1_19:latest"
+          docker save --output "${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github-latest.tar" "github-latest:latest"
