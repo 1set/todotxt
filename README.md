@@ -5,11 +5,12 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/KEINOS/go-todotxt.svg)](https://pkg.go.dev/github.com/KEINOS/go-todotxt/todo "View document")
 [![License](https://img.shields.io/github/license/KEINOS/go-todotxt)](https://github.com/KEINOS/go-todotxt/blob/master/LICENSE)
 
-`github.com/KEINOS/go-todotxt` is a **Go package that parses and manipulates tasks and to-do lists in [todo.txt format](https://github.com/todotxt/todo.txt)** by [Gina Trapani](https://github.com/ginatrapani).
+`github.com/KEINOS/go-todotxt` is a Go package for parsing and editing todo.txt files, a [text format for task annotations](https://github.com/todotxt/todo.txt) designed by [Gina Trapani](https://github.com/ginatrapani).
 
-It implements the custom user sort functionality as well.
-
-> __Note__ This package is based on [**todotxt**](https://github.com/1set/todotxt) from [Kevin Tang](https://github.com/vt128) and [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) from [Fabio Berchtold](https://github.com/JamesClonk).
+> __Note__: This package is based on the following packages with **custom user sort functionality**.
+>
+> - [**todotxt**](https://github.com/1set/todotxt) from [Kevin Tang](https://github.com/vt128)
+> - [**go-todotxt**](https://github.com/JamesClonk/go-todotxt) from [Fabio Berchtold](https://github.com/JamesClonk)
 
 ## Usage
 
