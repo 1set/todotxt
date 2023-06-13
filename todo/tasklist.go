@@ -5,7 +5,6 @@ import (
 	"os"
 	"strings"
 
-	ys "github.com/1set/gut/ystring"
 	"github.com/pkg/errors"
 )
 
@@ -191,7 +190,7 @@ func (tasklist TaskList) String() string {
 
 	for _, task := range tasklist {
 		strBldr.WriteString(task.String())
-		strBldr.WriteString(ys.NewLine)
+		strBldr.WriteString(NewLine)
 	}
 
 	return strBldr.String()
