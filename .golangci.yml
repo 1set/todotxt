@@ -34,3 +34,15 @@ linters:
   - wastedassign
   # Disable due to test and mock private functions
   - testpackage
+
+linters-settings:
+  depguard:
+    rules:
+      main:
+        # List of allowed packages.
+        allow:
+          - $gostd
+          # Required for testing
+          - github.com/stretchr/testify
+          # Deprecated but still used
+          - github.com/pkg/errors

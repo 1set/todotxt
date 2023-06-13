@@ -21,7 +21,7 @@ echo '* Run go tidy ...'
 go get -u ./...
 go mod tidy -go=1.18
 
-echo '* Run tests ...'
+echo "* Run tests (on $(go version)) ..."
 go test ./... && {
     echo '* Testing passed. Removing old go.mod file ...'
     rm -f go.mod.bak

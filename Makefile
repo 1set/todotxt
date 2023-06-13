@@ -1,5 +1,7 @@
 SHELL=bash
 
+test: test_118 test_119 test_latest lint
+
 test_pull:
 	@docker pull alpine:latest
 	@docker pull golang:1.18-alpine
@@ -11,7 +13,6 @@ test_pull:
 test_build: test_pull
 	docker compose --file ./.github/docker-compose.yml build --no-cache
 
-test: test_118 test_119 test_latest lint
 test_118:
 	@echo -n "* Running unit test on go 1.18 ... "
 	@docker compose --file ./.github/docker-compose.yml run --rm v1_18
@@ -26,6 +27,10 @@ lint:
 	@echo -n "* Running golangci-lint ... "
 	@docker compose --file ./.github/docker-compose.yml run --rm lint && \
 	echo "ok"
+
+update_mod:
+	@echo "* Updating go.mod ... "
+	@docker compose --file ./.github/docker-compose.yml run --rm tidy
 
 clean:
 	@echo '! Cleaning up all docker images, containers, and networks (runs `docker system prune -a`)'
