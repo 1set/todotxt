@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      OS: 'ubuntu-latest'
+      GO: '1'
     steps:
       - uses: actions/checkout@v3
 
@@ -21,6 +24,10 @@ jobs:
           check-latest: true
           cache: true
 
+      - run: go test -coverprofile coverage.txt ./...
+
       - uses: codecov/codecov-action@v3
         with:
+          fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.txt
