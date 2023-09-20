@@ -1,16 +1,18 @@
 //go:build !windows
 // +build !windows
 
-package todo
+package todo_test
 
 import (
 	"fmt"
 	"log"
 	"strings"
+
+	"github.com/KEINOS/go-todotxt/todo"
 )
 
 func ExampleLoadFromPath() {
-	tasklist, err := LoadFromPath("testdata/todo.txt")
+	tasklist, err := todo.LoadFromPath("testdata/todo.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,7 +31,7 @@ func ExampleLoadFromPath() {
 }
 
 func ExampleTaskList_LoadFromPath() {
-	var tasklist TaskList
+	var tasklist todo.TaskList
 
 	// This will overwrite whatever was in the tasklist before.
 	if err := tasklist.LoadFromPath("testdata/todo.txt"); err != nil {
@@ -49,14 +51,14 @@ func ExampleTaskList_LoadFromPath() {
 
 func ExampleTaskList_CustomSort() {
 	//nolint:exhaustruct // fields of Task are missing but they are not used in this example
-	tasks := TaskList{
-		Task{Todo: "Task 3"},
-		Task{Todo: "Task 1"},
-		Task{Todo: "Task 4"},
-		Task{Todo: "Task 2"},
+	tasks := todo.TaskList{
+		todo.Task{Todo: "Task 3"},
+		todo.Task{Todo: "Task 1"},
+		todo.Task{Todo: "Task 4"},
+		todo.Task{Todo: "Task 2"},
 	}
 
-	customFunc := func(a, b Task) bool {
+	customFunc := func(a, b todo.Task) bool {
 		return strings.Compare(a.Todo, b.Todo) < 0
 	}
 
@@ -74,7 +76,7 @@ func ExampleTaskList_CustomSort() {
 }
 
 func ExampleTaskList_Filter() {
-	var tasklist TaskList
+	var tasklist todo.TaskList
 	if err := tasklist.LoadFromPath("testdata/filter_todo.txt"); err != nil {
 		log.Fatal(err)
 	}
@@ -82,8 +84,8 @@ func ExampleTaskList_Filter() {
 	fmt.Println("Before:", tasklist[0].String())
 
 	// Get tasks that are not overdue and are priority A or B.
-	tasklist = tasklist.Filter(FilterNot(FilterOverdue)).Filter(
-		FilterByPriority("A"), FilterByPriority("B"),
+	tasklist = tasklist.Filter(todo.FilterNot(todo.FilterOverdue)).Filter(
+		todo.FilterByPriority("A"), todo.FilterByPriority("B"),
 	)
 
 	fmt.Println("After :", tasklist[0].String())
@@ -93,7 +95,7 @@ func ExampleTaskList_Filter() {
 }
 
 func ExampleTaskList_Sort() {
-	var tasklist TaskList
+	var tasklist todo.TaskList
 	if err := tasklist.LoadFromPath("testdata/sort_todo.txt"); err != nil {
 		log.Fatal(err)
 	}
@@ -103,7 +105,7 @@ func ExampleTaskList_Sort() {
 	fmt.Println("Before #3:", tasklist[2].Projects)
 
 	// sort tasks by project and then priority in ascending order
-	if err := tasklist.Sort(SortProjectAsc, SortPriorityAsc); err != nil {
+	if err := tasklist.Sort(todo.SortProjectAsc, todo.SortPriorityAsc); err != nil {
 		log.Fatal(err)
 	}
 
