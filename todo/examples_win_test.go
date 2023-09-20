@@ -11,7 +11,7 @@ import (
 	"github.com/KEINOS/go-todotxt/todo"
 )
 
-func ExampleLoadFromPath_win() {
+func ExampleLoadFromPath() {
 	taskListRaw, err := todo.LoadFromPath("testdata/todo.txt")
 	if err != nil {
 		log.Fatal(err)
