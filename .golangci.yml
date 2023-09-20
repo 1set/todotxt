@@ -41,8 +41,11 @@ linters-settings:
       main:
         # List of allowed packages.
         allow:
+          # Standard library
           - $gostd
           # Required for testing
           - github.com/stretchr/testify
+          # Required for real examples
+          - github.com/KEINOS/go-todotxt/todo
           # Deprecated but still used
           - github.com/pkg/errors
