@@ -2,6 +2,7 @@ package todo
 
 import (
 	"bufio"
+	"io"
 	"os"
 	"strings"
 
@@ -20,13 +21,14 @@ type TaskList []Task
 //  Constructors
 // ----------------------------------------------------------------------------
 
-// LoadFromFile loads and returns a TaskList from *os.File.
+// LoadFromFile loads and returns a TaskList from io.Reader.
 //
-// Using *os.File instead of a filename allows to also use os.Stdin.
-func LoadFromFile(file *os.File) (TaskList, error) {
-	tasklist := TaskList{}
+// This function aims to be used with os.File, os.Stdin or any other io.Reader.
+func LoadFromFile(file io.Reader) (TaskList, error) {
+	var tasklist TaskList
+
 	if err := tasklist.LoadFromFile(file); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "failed to load from file")
 	}
 
 	return tasklist, nil
@@ -34,12 +36,20 @@ func LoadFromFile(file *os.File) (TaskList, error) {
 
 // LoadFromPath loads and returns a TaskList from a file (most likely called "todo.txt").
 func LoadFromPath(filename string) (TaskList, error) {
-	tasklist := TaskList{}
+	var tasklist TaskList
+
 	if err := tasklist.LoadFromPath(filename); err != nil {
 		return nil, err
 	}
 
 	return tasklist, nil
+}
+
+// LoadFromString loads and returns a TaskList from a string.
+func LoadFromString(str string) (TaskList, error) {
+	reader := strings.NewReader(str)
+
+	return LoadFromFile(reader)
 }
 
 // NewTaskList creates a new empty TaskList.
@@ -87,12 +97,16 @@ func (tasklist *TaskList) GetTask(id int) (*Task, error) {
 	return nil, errors.New("task not found")
 }
 
-// LoadFromFile loads a TaskList from *os.File.
+// LoadFromFile loads a TaskList from io.Reader.
 //
-// Using *os.File instead of a filename allows to also use os.Stdin.
+// This function aims to be used with os.File, os.Stdin or any other io.Reader.
 //
 // Note: This will clear the current TaskList and overwrite it's contents with whatever is in *os.File.
-func (tasklist *TaskList) LoadFromFile(file *os.File) error {
+func (tasklist *TaskList) LoadFromFile(file io.Reader) error {
+	if file == nil {
+		return errors.New("nil io.Reader")
+	}
+
 	*tasklist = []Task{} // Empty task list
 
 	taskID := 1

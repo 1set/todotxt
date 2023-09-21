@@ -16,7 +16,8 @@ type TaskSegmentType uint8
 
 // Flags for indicating type of segment in task string.
 const (
-	SegmentIsCompleted TaskSegmentType = iota + 1
+	_ TaskSegmentType = iota + 1
+	SegmentIsCompleted
 	SegmentCompletedDate
 	SegmentPriority
 	SegmentCreatedDate

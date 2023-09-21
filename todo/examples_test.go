@@ -3,41 +3,37 @@ package todo_test
 import (
 	"fmt"
 	"log"
-	"strings"
 
 	"github.com/KEINOS/go-todotxt/todo"
 )
 
-func ExampleTaskList_LoadFromPath() {
-	var tasklist todo.TaskList
+// ============================================================================
+//  TaskList
+// ============================================================================
 
-	// This will overwrite whatever was in the tasklist before.
-	if err := tasklist.LoadFromPath("testdata/todo.txt"); err != nil {
+// ============================================================================
+//  TaskList
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+//  TaskList.CustomSort
+// ----------------------------------------------------------------------------
+
+func ExampleTaskList_CustomSort() {
+	tasks, err := todo.LoadFromString(`
+		Task 3
+		Task 1
+		Task 4
+		Task 2
+	`)
+	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println(tasklist[0].Todo)      // Text part of first task (Call Mom)
-	fmt.Println(tasklist[2].Contexts)  // Slice of contexts from third task ([Computer])
-	fmt.Println(tasklist[3].Priority)  // Priority of fourth task (C)
-	fmt.Println(tasklist[7].Completed) // Completed flag of eighth task (true)
-	// Output:
-	// Call Mom
-	// [Computer]
-	// C
-	// true
-}
-
-func ExampleTaskList_CustomSort() {
-	//nolint:exhaustruct // fields of Task are missing but they are not used in this example
-	tasks := todo.TaskList{
-		todo.Task{Todo: "Task 3"},
-		todo.Task{Todo: "Task 1"},
-		todo.Task{Todo: "Task 4"},
-		todo.Task{Todo: "Task 2"},
-	}
-
+	// customFunc returns true if taskA is less than taskB.
 	customFunc := func(a, b todo.Task) bool {
-		return strings.Compare(a.Todo, b.Todo) < 0
+		// Compare strings of the text part of the task.
+		return a.Todo < b.Todo
 	}
 
 	tasks.CustomSort(customFunc)
@@ -53,7 +49,11 @@ func ExampleTaskList_CustomSort() {
 	// Task 4
 }
 
-func ExampleTaskList_Filter() {
+// ----------------------------------------------------------------------------
+//  TaskList.Filter
+// ----------------------------------------------------------------------------
+
+func ExampleTaskList_Filter_from_file() {
 	var tasklist todo.TaskList
 	if err := tasklist.LoadFromPath("testdata/filter_todo.txt"); err != nil {
 		log.Fatal(err)
@@ -71,6 +71,41 @@ func ExampleTaskList_Filter() {
 	// Before: This is a task should be due yesterday due:2020-11-15
 	// After : (A) Call Mom @Call @Phone +Family
 }
+
+func ExampleTaskList_Filter_from_string() {
+	tasks, err := todo.LoadFromString(`
+		(A) Call Mom @Phone +Family
+		x (A) Schedule annual checkup +Health
+		(B) Outline chapter 5 +Novel @Computer
+		(C) Add cover sheets @Office +TPSReports
+		Plan backyard herb garden @Home
+		Pick up milk @GroceryStore
+		Research self-publishing services +Novel @Computer
+		x Download Todo.txt mobile app @Phone
+	`)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// AND filter.  Get tasks that are not completed AND has priority.
+	nearTopTasks := tasks.Filter(todo.FilterNotCompleted).Filter(todo.FilterHasPriority)
+
+	// OR filter. Filter the above tasks by priority "A" OR "C".
+	nearTopTasks = nearTopTasks.Filter(
+		todo.FilterByPriority("A"),
+		todo.FilterByPriority("C"),
+	)
+
+	fmt.Println(nearTopTasks.String())
+
+	// Output:
+	// (A) Call Mom @Phone +Family
+	// (C) Add cover sheets @Office +TPSReports
+}
+
+// ----------------------------------------------------------------------------
+//  TaskList.Sort
+// ----------------------------------------------------------------------------
 
 func ExampleTaskList_Sort() {
 	var tasklist todo.TaskList

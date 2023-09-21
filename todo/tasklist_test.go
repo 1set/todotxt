@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -38,6 +39,8 @@ func TestLoadFromFile(t *testing.T) {
 
 	require.Error(t, err, "expected error when loading from nil")
 	require.Nil(t, testTasklist, "returned object should be nil on error")
+	assert.Contains(t, err.Error(), "failed to load from file")
+	assert.Contains(t, err.Error(), "nil io.Reader")
 }
 
 func TestLoadFromPath(t *testing.T) {

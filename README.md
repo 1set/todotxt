@@ -15,79 +15,43 @@
 ## Usage
 
 ```go
-go get github.com/KEINOS/go-todotxt
+// Download the package.
+go get "github.com/KEINOS/go-todotxt"
 ```
 
 ```go
+// Import the package.
 import "github.com/KEINOS/go-todotxt/todo"
 ```
 
 ```go
-// Load a todo.txt formatted file
-tasksAll, err := todo.LoadFromPath("my_todo.txt");
-if err != nil {
-    log.Fatal(err)
-}
-
-// Retrieve uncompleted tasks, with due dates or priorities from the task list.
-// - AND filter:
-//     TaskList.Filter(todo.FilterDueToday).Filter(todo.FilterHasPriority)
-// - OR filter:
-//     TaskList.Filter(todo.FilterDueToday, todo.FilterHasPriority)
-tasksToday := tasksAll.Filter(todo.FilterNotCompleted).Filter(
-    todo.FilterDueToday,
-    todo.FilterHasPriority,
-)
-
-// Sort the tasks by priority then project name.
-if err := tasksToday.Sort(todo.SortPriorityAsc, todo.SortProjectAsc); err != nil {
-    log.Fatal(err)
-}
-
-// Print each task info and set as completed.
-for i, task := range tasksToday {
-    fmt.Println(task.Todo)     // Print the task to be done
-    fmt.Println(task.Priority) // Print its priority (if any)
-    fmt.Println(task.Projects) // Print its projects name (if any)
-    fmt.Println(task.Contexts) // Print its contexts (if any)
-
-    tasks[i].Complete() // oh really?
-}
-
-// Save the tasks to a different file.
-if err = tasks.WriteToPath("today-todo.txt"); err != nil {
-    log.Fatal(err)
-}
-```
-
-```go
-func ExampleTaskList_CustomSort() {
-    tasks := TaskList{
-        Task{Todo: "Task 3"},
-        Task{Todo: "Task 1"},
-        Task{Todo: "Task 4"},
-        Task{Todo: "Task 2"},
+func Example() {
+    // Load tasks from a string. You can also load from a file by using LoadFromFile().
+    tasks, err := todo.LoadFromString(`
+        (A) Call Mom @Phone +Family
+        x (A) Schedule annual checkup +Health
+        (B) Outline chapter 5 +Novel @Computer
+        (C) Add cover sheets @Office +TPSReports
+        Plan backyard herb garden @Home
+        Pick up milk @GroceryStore
+        Research self-publishing services +Novel @Computer
+        x Download Todo.txt mobile app @Phone
+    `)
+    if err != nil {
+        log.Fatal(err)
     }
 
-    customFunc := func(a, b Task) bool {
-        return strings.Compare(a.Todo, b.Todo) < 0
-    }
+    // AND filter.  Get tasks that have priority A and are not completed.
+    nearTopTasks := tasks.Filter(todo.FilterHasPriority).Filter(todo.FilterNotCompleted)
 
-    tasks.CustomSort(customFunc)
+    fmt.Println(nearTopTasks.String())
 
-    fmt.Println(tasks[0].Todo)
-    fmt.Println(tasks[1].Todo)
-    fmt.Println(tasks[2].Todo)
-    fmt.Println(tasks[3].Todo)
     // Output:
-    // Task 1
-    // Task 2
-    // Task 3
-    // Task 4
+    // (A) Call Mom @Phone +Family
+    // (B) Outline chapter 5 @Computer +Novel
+    // (C) Add cover sheets @Office +TPSReports
 }
 ```
-
-For more examples and details, please check the [Go Doc](https://pkg.go.dev/github.com/KEINOS/go-todotxt/todo#pkg-examples).
 
 ## Todo.txt format
 

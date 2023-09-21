@@ -18,7 +18,8 @@ func TestTaskSegmentType(t *testing.T) {
 		SegmentProject:       "Project",
 		SegmentTag:           "Tag",
 		SegmentDueDate:       "DueDate",
-		0:                    "TaskSegmentType(0)",
+		0:                    "Unknown SegmentType(0)",
+		100:                  "Unknown SegmentType(100)",
 	}
 
 	for name, expect := range names {

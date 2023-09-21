@@ -4,6 +4,7 @@ package todo
 //  Type: tasklistSort
 // ----------------------------------------------------------------------------
 
+// tasklistSort is an implementation of sort.Interface.
 type tasklistSort struct {
 	by        func(task1, task2 *Task) bool
 	tasklists TaskList
